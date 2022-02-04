@@ -52,3 +52,13 @@ Dependencies (included in Docker image):
     * Website: <http://openbabel.org/wiki/Main_Page>
     * Installed from Debian repositories
 
+### Stage 7 - ADMET Filtering
+
+TODO: Describe stage 7
+
+Dependencies (included in Docker image):
+
+  * FPADMET
+    * Source: <https://gitlab.com/vishsoft/fpadmet>
+    * Commit: d61d63e3d3c37e887a5d4b1959260d9f1b41f77a
+
