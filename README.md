@@ -2,6 +2,14 @@
 
 TODO: Write a brief introduction / description
 
+## Usage
+
+TODO: Explain how to run in various environments
+
+## Testing
+
+The `data/` directory contains data and configuration for end-to-end testing.
+
 ## Workflow
 
 The `workflow/` directory contains everything necessary to run the Drug Sniffer
