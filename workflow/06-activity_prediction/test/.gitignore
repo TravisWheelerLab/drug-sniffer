@@ -1,0 +1,4 @@
+*.score
+pose_*.pdbqt
+pose_*.mol2
+autodock_output_pose_*.pdbqt

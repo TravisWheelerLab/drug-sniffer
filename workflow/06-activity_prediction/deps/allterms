@@ -1,0 +1,16 @@
+ 1.0 electrostatic(i=2,_^=100,_c=8)
+ 1.0 ad4_solvation(d-sigma=3.6,_s/q=0.01097,_c=8)
+ 1.0 gauss(o=0,_w=0.5,_c=8)
+ 1.0 gauss(o=3,_w=2,_c=8)
+ 1.0 repulsion(o=0,_c=8)
+ 1.0 hydrophobic(g=0.5,_b=1.5,_c=8)
+ 1.0 non_hydrophobic(g=0.5,_b=1.5,_c=8)
+ 1.0 vdw(i=6,_j=12,_s=1,_^=100,_c=8)
+ 1.0 non_dir_h_bond_lj(o=-0.7,_^=100,_c=8)
+ 1.0 non_dir_anti_h_bond_quadratic(o=0,_c=8)
+ 1.0 non_dir_h_bond(g=-0.7,_b=0,_c=8)
+ 1.0 acceptor_acceptor_quadratic(o=0,_c=8)
+ 1.0 donor_donor_quadratic(o=0,_c=8)
+ 1.0 ligand_length
+ 1.0 constant_term
+ 1.0 num_tors_div
