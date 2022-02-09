@@ -24,6 +24,23 @@ debugging, use `run-image.sh`. To run the automated smoke tests, use
 `test-image.sh`. The tests rely on data files stored in the `test/` directory
 and will write additional outputs to that same location when they run.
 
+### Stage 3 - Denovo Molecule Design
+
+TODO: Describe stage 3
+
+Dependencies (included in Docker image):
+
+  * Autogrow4
+    * Website: <https://durrantlab.pitt.edu/autogrow4/>
+    * Version: 4.0.3
+  * Autodock Vina
+    * Website: <https://vina.scripps.edu>
+    * Version: 1.1.2
+
+The Docker container for this stage also uses Miniconda 4.10.3 running Python
+3.8 to supply a Python interpreter and various dependencies for Autogrow4, which
+is in line with the recommended way to use this software.
+
 ### Stage 5 - Protein Ligand Docking
 
 TODO: Describe stage 5
