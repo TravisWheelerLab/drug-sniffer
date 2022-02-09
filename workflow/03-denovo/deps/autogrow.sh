@@ -19,6 +19,7 @@ set -e
 # SOURCE_COMPOUND_FILE
 # DOCKING_EXHAUSTIVENESS
 # NUMBER_OF_PROCESSORS
+# NUMBER_OF_GENERATIONS
 
 FULL_RECEPTOR_PATH=$(realpath "$RECEPTOR_PATH")
 ORIG_PWD="$PWD"
@@ -45,7 +46,7 @@ cd /opt/autogrow4 && python RunAutogrow.py \
     --diversity_mols_to_seed_first_generation 10 \
     --diversity_seed_depreciation_per_gen 10 \
     --docking_executable "/opt/autodock_vina/bin/vina" \
-    --num_generations 10 \
+    --num_generations "$NUMBER_OF_GENERATIONS" \
     --number_of_processors "$NUMBER_OF_PROCESSORS" \
     --selector_choice "Rank_Selector" \
     --max_variants_per_compound 5 \
@@ -62,3 +63,5 @@ cd /opt/autogrow4 && python RunAutogrow.py \
     --rxn_library "all_rxns" \
     --conversion_choice "ObabelConversion"
 
+cp "$ORIG_PWD/Run_0/generation_$NUMBER_OF_GENERATIONS/generation_$NUMBER_OF_GENERATIONS.smi" \
+    "$ORIG_PWD/denovo.smi"
