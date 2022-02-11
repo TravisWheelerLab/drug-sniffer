@@ -25,6 +25,15 @@ RUN conda install -y -c conda-forge rdkit rdkit=2020.03.1 \
     && pip install matplotlib==3.2.1 \
     && pip install func_timeout==4.3.5
 
+
+# dedup.py
+
+WORKDIR /opt
+
+RUN mkdir bin
+COPY deps/dedup.py bin/dedup.py
+ENV PATH=${PATH}:/opt/bin
+
 # autodock vina
 
 WORKDIR /opt

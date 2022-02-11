@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
@@ -63,5 +63,13 @@ cd /opt/autogrow4 && python RunAutogrow.py \
     --rxn_library "all_rxns" \
     --conversion_choice "ObabelConversion"
 
-cp "$ORIG_PWD/Run_0/generation_$NUMBER_OF_GENERATIONS/generation_$NUMBER_OF_GENERATIONS.smi" \
-    "$ORIG_PWD/denovo.smi"
+let "GEN0 = $NUMBER_OF_GENERATIONS - 2"
+let "GEN1 = $NUMBER_OF_GENERATIONS - 1"
+let "GEN2 = $NUMBER_OF_GENERATIONS - 0"
+
+dedup.py \
+    -o "$ORIG_PWD/denovo.smi" \
+    $ORIG_PWD/Run_0/generation_$GEN0/generation_$GEN0.smi \
+    $ORIG_PWD/Run_0/generation_$GEN1/generation_$GEN1.smi \
+    $ORIG_PWD/Run_0/generation_$GEN2/generation_$GEN2.smi
+
