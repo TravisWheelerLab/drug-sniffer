@@ -2,6 +2,8 @@
 
 set -e
 
+rm -f test/docked_*.pdbqt test/ligand.* test/output.log
+
 # autodock.sh
 echo "** autodock.sh **"
 docker run -v "$PWD/test:/data" -u "$(id -u):$(id -g)" \
