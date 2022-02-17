@@ -42,7 +42,7 @@ def main(args: List[str]):
     parser.add_argument(
         "smi_dir",
         help="a directory that contains .smi files for each ligand",
-        metavar="DIR",
+        metavar="SMI_DIR",
     )
     parser.add_argument(
         "--tanimoto",
@@ -57,7 +57,7 @@ def main(args: List[str]):
         "-d",
         required=True,
         help="a directory containing a fingerprint database (fingerprints, indexes, splits)",
-        metavar="DIR",
+        metavar="DB_DIR",
     )
     options = parser.parse_args(args)
 
@@ -67,7 +67,7 @@ def main(args: List[str]):
         neighbors = find_ligand_neighbors(fpts_dir, options.db_dir, options.tanimoto)
         # db_smis = fetch_neighbors(neighbors, options.db_dir)
     
-    print(neighbors)
+    print(list(neighbors))
     # print(db_smis)
 
 
