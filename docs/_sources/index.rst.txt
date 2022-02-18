@@ -3,22 +3,25 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Drug Sniffer
-=======================
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-
+Drug Sniffer
+============
 
 Drug Sniffer is a drug discovery pipeline. More details to come!
 
+Table of Contents
+=================
 
 
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 2
+
+   stages
+   usage
+   parameters
+
+
+Indices
+=======
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
