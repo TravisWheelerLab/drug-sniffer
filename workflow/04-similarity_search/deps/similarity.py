@@ -32,12 +32,6 @@ class DenovoLigand:
         self.fpt = bytes()
 
 
-class DBLigand(NamedTuple):
-    smi_str: str
-    db_src: str
-    neighbor: Neighbor
-
-
 class Neighbor(NamedTuple):
     ligand: DenovoLigand
     ligand_fpt_path: str
@@ -64,6 +58,12 @@ class Neighbor(NamedTuple):
         name = ".".join(name_pieces[:-1])
 
         return f"{db_path}/splits/{name}.smi"
+
+
+class DBLigand(NamedTuple):
+    smi_str: str
+    db_src: str
+    neighbor: Neighbor
 
 
 def main(args: List[str]):
