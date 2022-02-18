@@ -9,3 +9,6 @@ Once you've made your changes, run `build.sh`, which will build the
 documentation and also move it to the correct location in the repo.  Then, you
 can commit all changes and push (or submit a pull request).
 
+You must have [Sphinx](http://sphinx-doc.org) installed for the build script to
+work.
+
