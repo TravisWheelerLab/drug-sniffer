@@ -64,17 +64,13 @@ def main(args: List[str]):
     )
     options = parser.parse_args(args)
 
-    fpts_dir = TemporaryDirectory()
-
     ligands = load_ligands(options.smi_dir)
-    fingerprint_ligands(ligands, fpts_dir.name)
-    neighbors = find_ligand_neighbors(fpts_dir.name, options.db_dir, options.tanimoto)
+    fingerprint_ligands(ligands)
+    neighbors = find_ligand_neighbors(ligands, options.db_dir, options.tanimoto)
     # db_smis = fetch_neighbors(neighbors, options.db_dir)
     
     print(list(neighbors))
     # print(list(db_smis))
-
-    fpts_dir.cleanup()
 
 
 def load_ligands(smi_dir: str) -> List[Ligand]:
