@@ -12,6 +12,7 @@ from rdkit.Chem import AllChem
 
 class Neighbor(NamedTuple):
     ligand_fpt: int
+    ligand_index: int
     db_fpt: int
     db_index: int
 
@@ -135,11 +136,13 @@ def find_ligand_neighbors(
     for fpt_path in glob(f"{fpts_dir}/*.fpt"):
         with open(fpt_path, "rb") as fpt_file:
             ligands_fpts.write(fpt_file.read())
+    ligands_fpts.flush()
 
     # db_list = NamedTemporaryFile("w")
     db_list = open("db_list.list", "w")
     for fpt_path in glob(f"{db_dir}/fingerprints/*.fpt"):
         db_list.write(f"{fpt_path}\n")
+    db_list.flush()
 
     proc = run(
         [
@@ -155,10 +158,14 @@ def find_ligand_neighbors(
     ligands_fpts.close()
     db_list.close()
 
-    for line in proc.stdout:
+    for line in proc.stdout.split("\n"):
+        if not line.strip():
+            continue
+
         pieces = line.split()
         yield Neighbor(
             int(pieces[0]),
+            int(pieces[1]),
             int(pieces[2]),
             int(pieces[3]),
         )
