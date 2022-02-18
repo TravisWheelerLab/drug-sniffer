@@ -96,7 +96,7 @@ def load_ligands(smi_dir: str) -> List[Ligand]:
     return ligands
 
 
-def fingerprint_ligands(ligands: Iterable[Ligand], fpts_dir: str) -> None:
+def fingerprint_ligands(ligands: Iterable[Ligand]) -> None:
     """
     Fingerprint the given ligands and return the path to a directory
     containing the resulting .fpt files. Also updates the Ligand
@@ -105,9 +105,7 @@ def fingerprint_ligands(ligands: Iterable[Ligand], fpts_dir: str) -> None:
     >>> l = Ligand('C#N')
     >>> l.fpt
     b''
-    >>> from tempfile import TemporaryDirectory
-    >>> d = TemporaryDirectory()
-    >>> fingerprint_ligands([l], d.name)
+    >>> fingerprint_ligands([l])
     >>> len(l.fpt)
     128
     >>> l.fpt
@@ -123,21 +121,17 @@ def fingerprint_ligands(ligands: Iterable[Ligand], fpts_dir: str) -> None:
         bit_str = bit_vec.ToBitString()
         byte_str = bitstring_to_bytes(bit_str)
         
-        with open(f"{fpts_dir}/{ligand.index}.fpt", "wb") as fpt_file:
-            fpt_file.write(byte_str)
-        
         ligand.fpt = byte_str
 
 
 def find_ligand_neighbors(
-    fpts_dir: str,
+    ligands: Iterable[Ligand],
     db_dir: str,
     tanimoto: float,
 ) -> Iterable[Neighbor]:
-    ligands_fpts = NamedTemporaryFile("w")
-    for fpt_path in glob(f"{fpts_dir}/*.fpt"):
-        with open(fpt_path, "rb") as fpt_file:
-            ligands_fpts.write(fpt_file.read())
+    ligands_fpts = NamedTemporaryFile("wb")
+    for ligand in ligands:
+        ligands_fpts.write(ligand.fpt)
     ligands_fpts.flush()
 
     db_list = NamedTemporaryFile("w")
