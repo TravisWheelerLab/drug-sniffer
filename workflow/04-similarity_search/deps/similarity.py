@@ -11,9 +11,9 @@ from rdkit.Chem import AllChem
 
 
 class Neighbor(NamedTuple):
-    ligand_fpt: int
+    ligand_fpt_path: str
     ligand_index: int
-    db_fpt: int
+    db_fpt_path: str
     db_index: int
 
 
@@ -64,14 +64,17 @@ def main(args: List[str]):
     )
     options = parser.parse_args(args)
 
+    fpts_dir = TemporaryDirectory()
+
     ligands = load_ligands(options.smi_dir)
-    with TemporaryDirectory() as fpts_dir:
-        fingerprint_ligands(ligands, fpts_dir)
-        neighbors = find_ligand_neighbors(fpts_dir, options.db_dir, options.tanimoto)
-        # db_smis = fetch_neighbors(neighbors, options.db_dir)
+    fingerprint_ligands(ligands, fpts_dir.name)
+    neighbors = find_ligand_neighbors(fpts_dir.name, options.db_dir, options.tanimoto)
+    # db_smis = fetch_neighbors(neighbors, options.db_dir)
     
     print(list(neighbors))
-    # print(db_smis)
+    # print(list(db_smis))
+
+    fpts_dir.cleanup()
 
 
 def load_ligands(smi_dir: str) -> List[Ligand]:
@@ -131,15 +134,13 @@ def find_ligand_neighbors(
     db_dir: str,
     tanimoto: float,
 ) -> Iterable[Neighbor]:
-    # ligands_list = NamedTemporaryFile("w")
-    ligands_fpts = open("ligands_fingerprints.fpt", "wb")
+    ligands_fpts = NamedTemporaryFile("w")
     for fpt_path in glob(f"{fpts_dir}/*.fpt"):
         with open(fpt_path, "rb") as fpt_file:
             ligands_fpts.write(fpt_file.read())
     ligands_fpts.flush()
 
-    # db_list = NamedTemporaryFile("w")
-    db_list = open("db_list.list", "w")
+    db_list = NamedTemporaryFile("w")
     for fpt_path in glob(f"{db_dir}/fingerprints/*.fpt"):
         db_list.write(f"{fpt_path}\n")
     db_list.flush()
@@ -164,9 +165,9 @@ def find_ligand_neighbors(
 
         pieces = line.split()
         yield Neighbor(
-            int(pieces[0]),
+            pieces[0],
             int(pieces[1]),
-            int(pieces[2]),
+            pieces[2],
             int(pieces[3]),
         )
 
