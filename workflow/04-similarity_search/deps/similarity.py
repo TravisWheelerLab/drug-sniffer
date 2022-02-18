@@ -2,6 +2,8 @@
 
 from argparse import ArgumentParser
 from glob import glob
+from os import path
+import os
 from subprocess import run
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 from typing import Iterable, List, NamedTuple
@@ -10,17 +12,10 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 
 
-class Neighbor(NamedTuple):
-    ligand_fpt_path: str
-    ligand_index: int
-    db_fpt_path: str
-    db_index: int
-
-
 LIGAND_INDEX = 0
 
 
-class Ligand:
+class DenovoLigand:
     __slots__ = ["index", "smi_str", "fpt"]
 
     index: int
@@ -35,6 +30,40 @@ class Ligand:
 
         self.smi_str = smi_str
         self.fpt = bytes()
+
+
+class DBLigand(NamedTuple):
+    smi_str: str
+    db_src: str
+    neighbor: Neighbor
+
+
+class Neighbor(NamedTuple):
+    ligand: DenovoLigand
+    ligand_fpt_path: str
+    ligand_index: int
+    db_fpt_path: str
+    db_index: int
+
+    @property
+    def db_index_path(self) -> str:
+        pieces = self.db_fpt_path.split(os.sep)
+        name_pieces = pieces[-1].split(".")
+
+        db_path = os.sep.join(pieces[:-2])
+        name = ".".join(name_pieces[:-1])
+
+        return f"{db_path}/indexes/{name}.index"
+    
+    @property
+    def db_smi_path(self) -> str:
+        pieces = self.db_fpt_path.split(os.sep)
+        name_pieces = pieces[-1].split(".")
+
+        db_path = os.sep.join(pieces[:-2])
+        name = ".".join(name_pieces[:-1])
+
+        return f"{db_path}/splits/{name}.smi"
 
 
 def main(args: List[str]):
@@ -67,13 +96,12 @@ def main(args: List[str]):
     ligands = load_ligands(options.smi_dir)
     fingerprint_ligands(ligands)
     neighbors = find_ligand_neighbors(ligands, options.db_dir, options.tanimoto)
-    # db_smis = fetch_neighbors(neighbors, options.db_dir)
+    db_smis = fetch_neighbors(neighbors, options.db_dir)
     
-    print(list(neighbors))
-    # print(list(db_smis))
+    print(list(db_smis))
 
 
-def load_ligands(smi_dir: str) -> List[Ligand]:
+def load_ligands(smi_dir: str) -> List[DenovoLigand]:
     """
     Load ligands from the .smi files contained in the given directory. Each
     .smi file may contain any number of SMILES strings.
@@ -88,17 +116,17 @@ def load_ligands(smi_dir: str) -> List[Ligand]:
     for smi_path in glob(f"{smi_dir}/*.smi"):
         with open(smi_path, "r") as smi_file:
             for smi_str in smi_file:
-                ligands.append(Ligand(smi_str.strip()))
+                ligands.append(DenovoLigand(smi_str.strip()))
     return ligands
 
 
-def fingerprint_ligands(ligands: Iterable[Ligand]) -> None:
+def fingerprint_ligands(ligands: Iterable[DenovoLigand]) -> None:
     """
     Fingerprint the given ligands and return the path to a directory
-    containing the resulting .fpt files. Also updates the Ligand
+    containing the resulting .fpt files. Also updates the DenovoLigand
     instances with their fingerprints.
 
-    >>> l = Ligand('C#N')
+    >>> l = DenovoLigand('C#N')
     >>> l.fpt
     b''
     >>> fingerprint_ligands([l])
@@ -121,7 +149,7 @@ def fingerprint_ligands(ligands: Iterable[Ligand]) -> None:
 
 
 def find_ligand_neighbors(
-    ligands: Iterable[Ligand],
+    ligands: List[DenovoLigand],
     db_dir: str,
     tanimoto: float,
 ) -> Iterable[Neighbor]:
@@ -154,9 +182,11 @@ def find_ligand_neighbors(
             continue
 
         pieces = line.split()
+        ligand_index = int(pieces[1])
         yield Neighbor(
+            ligands[ligand_index],
             pieces[0],
-            int(pieces[1]),
+            ligand_index,
             pieces[2],
             int(pieces[3]),
         )
@@ -166,8 +196,25 @@ def fetch_neighbors(neighbors: Iterable[Neighbor], db_dir: str) -> List[str]:
     """
     Use the given neighbors to look up and return a list of corresponding
     SMILES strings from the database.
+
+    TODO: Re-use open files if possible
     """
-    pass
+    for neighbor in neighbors:
+        smi_file = open(neighbor.db_smi_path, "r")
+        index_file = open(neighbor.db_index_path, "rb")
+
+        index_file.seek(neighbor.db_index * 8)
+        index_value = index_file.read(8)
+
+        smi_offset = int.from_bytes(index_value, "big")
+        smi_file.seek(smi_offset)
+        smi_line = smi_file.readline()
+        (smi_str, db_src, _db_id) = smi_line.split()
+
+        yield DBLigand(smi_str, db_src, neighbor)
+    
+        smi_file.close()
+        index_file.close()
 
 
 def bitstring_to_bytes(bit_str: str):
