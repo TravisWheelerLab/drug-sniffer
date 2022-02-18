@@ -6,5 +6,5 @@ make html
 rm -rf ../docs
 mv build/html ../docs
 touch ../docs/.nojekyll
-echo 'drugsniffer.org' > ../docs/CNAME
+echo -n 'drugsniffer.org' > ../docs/CNAME
 
