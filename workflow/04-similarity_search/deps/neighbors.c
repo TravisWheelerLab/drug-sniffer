@@ -32,8 +32,8 @@ int main (int argc, char *argv[]) {
     long int seed_cnt;
     float jaccard_cutoff;
 
-    if (argc<6) {
-        printf("Usage: %s seed_filename db_filelist jaccard_cutoff\n", argv[0]);
+    if (argc != 4) {
+        printf("Usage: %s ligand_fingerprints db_fingerprint_files tanimoto_cutoff\n", argv[0]);
         exit(1);
     }
     seed_filename  = argv[1];

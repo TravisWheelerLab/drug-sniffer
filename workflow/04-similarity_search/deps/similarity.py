@@ -130,18 +130,21 @@ def find_ligand_neighbors(
     db_dir: str,
     tanimoto: float,
 ) -> Iterable[Neighbor]:
-    ligands_list = NamedTemporaryFile("w")
+    # ligands_list = NamedTemporaryFile("w")
+    ligands_fpts = open("ligands_fingerprints.fpt", "wb")
     for fpt_path in glob(f"{fpts_dir}/*.fpt"):
-        ligands_list.write(f"{fpt_path}\n")
+        with open(fpt_path, "rb") as fpt_file:
+            ligands_fpts.write(fpt_file.read())
 
-    db_list = NamedTemporaryFile("w")
+    # db_list = NamedTemporaryFile("w")
+    db_list = open("db_list.list", "w")
     for fpt_path in glob(f"{db_dir}/fingerprints/*.fpt"):
         db_list.write(f"{fpt_path}\n")
 
     proc = run(
         [
             "neighbors",
-            ligands_list.name,
+            ligands_fpts.name,
             db_list.name,
             str(tanimoto),
         ],
@@ -149,7 +152,7 @@ def find_ligand_neighbors(
         text=True,
     )
 
-    ligands_list.close()
+    ligands_fpts.close()
     db_list.close()
 
     for line in proc.stdout:
