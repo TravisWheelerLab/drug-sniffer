@@ -7,6 +7,8 @@ Drug Sniffer
 ============
 
 Drug Sniffer is a drug discovery pipeline. More details to come!
+Code can be found on
+`GitHub <https://github.com/TravisWheelerLab/drug-sniffer>`_.
 
 Table of Contents
 =================
