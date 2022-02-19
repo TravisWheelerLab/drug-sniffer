@@ -71,7 +71,13 @@ is in line with the recommended way to use this software.</p>
 </section>
 <section id="stage-4-similarity-search">
 <h2>Stage 4 - Similarity Search<a class="headerlink" href="#stage-4-similarity-search" title="Permalink to this headline">¶</a></h2>
-<p>TODO: Describe stage 4</p>
+<p>Build fingerprints for our denovo molecules, then compare against molecules in
+the database. The fingerprints for the database molecules are pre-generated and
+are referenced with the <code class="code docutils literal notranslate"><span class="pre">molecule_db</span></code> parameter. The result of this stage
+is a collection of molecules likely to be similar to the denovo molecules and
+therefore (hopefully) likely to fit the receptor.</p>
+<p>This stage consists entirely of custom code but relies on RDKit (specifically
+the Python bindings), version 2021.9.4.</p>
 </section>
 <section id="stage-5-protein-ligand-docking">
 <h2>Stage 5 - Protein Ligand Docking<a class="headerlink" href="#stage-5-protein-ligand-docking" title="Permalink to this headline">¶</a></h2>

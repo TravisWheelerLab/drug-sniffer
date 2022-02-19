@@ -33,7 +33,14 @@ is in line with the recommended way to use this software.
 Stage 4 - Similarity Search
 ---------------------------
 
-TODO: Describe stage 4
+Build fingerprints for our denovo molecules, then compare against molecules in
+the database. The fingerprints for the database molecules are pre-generated and
+are referenced with the :code:`molecule_db` parameter. The result of this stage
+is a collection of molecules likely to be similar to the denovo molecules and
+therefore (hopefully) likely to fit the receptor.
+
+This stage consists entirely of custom code but relies on RDKit (specifically
+the Python bindings), version 2021.9.4.
 
 Stage 5 - Protein Ligand Docking
 --------------------------------

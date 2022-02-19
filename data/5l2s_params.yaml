@@ -1,9 +1,12 @@
-pocket_pdb: 5l2s_aligned.pdb
+molecule_db: '${projectDir}/data/small-db'
+tanimoto_cutoff: 0.5
 
-pocket_center_x: 21.971001
-pocket_center_y: 36.053001
-pocket_center_z: -8.927000
+receptor_pdb: '${projectDir}/5l2s_aligned.pdb'
 
-pocket_size_x: 8.0
-pocket_size_y: 16.0
-pocket_size_z: 16.0
+receptor_center_x: 21.971001
+receptor_center_y: 36.053001
+receptor_center_z: -8.927000
+
+receptor_size_x: 8.0
+receptor_size_y: 16.0
+receptor_size_z: 16.0
