@@ -6,10 +6,12 @@ TODO: Write a brief introduction / description
 
 The project documentation can be found at <http://drugsniffer.org>.
 
-## License
-
-TODO
-
 ## Contributing
 
 TODO
+
+## License
+
+Original code and configuration are under the BSD 3-clause license. Third-party
+software is licensed separately.
+
