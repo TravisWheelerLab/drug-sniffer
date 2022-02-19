@@ -58,7 +58,7 @@ COPY deps/${AG_FILE} ${AG_FILE}
 RUN unzip ${AG_FILE} \
     && rm ${AG_FILE} \
     && mv ${AG_NAME} autogrow4
-COPY deps/autogrow.sh autogrow4/
+COPY deps/run.sh autogrow4/
 ENV PATH=${PATH}:/opt/autogrow4
 
 COPY deps/Fragment_MW_up_to_250.smi /opt/autogrow4/

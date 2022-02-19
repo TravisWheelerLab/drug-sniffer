@@ -2,9 +2,6 @@
 
 set -e
 
-# autogrow.sh
-
-echo "** autogrow.sh **"
 docker run -u $(id -u):$(id -g) -v $PWD/test:/data \
     -e NUMBER_OF_PROCESSORS=4 \
     -e RECEPTOR_PATH=3clpro_itasser_h.pdb \
@@ -15,5 +12,5 @@ docker run -u $(id -u):$(id -g) -v $PWD/test:/data \
     -e SIZE_Y=16.0 \
     -e SIZE_Z=16.0 \
     traviswheelerlab/03-denovo \
-    autogrow.sh
+    run.sh
 
