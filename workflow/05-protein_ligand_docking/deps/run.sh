@@ -4,14 +4,13 @@
 # values provided to stage 3.
 #
 # RECEPTOR_PDBQT
+# LIGANDS_SMI
 # CENTER_X
 # CENTER_Y
 # CENTER_Z
 # SIZE_X
 # SIZE_Y
 # SIZE_Z
-#
-# LIGANDS_SMI
 #
 # Optional parameters
 #
