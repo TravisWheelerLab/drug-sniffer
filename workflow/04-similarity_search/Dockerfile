@@ -22,8 +22,9 @@ RUN apt-get update && apt-get -y install \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /opt/fingerprinting
-COPY deps/gen_ecfp4_fingerprint.py /opt/fingerprinting/
-COPY deps/get_neighbor_smiles.pl /opt/fingerprinting/
+
+COPY deps/similarity.py /opt/fingerprinting/
+COPY deps/run.sh /opt/fingerprinting/
 COPY --from=build /opt/neighbors /opt/fingerprinting/
 
 ENV PATH=${PATH}:/opt/fingerprinting
@@ -36,4 +37,3 @@ ENV TANIMOTO_CUTOFF=0.5
 
 VOLUME /data
 WORKDIR /data
-
