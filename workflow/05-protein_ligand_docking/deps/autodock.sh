@@ -12,6 +12,10 @@
 # SIZE_Z
 #
 # LIGANDS_SMI
+#
+# Optional parameters
+#
+# NUMBER_OF_POSES
 
 n=0
 cat "$LIGANDS_SMI" | while read smi
@@ -20,7 +24,8 @@ do
     echo "$smi" > ligand.smi
     obabel -ismi ligand.smi -opdbqt -O ligand.pdbqt --gen3d
     if [[ "$?" -eq 0 ]]; then
-        vina --receptor "$RECEPTOR_PDBQT" --ligand ligand.pdbqt \
+        vina --receptor "$RECEPTOR_PDBQT" \
+            --ligand ligand.pdbqt \
             --center_x $CENTER_X \
             --center_y $CENTER_Y \
             --center_z $CENTER_Z \
@@ -28,7 +33,7 @@ do
             --size_y $SIZE_Y \
             --size_z $SIZE_Z \
             --out docked_${n}.pdbqt \
-            --num_modes 3 \
+            --num_modes "$NUMBER_OF_POSES" \
             --log output.log \
             --exhaustiveness 4
         if [[ "$?" -ne 0 ]]; then

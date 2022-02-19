@@ -26,6 +26,8 @@ ENV PATH=${PATH}:/opt/autodock_vina/bin
 COPY deps/autodock.sh /opt/protein_ligand_docking/
 ENV PATH=${PATH}:/opt/protein_ligand_docking
 
+ENV NUMBER_OF_POSES=4
+
 # ---------------------
 # Runtime configuration
 # ---------------------
