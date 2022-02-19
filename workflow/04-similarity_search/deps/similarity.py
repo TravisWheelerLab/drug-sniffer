@@ -72,9 +72,9 @@ def main(args: List[str]):
         description="determine similarity to a molecule database for a given ligand",
     )
     parser.add_argument(
-        "smi_dir",
-        help="a directory that contains .smi files for each ligand",
-        metavar="SMI_DIR",
+        "ligands_smi",
+        help="a file containing the SMILES strings for each denovo ligand",
+        metavar="SMI",
     )
     parser.add_argument(
         "--tanimoto",
@@ -89,34 +89,33 @@ def main(args: List[str]):
         "-d",
         required=True,
         help="a directory containing a fingerprint database (fingerprints, indexes, splits)",
-        metavar="DB_DIR",
+        metavar="DB",
     )
     options = parser.parse_args(args)
 
-    ligands = load_ligands(options.smi_dir)
-    fingerprint_ligands(ligands)
-    neighbors = find_ligand_neighbors(ligands, options.db_dir, options.tanimoto)
-    db_smis = fetch_neighbors(neighbors, options.db_dir)
+    denovo_ligands = load_ligands(options.ligands_smi)
+    fingerprint_ligands(denovo_ligands)
+    neighbors = find_ligand_neighbors(denovo_ligands, options.db_dir, options.tanimoto)
+    db_ligands = fetch_neighbors(neighbors, options.db_dir)
     
-    print(list(db_smis))
+    for db_ligand in db_ligands:
+        print(f"{db_ligand.smi_str} {db_ligand.db_src} {db_ligand.neighbor.db_index}")
 
 
-def load_ligands(smi_dir: str) -> List[DenovoLigand]:
+def load_ligands(ligands_smi: str) -> List[DenovoLigand]:
     """
-    Load ligands from the .smi files contained in the given directory. Each
-    .smi file may contain any number of SMILES strings.
+    Load denovo ligands from the given .smi file.
 
-    >>> ls = load_ligands("test/")
+    >>> ls = load_ligands("test/denovo.smi")
     >>> ls[0].smi_str
     'C=C[C@](C)(O)CNCc1cn(CC2CC2)nn1\\t(Gen_3_Cross_449571+ZINC001252572940)Gen_10_Mutant_48_356978'
     >>> len(ls)
     150
     """
     ligands = []
-    for smi_path in glob(f"{smi_dir}/*.smi"):
-        with open(smi_path, "r") as smi_file:
-            for smi_str in smi_file:
-                ligands.append(DenovoLigand(smi_str.strip()))
+    with open(ligands_smi, "r") as smi_file:
+        for smi_str in smi_file:
+            ligands.append(DenovoLigand(smi_str.strip()))
     return ligands
 
 
@@ -192,7 +191,7 @@ def find_ligand_neighbors(
         )
 
 
-def fetch_neighbors(neighbors: Iterable[Neighbor], db_dir: str) -> List[str]:
+def fetch_neighbors(neighbors: Iterable[Neighbor], db_dir: str) -> List[DBLigand]:
     """
     Use the given neighbors to look up and return a list of corresponding
     SMILES strings from the database.
