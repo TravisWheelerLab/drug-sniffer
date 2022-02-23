@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+torch = "*"
+numpy = "*"
+
+[dev-packages]
+black = "*"
+pytest = "*"
+ipython = "*"
+
+[requires]
+python_version = "3.9"
