@@ -8,8 +8,8 @@ from subprocess import run
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 from typing import Iterable, List, NamedTuple
 
-from rdkit import Chem
-from rdkit.Chem import AllChem
+from rdkit import Chem # type: ignore
+from rdkit.Chem import AllChem # type: ignore
 
 
 LIGAND_INDEX = 0
@@ -191,7 +191,7 @@ def find_ligand_neighbors(
         )
 
 
-def fetch_neighbors(neighbors: Iterable[Neighbor], db_dir: str) -> List[DBLigand]:
+def fetch_neighbors(neighbors: Iterable[Neighbor], db_dir: str) -> Iterable[DBLigand]:
     """
     Use the given neighbors to look up and return a list of corresponding
     SMILES strings from the database.
