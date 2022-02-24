@@ -65,11 +65,11 @@ WORKDIR /opt
 COPY deps/smina.static activity_prediction/
 COPY deps/allterms activity_prediction/
 
-# score script
+# run script
 
 WORKDIR /opt
 
-COPY deps/score.sh activity_prediction/
+COPY deps/run.sh activity_prediction/
 
 # prediction model
 
