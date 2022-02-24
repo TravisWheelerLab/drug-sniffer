@@ -122,9 +122,9 @@ ligands against; the database format is described alongside the other
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">TANIMOTO_CUTOFF</span></code> - the minimum Tanimoto score for a match between a
 denovo ligand and a molecule in the database, molecules above this score will be
-sent on to stage 5</p></li>
+sent on to stage 5 (default is 0.5)</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">OUTPUT_PATH</span></code> - the directory to which molecule .smi files should be
-written</p></li>
+written (default is <cite>./output</cite>)</p></li>
 </ul>
 <p>This stage consists entirely of custom code but relies on RDKit (specifically
 the Python bindings), version 2021.9.4.</p>
@@ -132,6 +132,24 @@ the Python bindings), version 2021.9.4.</p>
 <section id="stage-5-protein-ligand-docking">
 <h2>Stage 5 - Protein Ligand Docking<a class="headerlink" href="#stage-5-protein-ligand-docking" title="Permalink to this headline">¶</a></h2>
 <p>TODO: Describe stage 5</p>
+<p>Required environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">RECEPTOR_PDBQT</span></code> - path to the receptor (pocket) chosen by the user, in
+PDBQT format</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_X</span></code> - the x-coordinate center of the receptor</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_Y</span></code> - the y-coordinate of the receptor</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_Z</span></code> - the z-coordinate of the receptor</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_X</span></code> - the size of the receptor in the x direction</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_Y</span></code> - the size of the receptor in the y direction</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_Z</span></code> - the size of the receptor in the z direction</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">LIGANDS_SMI</span></code> - a file containing the ligands (molecules) chosen for
+further processing in stage 4</p></li>
+</ul>
+<p>Optional environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">NUMBER_OF_POSES</span></code> - the maximum number of docking poses to attempt
+using Autodock Vina</p></li>
+</ul>
 <p>Dependencies (included in Docker image):</p>
 <ul class="simple">
 <li><p>Autodock Vina</p>
@@ -145,6 +163,18 @@ the Python bindings), version 2021.9.4.</p>
 <section id="stage-6-activity-prediction">
 <h2>Stage 6 - Activity Prediction<a class="headerlink" href="#stage-6-activity-prediction" title="Permalink to this headline">¶</a></h2>
 <p>TODO: Describe stage 6</p>
+<p>Required environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">RECEPTOR_PATH</span></code> - path to the original PDB file containing the protein
+receptor (pocket) chosen manually by the user</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">LIGAND_NAME</span></code> - the name used to identify the ligand</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">DOCKED_PDBQT</span></code> - the docked ligand as a PDBQT file that contains all
+poses computed by Autodock Vina in stage 5</p></li>
+</ul>
+<p>Optional environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">OUTPUT_PATH</span></code> - path to the output file (default is <cite>ligand.score</cite>)</p></li>
+</ul>
 <p>Dependencies (included in Docker image):</p>
 <ul class="simple">
 <li><p>Autodock Vina</p>

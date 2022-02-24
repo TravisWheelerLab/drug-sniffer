@@ -85,9 +85,9 @@ Optional environment variables:
 
 * :code:`TANIMOTO_CUTOFF` - the minimum Tanimoto score for a match between a
   denovo ligand and a molecule in the database, molecules above this score will be
-  sent on to stage 5
+  sent on to stage 5 (default is 0.5)
 * :code:`OUTPUT_PATH` - the directory to which molecule .smi files should be
-  written
+  written (default is `./output`)
 
 This stage consists entirely of custom code but relies on RDKit (specifically
 the Python bindings), version 2021.9.4.
@@ -96,6 +96,24 @@ Stage 5 - Protein Ligand Docking
 --------------------------------
 
 TODO: Describe stage 5
+
+Required environment variables:
+
+* :code:`RECEPTOR_PDBQT` - path to the receptor (pocket) chosen by the user, in
+  PDBQT format
+* :code:`CENTER_X` - the x-coordinate center of the receptor
+* :code:`CENTER_Y` - the y-coordinate of the receptor
+* :code:`CENTER_Z` - the z-coordinate of the receptor
+* :code:`SIZE_X` - the size of the receptor in the x direction
+* :code:`SIZE_Y` - the size of the receptor in the y direction
+* :code:`SIZE_Z` - the size of the receptor in the z direction
+* :code:`LIGANDS_SMI` - a file containing the ligands (molecules) chosen for
+  further processing in stage 4
+
+Optional environment variables:
+
+* :code:`NUMBER_OF_POSES` - the maximum number of docking poses to attempt
+  using Autodock Vina
 
 Dependencies (included in Docker image):
 
@@ -108,6 +126,18 @@ Stage 6 - Activity Prediction
 -----------------------------
 
 TODO: Describe stage 6
+
+Required environment variables:
+
+* :code:`RECEPTOR_PATH` - path to the original PDB file containing the protein
+  receptor (pocket) chosen manually by the user
+* :code:`LIGAND_NAME` - the name used to identify the ligand
+* :code:`DOCKED_PDBQT` - the docked ligand as a PDBQT file that contains all
+  poses computed by Autodock Vina in stage 5
+
+Optional environment variables:
+
+* :code:`OUTPUT_PATH` - path to the output file (default is `ligand.score`)
 
 Dependencies (included in Docker image):
 
