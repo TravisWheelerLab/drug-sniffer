@@ -51,20 +51,54 @@ directory corresponding to that stage. To run the container, for manual
 debugging, use <cite>run-image.sh</cite>. To run the automated smoke tests, use
 <cite>test-image.sh</cite>. The tests rely on data files stored in the <cite>test/</cite> directory
 and may write additional outputs to that same location when they run.</p>
+<section id="running-a-stage">
+<h2>Running a Stage<a class="headerlink" href="#running-a-stage" title="Permalink to this headline">¶</a></h2>
+<p>Within each Docker image is a script, included in the <code class="code docutils literal notranslate"><span class="pre">PATH</span></code>, called
+<cite>run.sh</cite>. This script serves as the API for the container. To run a stage, the
+user sets certain environment variables and then executes the script. All stages
+work this way. Required and optional environment variables are described along
+with each stage below.</p>
+</section>
 <section id="stage-3-denovo-molecule-design">
 <h2>Stage 3 - Denovo Molecule Design<a class="headerlink" href="#stage-3-denovo-molecule-design" title="Permalink to this headline">¶</a></h2>
 <p>TODO: Describe stage 3</p>
-<p>Dependencies (included in Docker image):</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Autogrow4
-* Website: &lt;<a class="reference external" href="https://durrantlab.pitt.edu/autogrow4/">https://durrantlab.pitt.edu/autogrow4/</a>&gt;
-* Version: 4.0.3</p></li>
-<li><p>Autodock Vina
-* Website: &lt;<a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a>&gt;
-* Version: 1.1.2</p></li>
+<p>Required environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">RECEPTOR_PATH</span></code> - path to the original PDB file containing the protein
+receptor (pocket) chosen manually by the user</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_X</span></code> - the x-coordinate center of the receptor</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_Y</span></code> - the y-coordinate of the receptor</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_Z</span></code> - the z-coordinate of the receptor</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_X</span></code> - the size of the receptor in the x direction</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_Y</span></code> - the size of the receptor in the y direction</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_Z</span></code> - the size of the receptor in the z direction</p></li>
 </ul>
-</div></blockquote>
+<p>Optional environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">SOURCE_COMPOUND_FILE</span></code> - the list of compounds used to seed Autogrow4
+(default is <cite>Fragment_MW_up_to_250.smi</cite>, a custom version of the files found
+in Autogrow4)</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">DOCKING_EXHAUSTIVENESS</span></code> - Autogrow4 exhaustiveness (default is 1)</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">NUMBER_OF_PROCESSORS</span></code> - the number of CPUs to use for Autogrow4
+(default is 4)</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">NUMBER_OF_GENERATIONS</span></code> - the number of generations to use with
+Autogrow4 (default is 10)</p></li>
+</ul>
+<p>Dependencies (included in Docker image):</p>
+<ul class="simple">
+<li><p>Autogrow4</p>
+<ul>
+<li><p>Website: &lt;<a class="reference external" href="https://durrantlab.pitt.edu/autogrow4/">https://durrantlab.pitt.edu/autogrow4/</a>&gt;</p></li>
+<li><p>Version: 4.0.3</p></li>
+</ul>
+</li>
+<li><p>Autodock Vina</p>
+<ul>
+<li><p>Website: &lt;<a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a>&gt;</p></li>
+<li><p>Version: 1.1.2</p></li>
+</ul>
+</li>
+</ul>
 <p>The Docker container for this stage also uses Miniconda 4.10.3 running Python
 3.8 to supply a Python interpreter and various dependencies for Autogrow4, which
 is in line with the recommended way to use this software.</p>
@@ -83,45 +117,57 @@ the Python bindings), version 2021.9.4.</p>
 <h2>Stage 5 - Protein Ligand Docking<a class="headerlink" href="#stage-5-protein-ligand-docking" title="Permalink to this headline">¶</a></h2>
 <p>TODO: Describe stage 5</p>
 <p>Dependencies (included in Docker image):</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Autodock Vina
-* Website: &lt;<a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a>&gt;
-* Version: 1.1.2</p></li>
+<ul class="simple">
+<li><p>Autodock Vina</p>
+<ul>
+<li><p>Website: &lt;<a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a>&gt;</p></li>
+<li><p>Version: 1.1.2</p></li>
 </ul>
-</div></blockquote>
+</li>
+</ul>
 </section>
 <section id="stage-6-activity-prediction">
 <h2>Stage 6 - Activity Prediction<a class="headerlink" href="#stage-6-activity-prediction" title="Permalink to this headline">¶</a></h2>
 <p>TODO: Describe stage 6</p>
 <p>Dependencies (included in Docker image):</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Autodock Vina
-* Website: &lt;<a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a>&gt;
-* Version: 1.1.2</p></li>
-<li><p>DLIGAND2
-* Source: &lt;<a class="reference external" href="https://github.com/sysu-yanglab/DLIGAND2/">https://github.com/sysu-yanglab/DLIGAND2/</a>&gt;
-* Commit: 03b0347d450b1a70f4728d1d170626100b585bb4</p></li>
-<li><p>Smina
-* Source: &lt;<a class="reference external" href="https://github.com/mwojcikowski/smina">https://github.com/mwojcikowski/smina</a>&gt;</p></li>
-<li><p>Open Babel
-* Website: &lt;<a class="reference external" href="http://openbabel.org/wiki/Main_Page">http://openbabel.org/wiki/Main_Page</a>&gt;
-* Installed from Debian repositories</p></li>
+<ul class="simple">
+<li><p>Autodock Vina</p>
+<ul>
+<li><p>Website: &lt;<a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a>&gt;</p></li>
+<li><p>Version: 1.1.2</p></li>
 </ul>
-</div></blockquote>
+</li>
+<li><p>DLIGAND2</p>
+<ul>
+<li><p>Source: &lt;<a class="reference external" href="https://github.com/sysu-yanglab/DLIGAND2/">https://github.com/sysu-yanglab/DLIGAND2/</a>&gt;</p></li>
+<li><p>Commit: 03b0347d450b1a70f4728d1d170626100b585bb4</p></li>
+</ul>
+</li>
+<li><p>Smina</p>
+<ul>
+<li><p>Source: &lt;<a class="reference external" href="https://github.com/mwojcikowski/smina">https://github.com/mwojcikowski/smina</a>&gt;</p></li>
+</ul>
+</li>
+<li><p>Open Babel</p>
+<ul>
+<li><p>Website: &lt;<a class="reference external" href="http://openbabel.org/wiki/Main_Page">http://openbabel.org/wiki/Main_Page</a>&gt;</p></li>
+<li><p>Installed from Debian repositories</p></li>
+</ul>
+</li>
+</ul>
 </section>
 <section id="stage-7-admet-filtering-optional">
 <h2>Stage 7 - ADMET Filtering (optional)<a class="headerlink" href="#stage-7-admet-filtering-optional" title="Permalink to this headline">¶</a></h2>
 <p>TODO: Describe stage 7</p>
 <p>Dependencies (included in Docker image):</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>FPADMET
-* Source: &lt;<a class="reference external" href="https://gitlab.com/vishsoft/fpadmet">https://gitlab.com/vishsoft/fpadmet</a>&gt;
-* Commit: d61d63e3d3c37e887a5d4b1959260d9f1b41f77a</p></li>
+<ul class="simple">
+<li><p>FPADMET</p>
+<ul>
+<li><p>Source: &lt;<a class="reference external" href="https://gitlab.com/vishsoft/fpadmet">https://gitlab.com/vishsoft/fpadmet</a>&gt;</p></li>
+<li><p>Commit: d61d63e3d3c37e887a5d4b1959260d9f1b41f77a</p></li>
 </ul>
-</div></blockquote>
+</li>
+</ul>
 </section>
 </section>
 
@@ -135,6 +181,7 @@ the Python bindings), version 2021.9.4.</p>
 <h3><a href="index.html">Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Stages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-a-stage">Running a Stage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-3-denovo-molecule-design">Stage 3 - Denovo Molecule Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-4-similarity-search">Stage 4 - Similarity Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-5-protein-ligand-docking">Stage 5 - Protein Ligand Docking</a></li>
