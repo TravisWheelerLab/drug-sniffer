@@ -43,6 +43,23 @@
   <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
 <p>TODO</p>
+<section id="docker-images">
+<h2>Docker Images<a class="headerlink" href="#docker-images" title="Permalink to this headline">¶</a></h2>
+<p>Each stage in the Drug Sniffer pipeline has its own Docker image. The images can
+be built all at once with the <cite>build-images.sh</cite> script found in the <cite>tool/</cite>
+directory, which can be run from the repository root. This script accepts three
+parameters as environment variables, listed below. These allow the images to be
+built and pushed to registries other than the default locations.</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">IMAGE_REGISTRY</span></code> - the registry that will host the image, this doesn’t
+matter if the image will only be used locally</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">IMAGE_NAMESPACE</span></code> - the owner of the image, this is usually a project or
+organization name and, again, doesn’t matter for images that will never be
+pushed to a registry</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">IMAGE_VERSION</span></code> - the version identifier to be applied to the image</p></li>
+</ul>
+<p>All of the variables above have usable defaults.</p>
+</section>
 </section>
 
 
@@ -55,7 +72,10 @@
 <h3><a href="index.html">Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="stages.html">Stages</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#docker-images">Docker Images</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
 </ul>
 

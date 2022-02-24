@@ -9,10 +9,11 @@ IMAGE_NAMESPACE=${IMAGE_NAMESPACE:-traviswheelerlab}
 IMAGE_VERSION=${IMAGE_VERSION:-latest}
 
 for stage in workflow/0*; do
+    tag="$IMAGE_REGISTRY/$IMAGE_NAMESPACE/$stage:$IMAGE_VERSION"
     echo "----------------------------------------"
-    echo "building $IMAGE_REGISTRY/$IMAGE_NAMESPACE/$stage:$IMAGE_VERSION"
+    echo "building $tag"
     echo "----------------------------------------"
     pushd "$stage"
-    ./build-image.sh
+    docker build -t "$tag" .
     popd
 done
