@@ -8,8 +8,8 @@ from subprocess import run
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 from typing import Iterable, List, NamedTuple
 
-from rdkit import Chem # type: ignore
-from rdkit.Chem import AllChem # type: ignore
+from rdkit import Chem  # type: ignore
+from rdkit.Chem import AllChem  # type: ignore
 
 
 LIGAND_INDEX = 0
@@ -48,7 +48,7 @@ class Neighbor(NamedTuple):
         name = ".".join(name_pieces[:-1])
 
         return f"{db_path}/indexes/{name}.index"
-    
+
     @property
     def db_smi_path(self) -> str:
         pieces = self.db_fpt_path.split(os.sep)
@@ -91,15 +91,27 @@ def main(args: List[str]):
         help="a directory containing a fingerprint database (fingerprints, indexes, splits)",
         metavar="DB",
     )
+    parser.add_argument(
+        "--out-dir",
+        "-o",
+        default=".",
+        help="directory to write .smi output files to",
+        metavar="OUT",
+    )
     options = parser.parse_args(args)
 
     denovo_ligands = load_ligands(options.ligands_smi)
     fingerprint_ligands(denovo_ligands)
     neighbors = find_ligand_neighbors(denovo_ligands, options.db_dir, options.tanimoto)
     db_ligands = fetch_neighbors(neighbors, options.db_dir)
-    
+
+    index = 0
     for db_ligand in db_ligands:
-        print(f"{db_ligand.smi_str} {db_ligand.db_src} {db_ligand.neighbor.db_index}")
+        with open(f"{options.out_dir}/{index}.smi", "w") as out_file:
+            out_file.write(
+                f"{db_ligand.smi_str} {db_ligand.db_src} {db_ligand.neighbor.db_index}"
+            )
+        index += 1
 
 
 def load_ligands(ligands_smi: str) -> List[DenovoLigand]:
@@ -143,7 +155,7 @@ def fingerprint_ligands(ligands: Iterable[DenovoLigand]) -> None:
         bit_vec = AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=1024)
         bit_str = bit_vec.ToBitString()
         byte_str = bitstring_to_bytes(bit_str)
-        
+
         ligand.fpt = byte_str
 
 
@@ -211,7 +223,7 @@ def fetch_neighbors(neighbors: Iterable[Neighbor], db_dir: str) -> Iterable[DBLi
         (smi_str, db_src, _db_id) = smi_line.split()
 
         yield DBLigand(smi_str, db_src, neighbor)
-    
+
         smi_file.close()
         index_file.close()
 

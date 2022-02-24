@@ -10,9 +10,15 @@ set -e
 # Optional parameters:
 #
 # TANIMOTO_CUTOFF
+# OUTPUT_PATH
 #
+
+OUTPUT_PATH=${OUTPUT_PATH:-output}
+
+mkdir -p "$OUTPUT_PATH"
 
 similarity.py \
     -t "$TANIMOTO_CUTOFF" \
     -d "$MOLECULE_DB" \
-    "$DENOVO_LIGANDS_SMI" > db_ligands.smi
+    -o "$OUTPUT_PATH/" \
+    "$DENOVO_LIGANDS_SMI"
