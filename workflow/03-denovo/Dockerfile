@@ -15,7 +15,8 @@ RUN apt-get update && apt-get -y install \
 WORKDIR /opt
 
 ADD https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh miniconda.sh
-RUN ./miniconda.sh -b -p /opt/miniconda3 \
+RUN chmod +x miniconda.sh \
+    && ./miniconda.sh -b -p /opt/miniconda3 \
     && rm miniconda.sh
 ENV PATH=/opt/miniconda3/bin/:${PATH}
 
