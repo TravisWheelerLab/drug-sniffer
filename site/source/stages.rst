@@ -73,6 +73,22 @@ are referenced with the :code:`molecule_db` parameter. The result of this stage
 is a collection of molecules likely to be similar to the denovo molecules and
 therefore (hopefully) likely to fit the receptor.
 
+Required environment variables:
+
+* :code:`DENOVO_LIGANDS_SMI` - a .smi file containing the ligands created in
+  stage 3
+* :code:`MOLECULE_DB` - the path to a molecule database to match denovo
+  ligands against; the database format is described alongside the other
+  :ref:`parameters <molecule-db-parameter>`
+
+Optional environment variables:
+
+* :code:`TANIMOTO_CUTOFF` - the minimum Tanimoto score for a match between a
+  denovo ligand and a molecule in the database, molecules above this score will be
+  sent on to stage 5
+* :code:`OUTPUT_PATH` - the directory to which molecule .smi files should be
+  written
+
 This stage consists entirely of custom code but relies on RDKit (specifically
 the Python bindings), version 2021.9.4.
 

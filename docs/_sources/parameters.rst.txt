@@ -48,6 +48,8 @@ receptor_size_z
 Search and Similarity
 ---------------------
 
+.. _molecule-db-parameter:
+
 molecule_db
 ^^^^^^^^^^^
 

@@ -110,6 +110,22 @@ the database. The fingerprints for the database molecules are pre-generated and
 are referenced with the <code class="code docutils literal notranslate"><span class="pre">molecule_db</span></code> parameter. The result of this stage
 is a collection of molecules likely to be similar to the denovo molecules and
 therefore (hopefully) likely to fit the receptor.</p>
+<p>Required environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">DENOVO_LIGANDS_SMI</span></code> - a .smi file containing the ligands created in
+stage 3</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">MOLECULE_DB</span></code> - the path to a molecule database to match denovo
+ligands against; the database format is described alongside the other
+<a class="reference internal" href="parameters.html#molecule-db-parameter"><span class="std std-ref">parameters</span></a></p></li>
+</ul>
+<p>Optional environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">TANIMOTO_CUTOFF</span></code> - the minimum Tanimoto score for a match between a
+denovo ligand and a molecule in the database, molecules above this score will be
+sent on to stage 5</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">OUTPUT_PATH</span></code> - the directory to which molecule .smi files should be
+written</p></li>
+</ul>
 <p>This stage consists entirely of custom code but relies on RDKit (specifically
 the Python bindings), version 2021.9.4.</p>
 </section>
