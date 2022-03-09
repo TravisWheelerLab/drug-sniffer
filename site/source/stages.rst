@@ -165,6 +165,15 @@ Stage 7 - ADMET Filtering (optional)
 
 TODO: Describe stage 7
 
+Required environment variables:
+
+* :code:`LIGAND_SMI` - path to the ligand under evaluation
+
+Optional environment variables:
+
+* :code:`ADMET_CHECKS` - space-separated list of ADMET checks for FPADMET,
+  values in the range [1, 56] (default is empty)
+
 Dependencies (included in Docker image):
 
 * FPADMET
