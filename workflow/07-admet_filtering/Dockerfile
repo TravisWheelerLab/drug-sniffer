@@ -22,7 +22,7 @@ RUN git clone https://gitlab.com/vishsoft/fpadmet.git \
     && chmod 777 RESULTS \
     && git checkout d61d63e3d3c37e887a5d4b1959260d9f1b41f77a
 
-WORKDIR fpadmet
+WORKDIR /opt/fpadmet
 RUN bash installpackages.sh ranger \
     && bash installpackages.sh caret \
     && bash installpackages.sh quantregForest \
@@ -30,6 +30,15 @@ RUN bash installpackages.sh ranger \
     && chmod +x runadmet.sh
 
 ENV PATH=${PATH}:/opt/fpadmet
+
+WORKDIR /opt
+RUN mkdir admet_filtering
+
+WORKDIR /opt/admet_filtering
+COPY deps/JLogP.jar ./
+COPY deps/run.sh ./
+
+ENV PATH=${PATH}:/opt/admet_filtering
 
 VOLUME /data
 WORKDIR /data

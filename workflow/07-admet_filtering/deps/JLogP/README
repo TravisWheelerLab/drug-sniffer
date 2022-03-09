@@ -1,0 +1,7 @@
+# To compile the program
+cd build
+bash build.sh
+
+# To run the program
+java -jar JLogP.jar input.smi output.txt
+ 
