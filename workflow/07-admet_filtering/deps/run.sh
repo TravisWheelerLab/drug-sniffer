@@ -14,7 +14,6 @@ set -e
 
 OUTPUT_FILE=${OUTPUT_FILE:-output.txt}
 
-# TODO: Headers should probably be a separate loop?
 rm -f headers.txt
 for check in $ADMET_CHECKS; do
     echo -n "${check}_predicted,${check}_confidence,${check}_credibility," >> headers.txt
@@ -24,15 +23,18 @@ echo "jlogp" >> headers.txt
 rm -f data.txt
 cat "$LIGANDS_SMI" | while read smi
 do
-    echo "$smi" > smi.txt
+    echo "$smi" > ligand.smi
     for check in $ADMET_CHECKS; do
-        runadmet.sh -f smi.txt -p "$check" -a
+        runadmet.sh -f ligand.smi -p "$check" -a
         awk 'NR!=1 {printf "%s,%s,%s,",2,3,4}' /opt/fpadmet/RESULTS/predicted.txt >> data.txt
     done
 
     rm -f jlogp.txt
-    java -jar /opt/JLogP/build/JLogP.jar smi.txt jlogp.txt
+    java -jar /opt/JLogP/build/JLogP.jar ligand.smi jlogp.txt
     awk '{print $2}' jlogp.txt >> data.txt
 done
 
 cat headers.txt data.txt > "$OUTPUT_FILE"
+
+rm -f data.txt headers.txt ligand.smi jlogp.txt
+
