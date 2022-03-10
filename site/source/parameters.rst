@@ -18,32 +18,32 @@ Description of the protein receptor, in PDB format.
 receptor_center_x
 ^^^^^^^^^^^^^^^^^
 
-
+X coordinate of the pocket center
 
 receptor_center_y
 ^^^^^^^^^^^^^^^^^
 
-
+Y coordinate of the pocket center
 
 receptor_center_z
 ^^^^^^^^^^^^^^^^^
 
-
+Z coordinate of the pocket center
 
 receptor_size_x
 ^^^^^^^^^^^^^^^
 
-
+size in the X dimension (Angstroms)
 
 receptor_size_y
 ^^^^^^^^^^^^^^^
 
-
+size in the Y dimension (Angstroms)
 
 receptor_size_z
 ^^^^^^^^^^^^^^^
 
-
+size in the Z dimension (Angstroms)
 
 Search and Similarity
 ---------------------
