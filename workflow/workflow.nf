@@ -33,12 +33,12 @@ process denovo {
     """
     NUMBER_OF_PROCESSORS=4 \
     RECEPTOR_PATH="${receptor_pdb}" \
-    CENTER_X="${receptor_center_x}" \
-    CENTER_Y="${receptor_center_y}" \
-    CENTER_Z="${receptor_center_z}" \
-    SIZE_X="${receptor_size_x}" \
-    SIZE_Y="${receptor_size_y}" \
-    SIZE_Z="${receptor_size_z}" \
+    CENTER_X="${center_x}" \
+    CENTER_Y="${center_y}" \
+    CENTER_Z="${center_z}" \
+    SIZE_X="${size_x}" \
+    SIZE_Y="${size_y}" \
+    SIZE_Z="${size_z}" \
     run.sh
     """
 }
