@@ -122,13 +122,15 @@ process activity_prediction {
 
 process admet_filtering {
     input:
-    path ligand_score from ligand_score
+    path db_ligands_smi from db_ligands_smi
 
     output:
-    path "ligand.score.admet" into ligand_score_admet
+    path "output.txt" into admet_output
 
     """
-    cp ligand.score ligand.score.admet
+    LIGAND_SMIS=${db_ligands_smi} \
+    ADMET_CHECKS=${params.admet_checks} \
+    run.sh
     """
 }
 

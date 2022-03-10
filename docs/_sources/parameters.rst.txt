@@ -59,3 +59,9 @@ tanimoto_cutoff
 ^^^^^^^^^^^^^^^
 
 The minimum Tanimoto coefficient to consider two molecules a match.
+
+admet_checks
+^^^^^^^^^^^^
+
+A space-separated list of ADMET checks to perform, see the FPADMET documentation
+for a list of available checks.
