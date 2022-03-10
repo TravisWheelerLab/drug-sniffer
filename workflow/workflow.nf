@@ -21,9 +21,9 @@ process denovo {
     val center_y from params.receptor_center_y
     val center_z from params.receptor_center_z
 
-    val size_x from params.box_size_x
-    val size_y from params.box_size_y
-    val size_z from params.box_size_z
+    val size_x from params.receptor_size_x
+    val size_y from params.receptor_size_y
+    val size_z from params.receptor_size_z
 
     output:
     path "denovo.smi" into denovo_ligands_smi
@@ -33,12 +33,12 @@ process denovo {
     """
     NUMBER_OF_PROCESSORS=4 \
     RECEPTOR_PATH="${receptor_pdb}" \
-    CENTER_X="${center_x}" \
-    CENTER_Y="${center_y}" \
-    CENTER_Z="${center_z}" \
-    SIZE_X="${size_x}" \
-    SIZE_Y="${size_y}" \
-    SIZE_Z="${size_z}" \
+    CENTER_X="${receptor_center_x}" \
+    CENTER_Y="${receptor_center_y}" \
+    CENTER_Z="${receptor_center_z}" \
+    SIZE_X="${receptor_size_x}" \
+    SIZE_Y="${receptor_size_y}" \
+    SIZE_Z="${receptor_size_z}" \
     run.sh
     """
 }
@@ -72,14 +72,12 @@ process protein_ligand_docking {
     input:
     path receptor_pdb from params.receptor_pdb
     path db_ligands_smi from db_ligands_smi
-    val center_x from params.center_x
-    val center_y from params.center_y
-    val center_z from params.center_z
-    val size_x from params.size_x
-    val size_y from params.size_y
-    val size_z from params.size_z
-    val num_modes from params.autodock_vina_num_modes
-    val exhaustiveness from params.autodock_vina_exhaustiveness
+    val center_x from params.receptor_center_x
+    val center_y from params.receptor_center_y
+    val center_z from params.receptor_center_z
+    val size_x from params.receptor_size_x
+    val size_y from params.receptor_size_y
+    val size_z from params.receptor_size_z
 
     output:
     path "docked_*.pdbqt" into docked_pdbqt
@@ -89,12 +87,12 @@ process protein_ligand_docking {
     """
     RECEPTOR_PDBQT="${params.receptor_pdb}" \
     LIGANDS_SMI="${db_ligands_smi}" \
-    CENTER_X="${params.center_x}" \
-    CENTER_Y="${params.center_y}" \
-    CENTER_Z="${params.center_z}" \
-    SIZE_X="${params.size_x}" \
-    SIZE_Y="${params.size_y}" \
-    SIZE_Z="${params.size_z}" \
+    CENTER_X="${params.receptor_center_x}" \
+    CENTER_Y="${params.receptor_center_y}" \
+    CENTER_Z="${params.receptor_center_z}" \
+    SIZE_X="${params.receptor_size_x}" \
+    SIZE_Y="${params.receptor_size_y}" \
+    SIZE_Z="${params.receptor_size_z}" \
     run.sh
     """
 }
