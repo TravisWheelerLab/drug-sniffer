@@ -17,7 +17,9 @@ GitHub Pages.
 
 ## Contributing
 
-TODO
+Contributions are welcome. Fork this repository, modify the contents, and then
+create a pull request. Someone will look over it and provide feedback, then
+merge it when it is ready.
 
 ## License
 
