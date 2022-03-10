@@ -61,17 +61,20 @@ with each stage below.</p>
 </section>
 <section id="stage-3-denovo-molecule-design">
 <h2>Stage 3 - Denovo Molecule Design<a class="headerlink" href="#stage-3-denovo-molecule-design" title="Permalink to this headline">¶</a></h2>
-<p>TODO: Describe stage 3</p>
+<p>One option for identifying leads is to dock a virtual library of pre-enumerated compounds. Alternatively, one may evolve drug-like molecules using a genetic algorithm. In DrugSniffer, we make use of AutoGrow4, an open-source program that uses an evolutionary algorithm to generate novel leads from a set of chemically diverse molecular fragments. The de novo process makes use of in silico chemical reactions to generate new compounds, and the population of compounds is iteratively refined over a number of cycles. In order to remove compounds with undesirable physical and chemical properties, AutoGrow4 makes use of molecular filters such as PAINS and Lipinski rules. The molecules from the last three generations are set up as seeds to identify similar molecules in massive libraries.</p>
 <p>Required environment variables:</p>
 <ul class="simple">
-<li><p><code class="code docutils literal notranslate"><span class="pre">RECEPTOR_PATH</span></code> - path to the original PDB file containing the protein
-receptor (pocket) chosen manually by the user</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_X</span></code> - the x-coordinate center of the receptor</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_Y</span></code> - the y-coordinate of the receptor</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_Z</span></code> - the z-coordinate of the receptor</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_X</span></code> - the size of the receptor in the x direction</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_Y</span></code> - the size of the receptor in the y direction</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_Z</span></code> - the size of the receptor in the z direction</p></li>
+<li><dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">RECEPTOR_PATH</span></code> - path to the original PDB file containing the protein</dt><dd><p>pocket chosen manually by the user</p>
+</dd>
+</dl>
+</li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_X</span></code> - the x-coordinate center of the pocket</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_Y</span></code> - the y-coordinate of the pocket</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">CENTER_Z</span></code> - the z-coordinate of the pocket</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_X</span></code> - the size of the pocket in the x direction</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_Y</span></code> - the size of the pocket in the y direction</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">SIZE_Z</span></code> - the size of the pocket in the z direction</p></li>
 </ul>
 <p>Optional environment variables:</p>
 <ul class="simple">
@@ -105,11 +108,7 @@ is in line with the recommended way to use this software.</p>
 </section>
 <section id="stage-4-similarity-search">
 <h2>Stage 4 - Similarity Search<a class="headerlink" href="#stage-4-similarity-search" title="Permalink to this headline">¶</a></h2>
-<p>Build fingerprints for our denovo molecules, then compare against molecules in
-the database. The fingerprints for the database molecules are pre-generated and
-are referenced with the <code class="code docutils literal notranslate"><span class="pre">molecule_db</span></code> parameter. The result of this stage
-is a collection of molecules likely to be similar to the denovo molecules and
-therefore (hopefully) likely to fit the receptor.</p>
+<p>In order to expand the candidate pool, the denovo molecules are used as seeds to identify other similar structures in larger databases. After building 1024-bit ECFP4 fingerprints for the denovo molecules, they are compared against molecules in the database. The fingerprints for the database molecules are pre-generated and are referenced with the <code class="code docutils literal notranslate"><span class="pre">molecule_db</span></code> parameter. The result of this stage is a collection of molecules likely to be similar to the denovo molecules and therefore (hopefully) likely to fit the receptor.</p>
 <p>Required environment variables:</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">DENOVO_LIGANDS_SMI</span></code> - a .smi file containing the ligands created in
@@ -131,7 +130,7 @@ the Python bindings), version 2021.9.4.</p>
 </section>
 <section id="stage-5-protein-ligand-docking">
 <h2>Stage 5 - Protein Ligand Docking<a class="headerlink" href="#stage-5-protein-ligand-docking" title="Permalink to this headline">¶</a></h2>
-<p>TODO: Describe stage 5</p>
+<p>For the seed-neighbor molecules identified by the similarity search, optimized structures (lowest energy conformation generated using OpenBabel) of neighbors are docked into their respective targets using AutoDock Vina. The number of docking poses produced and the exhaustiveness parameter for the search for each ligand are parameterized by the user; the default values are 9 and 4, respectively.</p>
 <p>Required environment variables:</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">RECEPTOR_PDBQT</span></code> - path to the receptor (pocket) chosen by the user, in
@@ -162,7 +161,7 @@ using Autodock Vina</p></li>
 </section>
 <section id="stage-6-activity-prediction">
 <h2>Stage 6 - Activity Prediction<a class="headerlink" href="#stage-6-activity-prediction" title="Permalink to this headline">¶</a></h2>
-<p>TODO: Describe stage 6</p>
+<p>The docking score produced by AutoDock Vina is only a loose estimate of the actual binding affinity. DrugSniffer adds 3 post hoc re-scoring methods (1) the Autodock Vina score (2) the SMINA score (3) <strong>dock2bind</strong> (the default) which is a neural network re-scoring strategy. The model is trained on ligand-protein complexes taken from the LIT-PCBA and DUD-E. For each docked pose, 16 pose descriptors calculated by SMINA, along with the DFIRE estimate of protein–ligand potential are used as input to the model. <strong>dock2bind</strong> produces a value between 0 and 1 and can be thought of as the model’s confidence that the molecule binds to the pocket, constrained by the specific pose.</p>
 <p>Required environment variables:</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">RECEPTOR_PATH</span></code> - path to the original PDB file containing the protein
@@ -204,7 +203,16 @@ poses computed by Autodock Vina in stage 5</p></li>
 </section>
 <section id="stage-7-admet-filtering-optional">
 <h2>Stage 7 - ADMET Filtering (optional)<a class="headerlink" href="#stage-7-admet-filtering-optional" title="Permalink to this headline">¶</a></h2>
-<p>TODO: Describe stage 7</p>
+<p>The absorption, distribution, metabolism, excretion, and toxicity (ADMET) of drugs plays a key role in determining which among the potential candidate structures are to be prioritized. The ADMET filtering here is based on molecular fingerprint-based predictive models. While a majority of the models are binary classification models, for some endpoints such the metabolic intrinsic clearance, acute oral toxicity in rats, plasma protein binding and elimination half-life, multiclass models are proposed. For a complete list of the models employed see &lt;<a class="reference external" href="https://doi.org/10.1186/s13321-021-00557-5">https://doi.org/10.1186/s13321-021-00557-5</a>&gt; For classification models, two additional values are reported: a confidence (how certain the model is that the prediction is a singleton) and a credibility. A confidence value of 0.95 suggests that the classifier is quite certain that the prediction is likely to be a single label. A relatively low value of credibility suggests that the compounds are not sufficiently represented in the training set and that the user needs to treat the prediction with caution.</p>
+<p>Required environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">LIGAND_SMI</span></code> - path to the ligand under evaluation</p></li>
+</ul>
+<p>Optional environment variables:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">ADMET_CHECKS</span></code> - space-separated list of ADMET checks for FPADMET,
+values in the range [1, 56] (default is empty)</p></li>
+</ul>
 <p>Dependencies (included in Docker image):</p>
 <ul class="simple">
 <li><p>FPADMET</p>

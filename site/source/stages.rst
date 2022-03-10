@@ -24,18 +24,18 @@ with each stage below.
 Stage 3 - Denovo Molecule Design
 --------------------------------
 
-TODO: Describe stage 3
+One option for identifying leads is to dock a virtual library of pre-enumerated compounds. Alternatively, one may evolve drug-like molecules using a genetic algorithm. In DrugSniffer, we make use of AutoGrow4, an open-source program that uses an evolutionary algorithm to generate novel leads from a set of chemically diverse molecular fragments. The de novo process makes use of in silico chemical reactions to generate new compounds, and the population of compounds is iteratively refined over a number of cycles. In order to remove compounds with undesirable physical and chemical properties, AutoGrow4 makes use of molecular filters such as PAINS and Lipinski rules. The molecules from the last three generations are set up as seeds to identify similar molecules in massive libraries.  
 
 Required environment variables:
 
 * :code:`RECEPTOR_PATH` - path to the original PDB file containing the protein
-  receptor (pocket) chosen manually by the user
-* :code:`CENTER_X` - the x-coordinate center of the receptor
-* :code:`CENTER_Y` - the y-coordinate of the receptor
-* :code:`CENTER_Z` - the z-coordinate of the receptor
-* :code:`SIZE_X` - the size of the receptor in the x direction
-* :code:`SIZE_Y` - the size of the receptor in the y direction
-* :code:`SIZE_Z` - the size of the receptor in the z direction
+   pocket chosen manually by the user
+* :code:`CENTER_X` - the x-coordinate center of the pocket
+* :code:`CENTER_Y` - the y-coordinate of the pocket
+* :code:`CENTER_Z` - the z-coordinate of the pocket
+* :code:`SIZE_X` - the size of the pocket in the x direction
+* :code:`SIZE_Y` - the size of the pocket in the y direction
+* :code:`SIZE_Z` - the size of the pocket in the z direction
 
 Optional environment variables:
 
@@ -67,11 +67,7 @@ is in line with the recommended way to use this software.
 Stage 4 - Similarity Search
 ---------------------------
 
-Build fingerprints for our denovo molecules, then compare against molecules in
-the database. The fingerprints for the database molecules are pre-generated and
-are referenced with the :code:`molecule_db` parameter. The result of this stage
-is a collection of molecules likely to be similar to the denovo molecules and
-therefore (hopefully) likely to fit the receptor.
+In order to expand the candidate pool, the denovo molecules are used as seeds to identify other similar structures in larger databases. After building 1024-bit ECFP4 fingerprints for the denovo molecules, they are compared against molecules in the database. The fingerprints for the database molecules are pre-generated and are referenced with the :code:`molecule_db` parameter. The result of this stage is a collection of molecules likely to be similar to the denovo molecules and therefore (hopefully) likely to fit the receptor.
 
 Required environment variables:
 
@@ -95,7 +91,7 @@ the Python bindings), version 2021.9.4.
 Stage 5 - Protein Ligand Docking
 --------------------------------
 
-TODO: Describe stage 5
+For the seed-neighbor molecules identified by the similarity search, optimized structures (lowest energy conformation generated using OpenBabel) of neighbors are docked into their respective targets using AutoDock Vina. The number of docking poses produced and the exhaustiveness parameter for the search for each ligand are parameterized by the user; the default values are 9 and 4, respectively.
 
 Required environment variables:
 
@@ -125,7 +121,7 @@ Dependencies (included in Docker image):
 Stage 6 - Activity Prediction
 -----------------------------
 
-TODO: Describe stage 6
+The docking score produced by AutoDock Vina is only a loose estimate of the actual binding affinity. DrugSniffer adds 3 post hoc re-scoring methods (1) the Autodock Vina score (2) the SMINA score (3) **dock2bind** (the default) which is a neural network re-scoring strategy. The model is trained on ligand-protein complexes taken from the LIT-PCBA and DUD-E. For each docked pose, 16 pose descriptors calculated by SMINA, along with the DFIRE estimate of protein–ligand potential are used as input to the model. **dock2bind** produces a value between 0 and 1 and can be thought of as the model's confidence that the molecule binds to the pocket, constrained by the specific pose.
 
 Required environment variables:
 
@@ -163,7 +159,7 @@ Dependencies (included in Docker image):
 Stage 7 - ADMET Filtering (optional)
 ------------------------------------
 
-TODO: Describe stage 7
+The absorption, distribution, metabolism, excretion, and toxicity (ADMET) of drugs plays a key role in determining which among the potential candidate structures are to be prioritized. The ADMET filtering here is based on molecular fingerprint-based predictive models. While a majority of the models are binary classification models, for some endpoints such the metabolic intrinsic clearance, acute oral toxicity in rats, plasma protein binding and elimination half-life, multiclass models are proposed. For a complete list of the models employed see <https://doi.org/10.1186/s13321-021-00557-5> For classification models, two additional values are reported: a confidence (how certain the model is that the prediction is a singleton) and a credibility. A confidence value of 0.95 suggests that the classifier is quite certain that the prediction is likely to be a single label. A relatively low value of credibility suggests that the compounds are not sufficiently represented in the training set and that the user needs to treat the prediction with caution.
 
 Required environment variables:
 
