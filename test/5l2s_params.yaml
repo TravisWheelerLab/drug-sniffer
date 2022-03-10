@@ -10,3 +10,5 @@ receptor_center_z: -8.927000
 receptor_size_x: 8.0
 receptor_size_y: 16.0
 receptor_size_z: 16.0
+
+admet_checks: '1 2 3'
