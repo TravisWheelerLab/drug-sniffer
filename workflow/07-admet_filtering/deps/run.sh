@@ -4,7 +4,7 @@ set -e
 
 # Required parameters:
 #
-# LIGAND_SMI
+# LIGANDS_SMI
 #
 # Optional parameters:
 #
