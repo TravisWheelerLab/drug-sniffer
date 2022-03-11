@@ -4,7 +4,7 @@ Usage
 Nextflow Workflow
 -----------------
 
-Drug Sniffer is implemented as a [Nextflow](https://nextflow.io) workflow. See
+Drug Sniffer is implemented as a `Nextflow <https://nextflow.io>`_ workflow. See
 :ref:`Parameters <parameters>` for details on the available workflow parameters.
 
 The simplest way to learn how to use Drug Sniffer is to experiment with the
