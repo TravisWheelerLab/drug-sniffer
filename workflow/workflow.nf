@@ -46,7 +46,7 @@ process denovo {
 // Stage 4
 
 process similarity_search {
-    container 'traviswheelerlab/04-similiarity_search:latest'
+    container 'traviswheelerlab/04-similarity_search:latest'
 
     input:
     path denovo_ligands_smi from denovo_ligands_smi

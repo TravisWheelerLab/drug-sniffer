@@ -4,7 +4,7 @@ set -e
 
 # Convenience script to build all container images.
 
-IMAGE_REGISTRY=${IMAGE_REGISTRY:-docker.io}
+IMAGE_REGISTRY=${IMAGE_REGISTRY:-}
 IMAGE_NAMESPACE=${IMAGE_NAMESPACE:-traviswheelerlab}
 IMAGE_VERSION=${IMAGE_VERSION:-latest}
 
