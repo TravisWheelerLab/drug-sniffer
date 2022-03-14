@@ -30,23 +30,39 @@ process denovo {
 
     cpus 4
 
-    script:
-    if params.denovo_ligands == null
-        """
-        NUMBER_OF_PROCESSORS=4 \
-        RECEPTOR_PATH="${receptor_pdb}" \
-        CENTER_X="${center_x}" \
-        CENTER_Y="${center_y}" \
-        CENTER_Z="${center_z}" \
-        SIZE_X="${size_x}" \
-        SIZE_Y="${size_y}" \
-        SIZE_Z="${size_z}" \
-        run.sh
-        """
-    else
-        """
-        cp ${params.denovo_ligands} denovo.smi
-        """
+    when:
+    params.denovo_ligands == null
+
+    """
+    NUMBER_OF_PROCESSORS=4 \
+    RECEPTOR_PATH="${receptor_pdb}" \
+    CENTER_X="${center_x}" \
+    CENTER_Y="${center_y}" \
+    CENTER_Z="${center_z}" \
+    SIZE_X="${size_x}" \
+    SIZE_Y="${size_y}" \
+    SIZE_Z="${size_z}" \
+    run.sh
+    """
+}
+
+process external_denovo {
+    container 'traviswheelerlab/03-denovo:latest'
+
+    input:
+    path denovo_ligands from params.denovo_ligands
+
+    output:
+    path "denovo.smi" into external_denovo_ligands_smi
+
+    cpus 4
+
+    when:
+    params.denovo_ligands != null
+
+    """
+    cp ${denovo_ligands} denovo.smi
+    """
 }
 
 // Stage 4
@@ -55,7 +71,7 @@ process similarity_search {
     container 'traviswheelerlab/04-similarity_search:latest'
 
     input:
-    path denovo_ligands_smi from denovo_ligands_smi
+    path denovo_ligands_smi from denovo_ligands_smi.mix(external_denovo_ligands_smi)
 
     output:
     path "db_ligands.smi" into db_ligands_smi
