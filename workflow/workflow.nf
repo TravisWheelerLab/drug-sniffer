@@ -30,17 +30,23 @@ process denovo {
 
     cpus 4
 
-    """
-    NUMBER_OF_PROCESSORS=4 \
-    RECEPTOR_PATH="${receptor_pdb}" \
-    CENTER_X="${center_x}" \
-    CENTER_Y="${center_y}" \
-    CENTER_Z="${center_z}" \
-    SIZE_X="${size_x}" \
-    SIZE_Y="${size_y}" \
-    SIZE_Z="${size_z}" \
-    run.sh
-    """
+    script:
+    if params.denovo_ligands == null
+        """
+        NUMBER_OF_PROCESSORS=4 \
+        RECEPTOR_PATH="${receptor_pdb}" \
+        CENTER_X="${center_x}" \
+        CENTER_Y="${center_y}" \
+        CENTER_Z="${center_z}" \
+        SIZE_X="${size_x}" \
+        SIZE_Y="${size_y}" \
+        SIZE_Z="${size_z}" \
+        run.sh
+        """
+    else
+        """
+        cp ${params.denovo_ligands} denovo.smi
+        """
 }
 
 // Stage 4

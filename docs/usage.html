@@ -42,7 +42,70 @@
             
   <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
-<p>TODO</p>
+<section id="nextflow-workflow">
+<h2>Nextflow Workflow<a class="headerlink" href="#nextflow-workflow" title="Permalink to this headline">¶</a></h2>
+<p>Drug Sniffer is implemented as a <a class="reference external" href="https://nextflow.io">Nextflow</a> workflow. See
+<a class="reference internal" href="parameters.html#parameters"><span class="std std-ref">Parameters</span></a> for details on the available workflow parameters.</p>
+<p>The simplest way to learn how to use Drug Sniffer is to experiment with the
+examples.  These may be found in the <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory within the project
+repository. From this directory, you can run one of the examples with the
+command below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> \
+  <span class="o">-</span><span class="n">profile</span> <span class="n">local</span> \
+  <span class="o">-</span><span class="n">params</span><span class="o">-</span><span class="n">file</span> <span class="mi">3</span><span class="n">vri_params</span><span class="o">.</span><span class="n">yaml</span> \
+  <span class="o">../</span><span class="n">workflow</span><span class="o">/</span><span class="n">workflow</span><span class="o">.</span><span class="n">nf</span>
+</pre></div>
+</div>
+<p>There are three things going on here. First, we select the environment the
+workflow will run in with <code class="docutils literal notranslate"><span class="pre">-profile</span> <span class="pre">local</span></code>. The available environments are
+described in <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> in the same directory. An example is shown
+below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">profiles</span> <span class="p">{</span>
+  <span class="n">local</span> <span class="p">{</span>
+      <span class="n">process</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="s1">&#39;local&#39;</span>
+      <span class="n">docker</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">true</span>
+  <span class="p">}</span>
+
+  <span class="n">aws_batch</span> <span class="p">{</span>
+      <span class="n">process</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="s1">&#39;awsbatch&#39;</span>
+      <span class="n">process</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="s1">&#39;drug-sniffer-queue&#39;</span>
+      <span class="n">aws</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;us-east-1&#39;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The config above describes two environments. The first, <code class="docutils literal notranslate"><span class="pre">local</span></code>, which runs
+the workflow on the local machine, with Docker enabled (Drug Sniffer requires
+Docker or another container runtime). The second is <code class="docutils literal notranslate"><span class="pre">aws_batch</span></code>, which will
+run the workflow in the AWS cloud using the Batch batch processing service,
+which would need to have been configured with a queue called
+<code class="docutils literal notranslate"><span class="pre">drug-sniffer-queue</span></code>.</p>
+<p>Second, we specify a set of parameters for the workflow run with
+<code class="docutils literal notranslate"><span class="pre">-params-file</span> <span class="pre">3vri_params.yaml</span></code>. This tells Nextflow to load workflow parameters
+from the specified YAML file. An example file is shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">molecule_db</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{projectDir}</span><span class="s1">/../examples/small-db&#39;</span>
+<span class="n">tanimoto_cutoff</span><span class="p">:</span> <span class="mf">0.5</span>
+
+<span class="n">receptor_pdb</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{projectDir}</span><span class="s1">/../examples/3vri_aligned.pdb&#39;</span>
+
+<span class="n">receptor_center_x</span><span class="p">:</span> <span class="mf">14.641000</span>
+<span class="n">receptor_center_y</span><span class="p">:</span> <span class="o">-</span><span class="mf">11.026000</span>
+<span class="n">receptor_center_z</span><span class="p">:</span> <span class="mf">43.231998</span>
+
+<span class="n">receptor_size_x</span><span class="p">:</span> <span class="mf">10.0</span>
+<span class="n">receptor_size_y</span><span class="p">:</span> <span class="mf">10.0</span>
+<span class="n">receptor_size_z</span><span class="p">:</span> <span class="mf">10.0</span>
+
+<span class="n">admet_checks</span><span class="p">:</span> <span class="s1">&#39;1 2 3&#39;</span>
+</pre></div>
+</div>
+<p>The parameters described in this file are explained on the <a class="reference internal" href="parameters.html#parameters"><span class="std std-ref">Parameters</span></a> page. Of interest, however, if the <code class="docutils literal notranslate"><span class="pre">${projectDir}</span></code> variable,
+which is set to the location of the workflow script (the <code class="docutils literal notranslate"><span class="pre">.nf</span></code> file) at
+runtime. There is also a variable called <code class="docutils literal notranslate"><span class="pre">launchDir</span></code> available which is set to
+the directory from which the Nextflow command line tool is invoked.</p>
+<p>Finally, the Nextflow script is specified. The Drug Sniffer script is defined in
+<code class="docutils literal notranslate"><span class="pre">workflow/workflow.nf</span></code>.</p>
+</section>
 <section id="docker-images">
 <h2>Docker Images<a class="headerlink" href="#docker-images" title="Permalink to this headline">¶</a></h2>
 <p>Each stage in the Drug Sniffer pipeline has its own Docker image. The images can
@@ -73,6 +136,7 @@ pushed to a registry</p></li>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="stages.html">Stages</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#nextflow-workflow">Nextflow Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker-images">Docker Images</a></li>
 </ul>
 </li>

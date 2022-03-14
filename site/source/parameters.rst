@@ -1,3 +1,5 @@
+.. _parameters:
+
 Parameters
 ==========
 
@@ -45,8 +47,18 @@ receptor_size_z
 
 size in the Z dimension (Angstroms)
 
-Search and Similarity
----------------------
+Denovo Ligands (Stage 3)
+------------------------
+
+denovo_ligands
+^^^^^^^^^^^^^^
+
+A SMILES file (.smi) containing one or more SMILES strings for molecules to use
+in place of building denovo ligands with Autogrow4. This causes Stage 3 to be
+skipped entirely, the ligands specified will be fed directly into Stage 4.
+
+Similarity Search (Stage 4)
+---------------------------
 
 .. _molecule-db-parameter:
 
@@ -59,6 +71,9 @@ tanimoto_cutoff
 ^^^^^^^^^^^^^^^
 
 The minimum Tanimoto coefficient to consider two molecules a match.
+
+ADMET Filtering (Stage 7)
+-------------------------
 
 admet_checks
 ^^^^^^^^^^^^

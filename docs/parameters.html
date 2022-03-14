@@ -37,7 +37,7 @@
           <div class="body" role="main">
             
   <section id="parameters">
-<h1>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h1>
 <p>The parameters described below can be specified when the pipeline is run. They
 change the behavior of various stages.</p>
 <section id="protein-receptor-pocket">
@@ -73,8 +73,17 @@ the denovo step.</p>
 <p>size in the Z dimension (Angstroms)</p>
 </section>
 </section>
-<section id="search-and-similarity">
-<h2>Search and Similarity<a class="headerlink" href="#search-and-similarity" title="Permalink to this headline">¶</a></h2>
+<section id="denovo-ligands-stage-3">
+<h2>Denovo Ligands (Stage 3)<a class="headerlink" href="#denovo-ligands-stage-3" title="Permalink to this headline">¶</a></h2>
+<section id="denovo-ligands">
+<h3>denovo_ligands<a class="headerlink" href="#denovo-ligands" title="Permalink to this headline">¶</a></h3>
+<p>A SMILES file (.smi) containing one or more SMILES strings for molecules to use
+in place of building denovo ligands with Autogrow4. This causes Stage 3 to be
+skipped entirely, the ligands specified will be fed directly into Stage 4.</p>
+</section>
+</section>
+<section id="similarity-search-stage-4">
+<h2>Similarity Search (Stage 4)<a class="headerlink" href="#similarity-search-stage-4" title="Permalink to this headline">¶</a></h2>
 <section id="molecule-db">
 <span id="molecule-db-parameter"></span><h3>molecule_db<a class="headerlink" href="#molecule-db" title="Permalink to this headline">¶</a></h3>
 <p>The path to the molecule database to use.</p>
@@ -83,6 +92,9 @@ the denovo step.</p>
 <h3>tanimoto_cutoff<a class="headerlink" href="#tanimoto-cutoff" title="Permalink to this headline">¶</a></h3>
 <p>The minimum Tanimoto coefficient to consider two molecules a match.</p>
 </section>
+</section>
+<section id="admet-filtering-stage-7">
+<h2>ADMET Filtering (Stage 7)<a class="headerlink" href="#admet-filtering-stage-7" title="Permalink to this headline">¶</a></h2>
 <section id="admet-checks">
 <h3>admet_checks<a class="headerlink" href="#admet-checks" title="Permalink to this headline">¶</a></h3>
 <p>A space-separated list of ADMET checks to perform, see the FPADMET documentation
@@ -104,7 +116,9 @@ for a list of available checks.</p>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Parameters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#protein-receptor-pocket">Protein Receptor (Pocket)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#search-and-similarity">Search and Similarity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#denovo-ligands-stage-3">Denovo Ligands (Stage 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#similarity-search-stage-4">Similarity Search (Stage 4)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#admet-filtering-stage-7">ADMET Filtering (Stage 7)</a></li>
 </ul>
 </li>
 </ul>
