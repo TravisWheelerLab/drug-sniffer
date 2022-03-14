@@ -50,8 +50,8 @@ size in the Z dimension (Angstroms)
 Denovo Ligands (Stage 3)
 ------------------------
 
-denovo_ligands
-^^^^^^^^^^^^^^
+denovo_ligands (optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A SMILES file (.smi) containing one or more SMILES strings for molecules to use
 in place of building denovo ligands with Autogrow4. This causes Stage 3 to be
