@@ -75,6 +75,7 @@ process similarity_search {
 
     output:
     path "db_ligands.smi" into db_ligands_smi
+    path "db_ligands.smi" into db_ligands_smi_admet
 
     cpus 1
 
@@ -144,7 +145,7 @@ process admet_filtering {
     container 'traviswheelerlab/07-admet_filtering'
 
     input:
-    path db_ligands_smi from db_ligands_smi
+    path db_ligands_smi from db_ligands_smi_admet
 
     output:
     path "output.txt" into admet_output
