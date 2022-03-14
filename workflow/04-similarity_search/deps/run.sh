@@ -13,7 +13,7 @@ set -e
 # OUTPUT_PATH
 #
 
-OUTPUT_PATH=${OUTPUT_PATH:-output}
+OUTPUT_PATH=${OUTPUT_PATH:-.}
 
 mkdir -p "$OUTPUT_PATH"
 

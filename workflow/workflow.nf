@@ -74,8 +74,7 @@ process similarity_search {
     path denovo_ligands_smi from denovo_ligands_smi.mix(external_denovo_ligands_smi)
 
     output:
-    path "db_ligands.smi" into db_ligands_smi
-    path "db_ligands.smi" into db_ligands_smi_admet
+    path "*.smi" into db_ligands_smi
 
     cpus 1
 
@@ -94,7 +93,7 @@ process protein_ligand_docking {
 
     input:
     path receptor_pdb from params.receptor_pdb
-    path db_ligands_smi from db_ligands_smi
+    path db_ligands_smi from db_ligands_smi.collect()
     val center_x from params.receptor_center_x
     val center_y from params.receptor_center_y
     val center_z from params.receptor_center_z
@@ -104,6 +103,7 @@ process protein_ligand_docking {
 
     output:
     path "docked_*.pdbqt" into docked_pdbqt
+    path "admet.smi" into admet_smi
 
     cpus 4
 
@@ -117,6 +117,8 @@ process protein_ligand_docking {
     SIZE_Y="${params.receptor_size_y}" \
     SIZE_Z="${params.receptor_size_z}" \
     run.sh
+
+    cp ${db_ligands_smi} admet.smi
     """
 }
 
@@ -145,7 +147,7 @@ process admet_filtering {
     container 'traviswheelerlab/07-admet_filtering'
 
     input:
-    path db_ligands_smi from db_ligands_smi_admet
+    path db_ligands_smi from admet_smi
 
     output:
     path "output.txt" into admet_output
