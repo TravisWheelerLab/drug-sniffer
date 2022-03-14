@@ -3,7 +3,7 @@
 # Required parameters - the parameters in the first group should be the same
 # values provided to stage 3.
 #
-# RECEPTOR_PDBQT
+# RECEPTOR_PDB
 # LIGANDS_SMI
 # CENTER_X
 # CENTER_Y
@@ -21,9 +21,10 @@ cat "$LIGANDS_SMI" | while read smi
 do
     echo "processing $smi"
     echo "$smi" > ligand.smi
+    obabel -ipdb "$RECEPTOR_PDB" -opdbqt -O receptor.pdbqt
     obabel -ismi ligand.smi -opdbqt -O ligand.pdbqt --gen3d
     if [[ "$?" -eq 0 ]]; then
-        vina --receptor "$RECEPTOR_PDBQT" \
+        vina --receptor receptor.pdbqt \
             --ligand ligand.pdbqt \
             --center_x $CENTER_X \
             --center_y $CENTER_Y \

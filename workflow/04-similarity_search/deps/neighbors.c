@@ -26,7 +26,7 @@ int main (int argc, char *argv[]) {
     long int pos;
     char *seed_filename;
     char *db_filelist;
-    char db_filename[100]; 
+    char db_filename[2048]; 
     size_t len;
 
     long int seed_cnt;
@@ -56,7 +56,7 @@ int main (int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    while ( fgets (db_filename, 100 , dbfile) != NULL ){
+    while ( fgets (db_filename, 2048 , dbfile) != NULL ){
         db_filename[strcspn(db_filename,"\n")] = 0;//remove a newline
         //printf("[%s]\n", db_filename);
         //start at the beginning of db file, to compare all

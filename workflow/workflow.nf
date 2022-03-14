@@ -72,6 +72,7 @@ process similarity_search {
 
     input:
     path denovo_ligands_smi from denovo_ligands_smi.mix(external_denovo_ligands_smi)
+    path molecule_db from params.molecule_db
 
     output:
     path "*.smi" into db_ligands_smi
@@ -80,7 +81,7 @@ process similarity_search {
 
     """
     DENOVO_LIGANDS_SMI="${denovo_ligands_smi}" \
-    MOLECULE_DB="${params.molecule_db}" \
+    MOLECULE_DB="${molecule_db}" \
     TANIMOTO_CUTOFF="${params.tanimoto_cutoff}" \
     run.sh
     """
@@ -93,7 +94,7 @@ process protein_ligand_docking {
 
     input:
     path receptor_pdb from params.receptor_pdb
-    path db_ligands_smi from db_ligands_smi.collect()
+    path db_ligands_smi from db_ligands_smi.flatMap()
     val center_x from params.receptor_center_x
     val center_y from params.receptor_center_y
     val center_z from params.receptor_center_z
@@ -108,7 +109,7 @@ process protein_ligand_docking {
     cpus 4
 
     """
-    RECEPTOR_PDBQT="${params.receptor_pdb}" \
+    RECEPTOR_PDB="${receptor_pdb}" \
     LIGANDS_SMI="${db_ligands_smi}" \
     CENTER_X="${params.receptor_center_x}" \
     CENTER_Y="${params.receptor_center_y}" \
