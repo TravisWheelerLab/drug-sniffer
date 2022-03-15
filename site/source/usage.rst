@@ -8,9 +8,9 @@ Drug Sniffer is implemented as a `Nextflow <https://nextflow.io>`_ workflow. See
 :ref:`Parameters <parameters>` for details on the available workflow parameters.
 
 The simplest way to learn how to use Drug Sniffer is to experiment with the
-examples.  These may be found in the ``examples/`` directory within the project
-repository. From this directory, you can run one of the examples with the
-command below.
+examples (see below for more information). These may be found in the
+``examples/`` directory within the project repository. From this directory, you
+can run one of the examples with the command below.
 
 ::
 
@@ -75,6 +75,18 @@ the directory from which the Nextflow command line tool is invoked.
 
 Finally, the Nextflow script is specified. The Drug Sniffer script is defined in
 ``workflow/workflow.nf``.
+
+Examples
+--------
+
+There are two examples, both found in the ``examples/`` directory within the
+repository: ``3vri`` and ``5l2s``. The first, when run, will test a pre-computed
+set of ligands, effectively skipping Stage 3 of the pipeline and going right to
+Stage 4. This has two benefits. First, Autogrow4 takes a long time to run, so if
+the goal is to simply see the pipeline in action, or verify some change, the
+``3vri`` example is the way to go. Second, some users may want to create ligands
+to test using some other method, and the ``3vri`` example serves to demonstrate
+how to do this. The ``5l2s`` example runs the entire pipeline.
 
 Docker Images
 -------------

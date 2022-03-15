@@ -47,9 +47,9 @@
 <p>Drug Sniffer is implemented as a <a class="reference external" href="https://nextflow.io">Nextflow</a> workflow. See
 <a class="reference internal" href="parameters.html#parameters"><span class="std std-ref">Parameters</span></a> for details on the available workflow parameters.</p>
 <p>The simplest way to learn how to use Drug Sniffer is to experiment with the
-examples.  These may be found in the <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory within the project
-repository. From this directory, you can run one of the examples with the
-command below.</p>
+examples (see below for more information). These may be found in the
+<code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory within the project repository. From this directory, you
+can run one of the examples with the command below.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> \
   <span class="o">-</span><span class="n">profile</span> <span class="n">local</span> \
   <span class="o">-</span><span class="n">params</span><span class="o">-</span><span class="n">file</span> <span class="mi">3</span><span class="n">vri_params</span><span class="o">.</span><span class="n">yaml</span> \
@@ -106,6 +106,17 @@ the directory from which the Nextflow command line tool is invoked.</p>
 <p>Finally, the Nextflow script is specified. The Drug Sniffer script is defined in
 <code class="docutils literal notranslate"><span class="pre">workflow/workflow.nf</span></code>.</p>
 </section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>There are two examples, both found in the <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory within the
+repository: <code class="docutils literal notranslate"><span class="pre">3vri</span></code> and <code class="docutils literal notranslate"><span class="pre">5l2s</span></code>. The first, when run, will test a pre-computed
+set of ligands, effectively skipping Stage 3 of the pipeline and going right to
+Stage 4. This has two benefits. First, Autogrow4 takes a long time to run, so if
+the goal is to simply see the pipeline in action, or verify some change, the
+<code class="docutils literal notranslate"><span class="pre">3vri</span></code> example is the way to go. Second, some users may want to create ligands
+to test using some other method, and the <code class="docutils literal notranslate"><span class="pre">3vri</span></code> example serves to demonstrate
+how to do this. The <code class="docutils literal notranslate"><span class="pre">5l2s</span></code> example runs the entire pipeline.</p>
+</section>
 <section id="docker-images">
 <h2>Docker Images<a class="headerlink" href="#docker-images" title="Permalink to this headline">¶</a></h2>
 <p>Each stage in the Drug Sniffer pipeline has its own Docker image. The images can
@@ -137,6 +148,7 @@ pushed to a registry</p></li>
 <li class="toctree-l1"><a class="reference internal" href="stages.html">Stages</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#nextflow-workflow">Nextflow Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker-images">Docker Images</a></li>
 </ul>
 </li>
