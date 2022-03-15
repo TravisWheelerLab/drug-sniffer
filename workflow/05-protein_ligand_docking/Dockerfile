@@ -21,6 +21,16 @@ RUN tar xfz ${AD_FILE} \
     && mv /opt/${AD_NAME} autodock_vina
 ENV PATH=${PATH}:/opt/autodock_vina/bin
 
+# mgltools
+
+WORKDIR /opt
+
+# MGLTools 1.5.7
+ARG MGL_URL=https://ccsb.scripps.edu/download/532/
+
+ADD ${MGL_NAME} mgltools.tar.gz
+RUN tar xfz mgltools.tar.gz
+
 # script
 
 COPY deps/run.sh /opt/protein_ligand_docking/
