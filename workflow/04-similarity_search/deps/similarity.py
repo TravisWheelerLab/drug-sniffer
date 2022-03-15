@@ -62,6 +62,7 @@ class Neighbor(NamedTuple):
 
 class DBLigand(NamedTuple):
     smi_str: str
+    name: str
     db_src: str
     neighbor: Neighbor
 
@@ -109,7 +110,7 @@ def main(args: List[str]):
     for db_ligand in db_ligands:
         with open(f"{options.out_dir}/{index}.smi", "w") as out_file:
             out_file.write(
-                f"{db_ligand.smi_str} {db_ligand.db_src} {db_ligand.neighbor.db_index}\n"
+                f"{db_ligand.smi_str} {db_ligand.name} {db_ligand.db_src} {db_ligand.neighbor.db_index}\n"
             )
         index += 1
 
@@ -220,9 +221,9 @@ def fetch_neighbors(neighbors: Iterable[Neighbor], db_dir: str) -> Iterable[DBLi
         smi_offset = int.from_bytes(index_value, "big")
         smi_file.seek(smi_offset)
         smi_line = smi_file.readline()
-        (smi_str, db_src, _db_id) = smi_line.split()
+        (smi_str, db_src, smi_name, _db_id) = smi_line.split()
 
-        yield DBLigand(smi_str, db_src, neighbor)
+        yield DBLigand(smi_str, smi_name, db_src, neighbor)
 
         smi_file.close()
         index_file.close()
