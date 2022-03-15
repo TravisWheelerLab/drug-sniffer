@@ -109,7 +109,7 @@ def main(args: List[str]):
     for db_ligand in db_ligands:
         with open(f"{options.out_dir}/{index}.smi", "w") as out_file:
             out_file.write(
-                f"{db_ligand.smi_str} {db_ligand.db_src} {db_ligand.neighbor.db_index}"
+                f"{db_ligand.smi_str} {db_ligand.db_src} {db_ligand.neighbor.db_index}\n"
             )
         index += 1
 

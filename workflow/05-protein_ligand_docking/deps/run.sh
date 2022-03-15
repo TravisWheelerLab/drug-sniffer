@@ -18,12 +18,13 @@
 
 NUMBER_OF_POSES=${NUMBER_OF_POSES:-4}
 
+obabel -ipdb "$RECEPTOR_PDB" -opdbqt -O receptor.pdbqt
+
 n=0
 cat "$LIGANDS_SMI" | while read smi
 do
     echo "processing $smi"
     echo "$smi" > ligand.smi
-    obabel -ipdb "$RECEPTOR_PDB" -opdbqt -O receptor.pdbqt
     obabel -ismi ligand.smi -opdbqt -O ligand.pdbqt --gen3d
     if [[ "$?" -eq 0 ]]; then
         vina --receptor receptor.pdbqt \
