@@ -8,7 +8,7 @@ set -e
 # documentation.
 #
 # LIGAND_NAME
-# RECEPTOR_PATH
+# RECEPTOR_PDB
 # DOCKED_PDBQT
 #
 # Full output will end up in OUTPUT_PATH
@@ -28,7 +28,7 @@ electrostatic ad4_solvation ligand_length \
 constant_term num_tors_div DFIRE" > "${OUTPUT_PATH}_"
 
 # Convert the protein to pdbqt
-obabel -ipdb "$RECEPTOR_PATH" -opdbqt -O "${RECEPTOR_PATH}qt"
+obabel -ipdb "$RECEPTOR_PDB" -opdbqt -O "receptor.pdbqt"
 
 # Split poses
 vina_split --input "$DOCKED_PDBQT" --ligand pose_
@@ -39,10 +39,10 @@ for pose_pdbqt in pose_*.pdbqt; do
     obabel -ipdbqt "$pose_pdbqt" -omol2 -O "$pose_pdbqt.mol2"
 
     # Capture DFIRE value
-    dfire=$(dligand2-15 -P "$RECEPTOR_PATH" -L "$pose_pdbqt.mol2" -etype 1)
+    dfire=$(dligand2-15 -P "$RECEPTOR_PDB" -L "$pose_pdbqt.mol2" -etype 1)
 
     # Create all other fields
-    smina=$(smina.static -r "${RECEPTOR_PATH}qt" -l "$pose_pdbqt" --score_only \
+    smina=$(smina.static -r "receptor.pdbqt" -l "$pose_pdbqt" --score_only \
         --custom_scoring /opt/activity_prediction/allterms \
             | grep "##" \
             | sed "s/##//" \

@@ -136,7 +136,7 @@ process activity_prediction {
 
     """
     LIGAND_NAME=dummy \
-    PROTEIN_PDB=${params.receptor_pdb} \
+    RECEPTOR_PDB=${params.receptor_pdb} \
     DOCKED_PDBQT=${docked_pdbqt} \
     run.sh
     """
