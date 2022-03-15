@@ -106,7 +106,7 @@ process protein_ligand_docking {
     path "docked_*.pdbqt" into docked_pdbqt
     path "admet.smi" into admet_smi
 
-    cpus 4
+    cpus 1
 
     """
     RECEPTOR_PDB="${receptor_pdb}" \
@@ -154,8 +154,8 @@ process admet_filtering {
     path "output.txt" into admet_output
 
     """
-    LIGAND_SMIS=${db_ligands_smi} \
-    ADMET_CHECKS=${params.admet_checks} \
+    LIGAND_SMIS="${db_ligands_smi}" \
+    ADMET_CHECKS="${params.admet_checks}" \
     run.sh
     """
 }
