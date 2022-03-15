@@ -1,7 +1,7 @@
-molecule_db: '${projectDir}/../examples/small-db'
+molecule_db: '${launchDir}/small-db'
 tanimoto_cutoff: 0.5
 
-receptor_pdb: '${projectDir}/../examples/3vri_aligned.pdb'
+receptor_pdb: '${launchDir}/3vri_rec.pdb'
 
 receptor_center_x: 14.641000
 receptor_center_y: -11.026000
@@ -12,3 +12,5 @@ receptor_size_y: 10.0
 receptor_size_z: 10.0
 
 admet_checks: '1 2 3'
+
+denovo_ligands: '${launchDir}/3vri_denovo.smi'

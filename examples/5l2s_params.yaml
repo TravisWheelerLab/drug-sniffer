@@ -1,7 +1,7 @@
-molecule_db: '${projectDir}/../examples/small-db'
+molecule_db: '${launchDir}/small-db'
 tanimoto_cutoff: 0.5
 
-receptor_pdb: '${projectDir}/../examples/5l2s_aligned.pdb'
+receptor_pdb: '${launchDir}/5l2s_rec.pdb'
 
 receptor_center_x: 21.971001
 receptor_center_y: 36.053001
@@ -12,3 +12,4 @@ receptor_size_y: 16.0
 receptor_size_z: 16.0
 
 admet_checks: '1 2 3'
+
