@@ -129,6 +129,7 @@ process activity_prediction {
     container 'traviswheelerlab/06-activity_prediction'
 
     input:
+    path receptor_pdb from params.receptor_pdb
     path docked_pdbqt from docked_pdbqt
 
     output:
@@ -136,7 +137,7 @@ process activity_prediction {
 
     """
     LIGAND_NAME=dummy \
-    RECEPTOR_PDB=${params.receptor_pdb} \
+    RECEPTOR_PDB=${receptor_pdb} \
     DOCKED_PDBQT=${docked_pdbqt} \
     run.sh
     """
