@@ -56,3 +56,6 @@ done
 # Re-score with the ML model
 rescore.py /opt/activity_prediction/platstd.h5 "${OUTPUT_PATH}_" \
     > "$OUTPUT_PATH"
+
+rm -f receptor.pdbqt
+
