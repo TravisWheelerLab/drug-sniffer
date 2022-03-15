@@ -49,3 +49,4 @@ do
     rm -f ligand.smi ligand.pdbqt
 done
 
+rm -f receptor.pdbqt
