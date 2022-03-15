@@ -16,6 +16,8 @@
 #
 # NUMBER_OF_POSES
 
+NUMBER_OF_POSES=${NUMBER_OF_POSES:-4}
+
 n=0
 cat "$LIGANDS_SMI" | while read smi
 do
