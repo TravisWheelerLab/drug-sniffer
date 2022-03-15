@@ -46,9 +46,16 @@ run the workflow in the AWS cloud using the Batch batch processing service,
 which would need to have been configured with a queue called
 ``drug-sniffer-queue``.
 
-Second, we specify a set of parameters for the workflow run with
-``-params-file 3vri_params.yaml``. This tells Nextflow to load workflow parameters
-from the specified YAML file. An example file is shown below:
+See the Nextflow `documentation
+<https://www.nextflow.io/docs/latest/index.html>`_ for information about other
+environments, including `SLURM
+<https://www.nextflow.io/docs/latest/executor.html#slurm>`_. The configuration
+file format is also `described
+<https://www.nextflow.io/docs/latest/config.html>`_.
+
+Next, we specify a set of parameters for the workflow run with
+``-params-file 3vri_params.yaml``. This tells Nextflow to load workflow
+parameters from the specified YAML file. An example file is shown below:
 
 ::
 
@@ -68,10 +75,11 @@ from the specified YAML file. An example file is shown below:
   admet_checks: '1 2 3'
 
 The parameters described in this file are explained on the :ref:`Parameters
-<parameters>` page. Of interest, however, if the ``${projectDir}`` variable,
-which is set to the location of the workflow script (the ``.nf`` file) at
-runtime. There is also a variable called ``launchDir`` available which is set to
-the directory from which the Nextflow command line tool is invoked.
+<parameters>` page. Of interest, however, if the ``${launchDir}`` variable,
+which is set to the directory from which the ``nextflow`` command is run
+(running a Nextflow workflow is often called "launching" it). There is also a
+variable called ``projectDir`` available which is set to the location of the
+workflow itself (the ``.nf`` file).
 
 Finally, the Nextflow script is specified. The Drug Sniffer script is defined in
 ``workflow/workflow.nf``.

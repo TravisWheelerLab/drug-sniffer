@@ -80,9 +80,12 @@ Docker or another container runtime). The second is <code class="docutils litera
 run the workflow in the AWS cloud using the Batch batch processing service,
 which would need to have been configured with a queue called
 <code class="docutils literal notranslate"><span class="pre">drug-sniffer-queue</span></code>.</p>
-<p>Second, we specify a set of parameters for the workflow run with
-<code class="docutils literal notranslate"><span class="pre">-params-file</span> <span class="pre">3vri_params.yaml</span></code>. This tells Nextflow to load workflow parameters
-from the specified YAML file. An example file is shown below:</p>
+<p>See the Nextflow <a class="reference external" href="https://www.nextflow.io/docs/latest/index.html">documentation</a> for information about other
+environments, including <a class="reference external" href="https://www.nextflow.io/docs/latest/executor.html#slurm">SLURM</a>. The configuration
+file format is also <a class="reference external" href="https://www.nextflow.io/docs/latest/config.html">described</a>.</p>
+<p>Next, we specify a set of parameters for the workflow run with
+<code class="docutils literal notranslate"><span class="pre">-params-file</span> <span class="pre">3vri_params.yaml</span></code>. This tells Nextflow to load workflow
+parameters from the specified YAML file. An example file is shown below:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">molecule_db</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{projectDir}</span><span class="s1">/../examples/small-db&#39;</span>
 <span class="n">tanimoto_cutoff</span><span class="p">:</span> <span class="mf">0.5</span>
 
@@ -99,10 +102,11 @@ from the specified YAML file. An example file is shown below:</p>
 <span class="n">admet_checks</span><span class="p">:</span> <span class="s1">&#39;1 2 3&#39;</span>
 </pre></div>
 </div>
-<p>The parameters described in this file are explained on the <a class="reference internal" href="parameters.html#parameters"><span class="std std-ref">Parameters</span></a> page. Of interest, however, if the <code class="docutils literal notranslate"><span class="pre">${projectDir}</span></code> variable,
-which is set to the location of the workflow script (the <code class="docutils literal notranslate"><span class="pre">.nf</span></code> file) at
-runtime. There is also a variable called <code class="docutils literal notranslate"><span class="pre">launchDir</span></code> available which is set to
-the directory from which the Nextflow command line tool is invoked.</p>
+<p>The parameters described in this file are explained on the <a class="reference internal" href="parameters.html#parameters"><span class="std std-ref">Parameters</span></a> page. Of interest, however, if the <code class="docutils literal notranslate"><span class="pre">${launchDir}</span></code> variable,
+which is set to the directory from which the <code class="docutils literal notranslate"><span class="pre">nextflow</span></code> command is run
+(running a Nextflow workflow is often called “launching” it). There is also a
+variable called <code class="docutils literal notranslate"><span class="pre">projectDir</span></code> available which is set to the location of the
+workflow itself (the <code class="docutils literal notranslate"><span class="pre">.nf</span></code> file).</p>
 <p>Finally, the Nextflow script is specified. The Drug Sniffer script is defined in
 <code class="docutils literal notranslate"><span class="pre">workflow/workflow.nf</span></code>.</p>
 </section>
