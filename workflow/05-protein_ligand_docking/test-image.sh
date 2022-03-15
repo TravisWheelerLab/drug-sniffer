@@ -5,7 +5,7 @@ set -e
 rm -f test/docked_*.pdbqt test/ligand.* test/output.log
 
 docker run -v "$PWD/test:/data" -u "$(id -u):$(id -g)" \
-    -e RECEPTOR_PDBQT=3clpro_itasser_h.pdbqt \
+    -e RECEPTOR_PDB=3clpro_rec.pdb \
     -e LIGANDS_SMI=ligands.smi \
     -e CENTER_X=-37.141998 \
     -e CENTER_Y=10.206000 \

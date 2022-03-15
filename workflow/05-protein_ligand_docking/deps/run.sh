@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Required parameters - the parameters in the first group should be the same
 # values provided to stage 3.
 #
@@ -18,7 +20,9 @@
 
 NUMBER_OF_POSES=${NUMBER_OF_POSES:-4}
 
-obabel -ipdb "$RECEPTOR_PDB" -opdbqt -O receptor.pdbqt
+/opt/mgltools/bin/pythonsh \
+    /opt/mgltools/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_receptor4.py \
+    -r "$RECEPTOR_PDB" -o receptor.pdbqt -A hydrogens
 
 n=0
 cat "$LIGANDS_SMI" | while read smi

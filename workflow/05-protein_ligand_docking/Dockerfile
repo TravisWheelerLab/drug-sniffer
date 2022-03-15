@@ -6,6 +6,7 @@ FROM debian:bullseye-slim
 
 RUN apt-get update && apt-get -y install \
         openbabel \
+        python \
     && rm -rf /var/lib/apt/lists/*
 
 # autodock vina
@@ -27,9 +28,13 @@ WORKDIR /opt
 
 # MGLTools 1.5.7
 ARG MGL_URL=https://ccsb.scripps.edu/download/532/
+ARG MGL_NAME=mgltools_x86_64Linux2_1.5.7
 
-ADD ${MGL_NAME} mgltools.tar.gz
-RUN tar xfz mgltools.tar.gz
+ADD ${MGL_URL} mgltools.tar.gz
+RUN tar xfz mgltools.tar.gz \
+    && mv ${MGL_NAME} mgltools \
+    && cd mgltools \
+    && ./install.sh
 
 # script
 
