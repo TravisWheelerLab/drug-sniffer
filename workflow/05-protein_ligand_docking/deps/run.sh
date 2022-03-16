@@ -40,6 +40,25 @@ NUMBER_OF_POSES=${NUMBER_OF_POSES:-4}
     -r "$RECEPTOR_PDB" -o receptor.pdbqt -A hydrogens
 exit-error "$?" "receptor pdb to pdbqt"
 
+# Make sure Vina can handle the receptor correctly and fail fast otherwise, we
+# use an extremely simple ligand here to make it quick and reliable
+echo "CC" > ligand.smi
+obabel -ismi ligand.smi -opdbqt -O ligand.pdbqt --gen3d --ff UFF
+vina --receptor receptor.pdbqt \
+    --ligand ligand.pdbqt \
+    --center_x $CENTER_X \
+    --center_y $CENTER_Y \
+    --center_z $CENTER_Z \
+    --size_x $SIZE_X \
+    --size_y $SIZE_Y \
+    --size_z $SIZE_Z \
+    --out docked_test.pdbqt \
+    --num_modes "$NUMBER_OF_POSES" \
+    --log output.log \
+    --exhaustiveness 4
+exit-error "$?" "vina receptor validation"
+rm -f docked_test.pdbqt
+
 n=0
 cat "$LIGANDS_SMI" | while read smi
 do
