@@ -105,6 +105,7 @@ process protein_ligand_docking {
     output:
     path "docked_*.pdbqt" into docked_pdbqt
     path "admet.smi" into admet_smi
+    path "errors.log" into protein_ligand_docking_errors
 
     cpus 1
 
@@ -134,6 +135,7 @@ process activity_prediction {
 
     output:
     path "ligand.score" into ligand_score
+    path "errors.log" into activity_prediction_errors
 
     """
     LIGAND_NAME=dummy \
@@ -161,3 +163,22 @@ process admet_filtering {
     """
 }
 
+// Stage 8
+
+process error_collation {
+    container 'traviswheelerlab/08-error_collation'
+
+    input:
+    path pld_log from protein_ligand_docking_errors.collectFile()
+    path ap_log from activity_prediction_errors.collectFile()
+
+    output:
+    path "all_errors.log" into all_errors
+
+    """
+    process_errors.py \
+        --protein-ligand-docking ${pld_log} \
+        --activity-prediction ${ap_log} \
+        > all_errors.log
+    """
+}
