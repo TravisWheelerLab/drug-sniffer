@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 # Required parameters
 #
 # The parameters below are required. They are described in the pipeline
