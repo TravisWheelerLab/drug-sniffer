@@ -18,6 +18,23 @@ set -e
 # OUTPUT_PATH
 #
 
+function log-error {
+    local code="$1"
+    local msg="$2"
+    echo "exited with code $code: $msg" >> errors.log
+}
+
+function exit-error {
+    local code="$1"
+    local msg="$2"
+    if [ "$code" != "0" ]; then
+        log-error "$code" "$msg"
+        exit "$code"
+    fi
+}
+
+touch errors.log
+
 OUTPUT_PATH="${OUTPUT_PATH:-ligand.score}"
 
 echo "#pose chemical_name gauss_1 gauss_2 repulsion \
@@ -29,17 +46,27 @@ constant_term num_tors_div DFIRE" > "${OUTPUT_PATH}_"
 
 # Convert the protein to pdbqt
 obabel -ipdb "$RECEPTOR_PDB" -opdbqt -O "receptor.pdbqt"
+exit-error "$?" "convert receptor to pdbqt"
 
 # Split poses
 vina_split --input "$DOCKED_PDBQT" --ligand pose_
+exit-error "$?" "run vina_split on $DOCKED_PDBQT"
 
 pose_id=1
 for pose_pdbqt in pose_*.pdbqt; do
     # Create mol2 file
     obabel -ipdbqt "$pose_pdbqt" -omol2 -O "$pose_pdbqt.mol2"
+    if [ "$?" != "0" ]; then
+        log-error "$?" "convert pose $pose_pdbqt to mol2"
+        continue
+    fi
 
     # Capture DFIRE value
     dfire=$(dligand2-15 -P "$RECEPTOR_PDB" -L "$pose_pdbqt.mol2" -etype 1)
+    if [ "$?" != "0" ]; then
+        log-error "$?" "run dfire on $pose_pdbqt"
+        continue
+    fi
 
     # Create all other fields
     smina=$(smina.static -r "receptor.pdbqt" -l "$pose_pdbqt" --score_only \
@@ -47,6 +74,10 @@ for pose_pdbqt in pose_*.pdbqt; do
             | grep "##" \
             | sed "s/##//" \
             | awk '{if(NR>1) print}')
+    if [ "$?" != "0" ]; then
+        log-error "$?" "run smina on $pose_pdbqt"
+        continue
+    fi
 
     echo "$pose_id $LIGAND_NAME $smina $dfire" >> "${OUTPUT_PATH}_"
 
@@ -56,6 +87,6 @@ done
 # Re-score with the ML model
 rescore.py /opt/activity_prediction/platstd.h5 "${OUTPUT_PATH}_" \
     > "$OUTPUT_PATH"
+exit-error "$?" "run rescore model"
 
 rm -f receptor.pdbqt
-
