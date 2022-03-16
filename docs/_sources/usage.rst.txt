@@ -96,6 +96,25 @@ the goal is to simply see the pipeline in action, or verify some change, the
 to test using some other method, and the ``3vri`` example serves to demonstrate
 how to do this. The ``5l2s`` example runs the entire pipeline.
 
+Molecule Database
+-----------------
+
+Drug Sniffer requires a database of potential molecules in order to function. We
+provide a large, curated database for use by the public. The database is an
+aggregation of a number of existing databases intended for drug research, and
+each molecule includes a reference back to its original source for convenience.
+
+The database is about 141GB compressed, so it requires a large filesystem.
+Further, when running Drug Sniffer on a cluster, we recommend that you make the
+database accessible through NFS or some similar means to avoid downloading it on
+to each node.
+
+Once extracted, you can point Drug Sniffer at the location using the
+:ref:`molecule_db <molecule-db-parameter>` parameter.
+
+The full database is available for download at
+`<https://data.drugsniffer.org/molecules.zip>`_.
+
 Docker Images
 -------------
 
