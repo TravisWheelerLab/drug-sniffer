@@ -96,6 +96,8 @@ the goal is to simply see the pipeline in action, or verify some change, the
 to test using some other method, and the ``3vri`` example serves to demonstrate
 how to do this. The ``5l2s`` example runs the entire pipeline.
 
+.. _molecule-db:
+
 Molecule Database
 -----------------
 

@@ -65,7 +65,7 @@ Similarity Search (Stage 4)
 molecule_db
 ^^^^^^^^^^^
 
-The path to the molecule database to use.
+The path to the :ref:`molecule database <molecule-db>` to use.
 
 tanimoto_cutoff
 ^^^^^^^^^^^^^^^
