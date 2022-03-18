@@ -3,7 +3,6 @@
 import torch
 from torch import nn
 import re
-import sys
 
 
 class ScoreModel(nn.Module):
@@ -119,85 +118,61 @@ class ScoreModel(nn.Module):
         Lx = torch.cat([x1, x2, x3], dim=-1)
         return torch.sigmoid(self.logout(Lx))
 
-        if self.useInputDropout:
-            x = self.input_drop(x)
 
-        Lx = self.logistic_drop(self.relu(self.loglin1(x)))
+def main(args):
+    if len(args) != 2:
+        print("Expects 2 arguments. Usage: python3 rescore.py <model> <scores>")
+        exit(1)
 
-        Lx = self.logistic_drop(self.relu(self.loglin2(Lx)))
-        Lx = self.logistic_drop(self.relu(self.loglin3(Lx)))
+    model_file = args[0]
+    dock_file = args[1]
 
-        if self.logisticMode:
-            return torch.sigmoid(self.logpredict(Lx))
+    model = ScoreModel(20, 128, 256, 512, 256, 512)
+    model.load_state_dict(torch.load(model_file))
+    model.requires_grad_(False)
 
-        #  x = x.unsqueeze(-1)
-        # print(x.shape, Lx.shape)
-        x = torch.cat((x, Lx), dim=-1)
+    names = []
+    vals = []
 
-        x = self.score_drop(self.sigmoid(self.scorelin1(x)))
-        x = self.score_drop(self.relu(self.scorelin2(x)))
+    sample_num = 20
 
-        return self.scorepredict(x)
+    with open(dock_file) as file:
+        for i, line in enumerate(file):
+            if i == 0:  # we expect the header
+                continue
 
+            line = line.strip()
+            cols = re.split(r"[ \t,]+", line)
 
-if len(sys.argv) != 3:
-    print("Expects 2 arguments. Usage: python3 score.py model.h5 score_file.score")
-    exit(-1)
+            if len(cols) != 19:
+                continue
 
-model_file = sys.argv[1]
-dock_file = sys.argv[2]
+            v = [0.0, 0.0, 0.0]
 
-model = ScoreModel(20, 128, 256, 512, 256, 512)
-model.load_state_dict(torch.load(model_file))
+            for j, value in enumerate(cols[2:]):
+                try:
+                    v.append(float(value))
+                except:
+                    print(f"value at index {j + 2} ({value}) must be a float")
+                    exit(2)
 
-model.requires_grad_(False)
+            name = cols[0:2]
+            name.append(dock_file)
 
+            names.append(name)
+            vals.append(v)
 
-names = []
-vals = []
+    data = torch.tensor(vals)
+    out = model(data).squeeze()
+    for i in range(sample_num - 1):
+        out += model(data).squeeze()
+    data = out
 
-sample_num = 20
-
-
-with open(dock_file) as file:
-    lines = file.readlines()
-    for i, line in enumerate(lines):
-        if i == 0:  # we expect the header
-            continue
-        line.replace("\n", "")
-        line.replace("\\n", "")
-        cols = re.split(r"[ \t,]+", line)
-        # print(cols)
-        # cols.replace('\n', '')
-
-        if len(cols) != 19:
-            continue
-
-        v = []
-        v.append(0.0)
-        v.append(0.0)
-        v.append(0.0)
-
-        for j in cols[2:]:
-            try:
-                v.append(float(j))
-            except:
-                print(j)
-
-        name = cols[0:2]
-
-        name.append(dock_file)
-        names.append(name)
-        vals.append(v)
+    for i in range(len(data)):
+        print(names[i][0], names[i][1], names[i][2], float(data[i]) / float(sample_num))
 
 
-data = torch.tensor(vals)
-# print(len(vals), len(names), data.shape)
-out = model(data).squeeze()
-for i in range(sample_num - 1):
-    out += model(data).squeeze()
-data = out
+if __name__ == "__main__":
+    import sys
 
-
-for i in range(len(data)):
-    print(names[i][0], names[i][1], names[i][2], float(data[i]) / float(sample_num))
+    main(sys.argv[1:])

@@ -24,7 +24,17 @@ with each stage below.
 Stage 3 - Denovo Molecule Design
 --------------------------------
 
-One option for identifying leads is to dock a virtual library of pre-enumerated compounds. Alternatively, one may evolve drug-like molecules using a genetic algorithm. In DrugSniffer, we make use of AutoGrow4, an open-source program that uses an evolutionary algorithm to generate novel leads from a set of chemically diverse molecular fragments. The de novo process makes use of in silico chemical reactions to generate new compounds, and the population of compounds is iteratively refined over a number of cycles. In order to remove compounds with undesirable physical and chemical properties, AutoGrow4 makes use of molecular filters such as PAINS and Lipinski rules. The molecules from the last three generations are set up as seeds to identify similar molecules in massive libraries.  
+One option for identifying leads is to dock a virtual library of pre-enumerated
+compounds. Alternatively, one may evolve drug-like molecules using a genetic
+algorithm. In DrugSniffer, we make use of AutoGrow4, an open-source program that
+uses an evolutionary algorithm to generate novel leads from a set of chemically
+diverse molecular fragments. The de novo process makes use of in silico chemical
+reactions to generate new compounds, and the population of compounds is
+iteratively refined over a number of cycles. In order to remove compounds with
+undesirable physical and chemical properties, AutoGrow4 makes use of molecular
+filters such as PAINS and Lipinski rules. The molecules from the last three
+generations are set up as seeds to identify similar molecules in massive
+libraries.  
 
 Required environment variables:
 
@@ -67,7 +77,13 @@ is in line with the recommended way to use this software.
 Stage 4 - Similarity Search
 ---------------------------
 
-In order to expand the candidate pool, the denovo molecules are used as seeds to identify other similar structures in larger databases. After building 1024-bit ECFP4 fingerprints for the denovo molecules, they are compared against molecules in the database. The fingerprints for the database molecules are pre-generated and are referenced with the :code:`molecule_db` parameter. The result of this stage is a collection of molecules likely to be similar to the denovo molecules and therefore (hopefully) likely to fit the receptor.
+In order to expand the candidate pool, the denovo molecules are used as seeds to
+identify other similar structures in larger databases. After building 1024-bit
+ECFP4 fingerprints for the denovo molecules, they are compared against molecules
+in the database. The fingerprints for the database molecules are pre-generated
+and are referenced with the :code:`molecule_db` parameter. The result of this
+stage is a collection of molecules likely to be similar to the denovo molecules
+and therefore (hopefully) likely to fit the receptor.
 
 Required environment variables:
 
@@ -91,7 +107,12 @@ the Python bindings), version 2021.9.4.
 Stage 5 - Protein Ligand Docking
 --------------------------------
 
-For the seed-neighbor molecules identified by the similarity search, optimized structures (lowest energy conformation generated using OpenBabel) of neighbors are docked into their respective targets using AutoDock Vina. The number of docking poses produced and the exhaustiveness parameter for the search for each ligand are parameterized by the user; the default values are 9 and 4, respectively.
+For the seed-neighbor molecules identified by the similarity search, optimized
+structures (lowest energy conformation generated using OpenBabel) of neighbors
+are docked into their respective targets using AutoDock Vina. The number of
+docking poses produced and the exhaustiveness parameter for the search for each
+ligand are parameterized by the user; the default values are 9 and 4,
+respectively.
 
 Required environment variables:
 
@@ -121,7 +142,46 @@ Dependencies (included in Docker image):
 Stage 6 - Activity Prediction
 -----------------------------
 
-The docking score produced by AutoDock Vina is only a loose estimate of the actual binding affinity. DrugSniffer adds 3 post hoc re-scoring methods (1) the Autodock Vina score (2) the SMINA score (3) **dock2bind** (the default) which is a neural network re-scoring strategy. The model is trained on ligand-protein complexes taken from the LIT-PCBA and DUD-E. For each docked pose, 16 pose descriptors calculated by SMINA, along with the DFIRE estimate of protein–ligand potential are used as input to the model. **dock2bind** produces a value between 0 and 1 and can be thought of as the model's confidence that the molecule binds to the pocket, constrained by the specific pose.
+The docking score produced by AutoDock Vina is only a loose estimate of the
+actual binding affinity. DrugSniffer adds 3 post hoc re-scoring methods (1) the
+Autodock Vina score (2) the SMINA score (3) **dock2bind** (the default) which is
+a neural network re-scoring strategy. The model is trained on ligand-protein
+complexes taken from the LIT-PCBA and DUD-E. For each docked pose, 16 pose
+descriptors calculated by SMINA, along with the DFIRE estimate of protein–ligand
+potential are used as input to the model. **dock2bind** produces a value from
+0 to 1 and can be thought of as the model's confidence that the molecule binds
+to the pocket, constrained by the specific pose.
+
+The model accepts the values below, in order, as a comma- or whitespace-delimited
+table:
+
+1. Pose (identifier)
+2. Chemical name
+3. gauss_1
+4. gauss_2
+5. repulsion
+6. hydrophobic
+7. non_hydrophobic
+8. vdw
+9. non_dir_hbond_lj
+10. non_dir_anti_h_bond_quadratic
+11. non_dir_h_bond
+12. acceptor_acceptor_quadratic
+13. donor_donor_quadratic
+14. electrostatic
+15. ad4_solvation
+16. ligand_length
+17. constant_term
+18. num_tors_div
+19. DFIRE
+
+The output of this stage is a comma-delimited table of values containing the
+columns listed below:
+
+1. Pose (identifier)
+2. Chemical name
+3. Docked file path
+4. Model output (from 0 to 1)
 
 Required environment variables:
 
@@ -159,7 +219,20 @@ Dependencies (included in Docker image):
 Stage 7 - ADMET Filtering (optional)
 ------------------------------------
 
-The absorption, distribution, metabolism, excretion, and toxicity (ADMET) of drugs plays a key role in determining which among the potential candidate structures are to be prioritized. The ADMET filtering here is based on molecular fingerprint-based predictive models. While a majority of the models are binary classification models, for some endpoints such the metabolic intrinsic clearance, acute oral toxicity in rats, plasma protein binding and elimination half-life, multiclass models are proposed. For a complete list of the models employed see <https://doi.org/10.1186/s13321-021-00557-5> For classification models, two additional values are reported: a confidence (how certain the model is that the prediction is a singleton) and a credibility. A confidence value of 0.95 suggests that the classifier is quite certain that the prediction is likely to be a single label. A relatively low value of credibility suggests that the compounds are not sufficiently represented in the training set and that the user needs to treat the prediction with caution.
+The absorption, distribution, metabolism, excretion, and toxicity (ADMET) of
+drugs plays a key role in determining which among the potential candidate
+structures are to be prioritized. The ADMET filtering here is based on molecular
+fingerprint-based predictive models. While a majority of the models are binary
+classification models, for some endpoints such the metabolic intrinsic
+clearance, acute oral toxicity in rats, plasma protein binding and elimination
+half-life, multiclass models are proposed. For a complete list of the models
+employed see <https://doi.org/10.1186/s13321-021-00557-5>. For classification
+models, two additional values are reported: a confidence (how certain the model
+is that the prediction is a singleton) and a credibility. A confidence value of
+0.95 suggests that the classifier is quite certain that the prediction is likely
+to be a single label. A relatively low value of credibility suggests that the
+compounds are not sufficiently represented in the training set and that the user
+needs to treat the prediction with caution.
 
 Required environment variables:
 
