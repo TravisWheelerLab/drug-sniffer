@@ -172,12 +172,32 @@ process error_collation {
     path ap_log from activity_prediction_errors.collectFile()
 
     output:
-    path "all_errors.log" into all_errors
+    path "all_errors.txt" into all_errors
 
     """
     process_errors.py \
         --protein-ligand-docking ${pld_log} \
         --activity-prediction ${ap_log} \
-        > all_errors.log
+        > all_errors.txt
+    """
+}
+
+// Stage 9
+
+process results_collation {
+    container 'traviswheelerlab/09-results_collation'
+
+    input:
+    path ligand_score from ligand_score.collectFile()
+    path admet_output from admet_output.collectFile()
+
+    output:
+    path "all_results.txt" into all_results
+
+    """
+    process_results.py \
+        --ligand-score ${ligand_score} \
+        --admet-output ${admet_output} \
+        > all_results.txt
     """
 }
