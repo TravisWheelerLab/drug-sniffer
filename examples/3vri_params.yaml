@@ -14,3 +14,5 @@ receptor_size_z: 10.0
 admet_checks: '1 2 3'
 
 denovo_ligands: '${launchDir}/3vri_denovo.smi'
+
+output_dir: '${launchDir}/drug-sniffer-output'

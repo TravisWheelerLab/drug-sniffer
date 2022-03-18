@@ -167,6 +167,8 @@ process admet_filtering {
 process error_collation {
     container 'traviswheelerlab/08-error_collation'
 
+    publishDir "${params.output_dir}", mode: 'symlink'
+
     input:
     path pld_log from protein_ligand_docking_errors.collectFile()
     path ap_log from activity_prediction_errors.collectFile()
@@ -186,6 +188,8 @@ process error_collation {
 
 process results_collation {
     container 'traviswheelerlab/09-results_collation'
+
+    publishDir "${params.output_dir}", mode: 'symlink'
 
     input:
     path ligand_score from ligand_score.collectFile()

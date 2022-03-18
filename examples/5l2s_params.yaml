@@ -13,3 +13,4 @@ receptor_size_z: 16.0
 
 admet_checks: '1 2 3'
 
+output_dir: '${launchDir}/drug-sniffer-output'
