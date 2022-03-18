@@ -89,6 +89,10 @@ do
         continue
     fi
 
+    # Successfully processed the ligand so add it to the list for ADMET
+    # filtering
+    echo "$smi" >> admet.smi
+
     let "n=n+1"
 done
 

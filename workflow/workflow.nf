@@ -103,12 +103,13 @@ process protein_ligand_docking {
     val size_z from params.receptor_size_z
 
     output:
-    path "docked_*.pdbqt" into docked_pdbqt
-    path "admet.smi" into admet_smi
+    path "docked_*.pdbqt" optional true into docked_pdbqt
+    path "admet.smi" optional true into admet_smi
     path "errors.log" into protein_ligand_docking_errors
 
     cpus 1
 
+    script:
     """
     RECEPTOR_PDB="${receptor_pdb}" \
     LIGANDS_SMI="${db_ligands_smi}" \
@@ -119,8 +120,6 @@ process protein_ligand_docking {
     SIZE_Y="${size_y}" \
     SIZE_Z="${size_z}" \
     run.sh
-
-    cp ${db_ligands_smi} admet.smi
     """
 }
 
