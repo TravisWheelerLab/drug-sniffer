@@ -18,7 +18,7 @@ def main(args):
     admet_file = open(options.admet_output, "r")
 
     for score, admet in zip(score_file, admet_file):
-        print(f"{score},{admet}")
+        print(f"{score.strip()},{admet.strip()}")
 
     score_file.close()
     admet_file.close()
