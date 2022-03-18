@@ -175,6 +175,7 @@ process activity_prediction {
 
     stub:
     """
+    echo "pose,chemical name,docked file,dock2bind score" >> ligand.score
     echo "name0,name1,name2,1.0" >> ligand.score
     touch errors_ap_${task.index}.log
     """
