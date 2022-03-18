@@ -33,6 +33,7 @@ process denovo {
     when:
     params.denovo_ligands == null
 
+    script:
     """
     NUMBER_OF_PROCESSORS=4 \
     RECEPTOR_PATH="${receptor_pdb}" \
@@ -43,6 +44,11 @@ process denovo {
     SIZE_Y="${size_y}" \
     SIZE_Z="${size_z}" \
     run.sh
+    """
+
+    stub:
+    """
+    touch denovo.smi
     """
 }
 
@@ -60,8 +66,14 @@ process external_denovo {
     when:
     params.denovo_ligands != null
 
+    script:
     """
     cp ${denovo_ligands} denovo.smi
+    """
+
+    stub:
+    """
+    touch denovo.smi
     """
 }
 
@@ -79,11 +91,18 @@ process similarity_search {
 
     cpus 1
 
+    script:
     """
     DENOVO_LIGANDS_SMI="${denovo_ligands_smi}" \
     MOLECULE_DB="${molecule_db}" \
     TANIMOTO_CUTOFF="${params.tanimoto_cutoff}" \
     run.sh
+    """
+
+    stub:
+    """
+    touch ligand0.smi
+    touch ligand1.smi
     """
 }
 
@@ -105,7 +124,7 @@ process protein_ligand_docking {
     output:
     path "docked_*.pdbqt" optional true into docked_pdbqt
     path "admet.smi" optional true into admet_smi
-    path "errors.log" into protein_ligand_docking_errors
+    path "errors_pld_${task.index}.log" into pld_errors
 
     cpus 1
 
@@ -121,6 +140,16 @@ process protein_ligand_docking {
     SIZE_Z="${size_z}" \
     run.sh
     """
+
+    stub:
+    """
+    touch docked_0.pdbqt
+    touch docked_1.pdbqt
+    touch docked_2.pdbqt
+    touch docked_3.pdbqt
+    cp ${db_ligands_smi} admet.smi
+    touch errors_pld_${task.index}.log
+    """
 }
 
 // Stage 6
@@ -134,13 +163,20 @@ process activity_prediction {
 
     output:
     path "ligand.score" into ligand_score
-    path "errors.log" into activity_prediction_errors
+    path "errors_ap_${task.index}.log" into ap_errors
 
+    script:
     """
     LIGAND_NAME=dummy \
     RECEPTOR_PDB=${receptor_pdb} \
     DOCKED_PDBQT=${docked_pdbqt} \
     run.sh
+    """
+
+    stub:
+    """
+    echo "name0,name1,name2,1.0" >> ligand.score
+    touch errors_ap_${task.index}.log
     """
 }
 
@@ -155,10 +191,17 @@ process admet_filtering {
     output:
     path "output.txt" into admet_output
 
+    script:
     """
     LIGAND_SMIS="${db_ligands_smi}" \
     ADMET_CHECKS="${params.admet_checks}" \
     run.sh
+    """
+
+    stub:
+    """
+    echo "1_predicted,1_confidence,1_credibility,jlogp" >> output.txt
+    echo "1.0,1.0,1.0,1.0" >> output.txt
     """
 }
 
@@ -170,12 +213,13 @@ process error_collation {
     publishDir "${params.output_dir}", mode: 'symlink'
 
     input:
-    path pld_log from protein_ligand_docking_errors.collectFile()
-    path ap_log from activity_prediction_errors.collectFile()
+    path pld_log from pld_errors.collectFile()
+    path ap_log from ap_errors.collectFile()
 
     output:
     path "all_errors.txt" into all_errors
 
+    script:
     """
     process_errors.py \
         --protein-ligand-docking ${pld_log} \
@@ -198,6 +242,7 @@ process results_collation {
     output:
     path "all_results.txt" into all_results
 
+    script:
     """
     process_results.py \
         --ligand-score ${ligand_score} \
