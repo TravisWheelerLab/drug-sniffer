@@ -6,6 +6,16 @@ Parameters
 The parameters described below can be specified when the pipeline is run. They
 change the behavior of various stages.
 
+Output
+------
+
+output_dir
+^^^^^^^^^^
+
+A local directory in which to write the final output files, including the
+aggregated results and error reports. A reasonable choice would be
+``'${launchDir}/output'``.
+
 Protein Receptor (Pocket)
 -------------------------
 
