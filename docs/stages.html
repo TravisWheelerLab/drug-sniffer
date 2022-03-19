@@ -15,8 +15,8 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Usage" href="usage.html" />
-    <link rel="prev" title="Drug Sniffer" href="index.html" /> 
+    <link rel="next" title="Parameters" href="parameters.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -25,10 +25,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="usage.html" title="Usage"
+          <a href="parameters.html" title="Parameters"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Drug Sniffer"
+          <a href="usage.html" title="Usage"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Drug Sniffer  documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Stages</a></li> 
@@ -44,7 +44,9 @@
 <h1>Stages<a class="headerlink" href="#stages" title="Permalink to this headline">¶</a></h1>
 <p>The <cite>workflow/</cite> directory contains everything necessary to run the Drug Sniffer
 pipeline conveniently on a variety of computing platforms. The individual
-components of the pipeline (stages) are described below.</p>
+components of the pipeline (stages) are described below. Although it is possible
+to use the pipeline without understanding the individual stages, this information
+is provided here to aid users in troubleshooting, and for completeness.</p>
 <p>Each stage includes a Docker image (<cite>Dockerfile</cite>) along with dependencies and
 scripts. To build the image for a given stage, run <cite>build-image.sh</cite> in the
 directory corresponding to that stage. To run the container, for manual
@@ -59,19 +61,31 @@ user sets certain environment variables and then executes the script. All stages
 work this way. Required and optional environment variables are described along
 with each stage below.</p>
 </section>
+<section id="stage-1-target-identification">
+<h2>Stage 1 - Target Identification<a class="headerlink" href="#stage-1-target-identification" title="Permalink to this headline">¶</a></h2>
+<p>The user is presumed to have chosen a target protein. For example, the SARS
+CoV-2 spike protein.</p>
+</section>
+<section id="stage-2-pocket-prediction">
+<h2>Stage 2 - Pocket Prediction<a class="headerlink" href="#stage-2-pocket-prediction" title="Permalink to this headline">¶</a></h2>
+<p>Pocket prediction is a manual process. Once a pocket has been selected, it is
+provided to the <em>Drug Sniffer</em> pipeline as a PDB file along with information
+about the pocket geometry. See <a class="reference internal" href="parameters.html#parameters"><span class="std std-ref">Parameters</span></a> for details.</p>
+</section>
 <section id="stage-3-denovo-molecule-design">
 <h2>Stage 3 - Denovo Molecule Design<a class="headerlink" href="#stage-3-denovo-molecule-design" title="Permalink to this headline">¶</a></h2>
 <p>One option for identifying leads is to dock a virtual library of pre-enumerated
 compounds. Alternatively, one may evolve drug-like molecules using a genetic
-algorithm. In DrugSniffer, we make use of AutoGrow4, an open-source program that
+algorithm.</p>
+<p>In <em>Drug Sniffer</em>, we make use of AutoGrow4, an open-source program that
 uses an evolutionary algorithm to generate novel leads from a set of chemically
 diverse molecular fragments. The de novo process makes use of in silico chemical
 reactions to generate new compounds, and the population of compounds is
-iteratively refined over a number of cycles. In order to remove compounds with
-undesirable physical and chemical properties, AutoGrow4 makes use of molecular
-filters such as PAINS and Lipinski rules. The molecules from the last three
-generations are set up as seeds to identify similar molecules in massive
-libraries.</p>
+iteratively refined over a number of cycles.</p>
+<p>In order to remove compounds with undesirable physical and chemical properties,
+AutoGrow4 makes use of molecular filters such as PAINS and Lipinski rules. The
+molecules from the last three generations are set up as seeds to identify
+similar molecules in massive libraries.</p>
 <p>Required environment variables:</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -269,7 +283,8 @@ structures are to be prioritized. The ADMET filtering here is based on molecular
 fingerprint-based predictive models. While a majority of the models are binary
 classification models, for some endpoints such the metabolic intrinsic
 clearance, acute oral toxicity in rats, plasma protein binding and elimination
-half-life, multiclass models are proposed. For a complete list of the models
+half-life, multiclass models are proposed.</p>
+<p>For a complete list of the models
 employed see &lt;<a class="reference external" href="https://doi.org/10.1186/s13321-021-00557-5">https://doi.org/10.1186/s13321-021-00557-5</a>&gt;. For classification
 models, two additional values are reported: a confidence (how certain the model
 is that the prediction is a singleton) and a credibility. A confidence value of
@@ -296,6 +311,17 @@ values in the range [1, 56] (default is empty)</p></li>
 </li>
 </ul>
 </section>
+<section id="stage-8-error-collation">
+<h2>Stage 8 - Error Collation<a class="headerlink" href="#stage-8-error-collation" title="Permalink to this headline">¶</a></h2>
+<p>Errors that occur in certain stages (those that tend to produce recoverable
+errors) are assembled into a single report and written to the path provided by
+the <a class="reference internal" href="parameters.html#output-dir"><span class="std std-ref">output_dir</span></a> parameter.</p>
+</section>
+<section id="stage-9-results-collation">
+<h2>Stage 9 - Results Collation<a class="headerlink" href="#stage-9-results-collation" title="Permalink to this headline">¶</a></h2>
+<p>Results are assembled into a single file and written to the path provided by the
+<a class="reference internal" href="parameters.html#output-dir"><span class="std std-ref">output_dir</span></a> parameter.</p>
+</section>
 </section>
 
 
@@ -304,19 +330,27 @@ values in the range [1, 56] (default is empty)</p></li>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div id="um-header" style="margin: 0 20px 10px 20px;">
+    <a href="https://umt.edu">
+        <img src="_static/um.png" alt="UM Logo" />
+    </a>
+</div>
 <h3><a href="index.html">Table of Contents</a></h3>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Stages</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#running-a-stage">Running a Stage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stage-1-target-identification">Stage 1 - Target Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stage-2-pocket-prediction">Stage 2 - Pocket Prediction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-3-denovo-molecule-design">Stage 3 - Denovo Molecule Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-4-similarity-search">Stage 4 - Similarity Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-5-protein-ligand-docking">Stage 5 - Protein Ligand Docking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-6-activity-prediction">Stage 6 - Activity Prediction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-7-admet-filtering-optional">Stage 7 - ADMET Filtering (optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stage-8-error-collation">Stage 8 - Error Collation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stage-9-results-collation">Stage 9 - Results Collation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
 </ul>
 
@@ -341,10 +375,10 @@ values in the range [1, 56] (default is empty)</p></li>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="usage.html" title="Usage"
+          <a href="parameters.html" title="Parameters"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Drug Sniffer"
+          <a href="usage.html" title="Usage"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Drug Sniffer  documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Stages</a></li> 

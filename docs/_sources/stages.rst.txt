@@ -3,7 +3,9 @@ Stages
 
 The `workflow/` directory contains everything necessary to run the Drug Sniffer
 pipeline conveniently on a variety of computing platforms. The individual
-components of the pipeline (stages) are described below.
+components of the pipeline (stages) are described below. Although it is possible
+to use the pipeline without understanding the individual stages, this information
+is provided here to aid users in troubleshooting, and for completeness.
 
 Each stage includes a Docker image (`Dockerfile`) along with dependencies and
 scripts. To build the image for a given stage, run `build-image.sh` in the
@@ -21,20 +23,36 @@ user sets certain environment variables and then executes the script. All stages
 work this way. Required and optional environment variables are described along
 with each stage below.
 
+Stage 1 - Target Identification
+--------------------------------
+
+The user is presumed to have chosen a target protein. For example, the SARS
+CoV-2 spike protein.
+
+Stage 2 - Pocket Prediction
+---------------------------
+
+Pocket prediction is a manual process. Once a pocket has been selected, it is
+provided to the *Drug Sniffer* pipeline as a PDB file along with information
+about the pocket geometry. See :ref:`Parameters <parameters>` for details.
+
 Stage 3 - Denovo Molecule Design
 --------------------------------
 
 One option for identifying leads is to dock a virtual library of pre-enumerated
 compounds. Alternatively, one may evolve drug-like molecules using a genetic
-algorithm. In DrugSniffer, we make use of AutoGrow4, an open-source program that
+algorithm.
+
+In *Drug Sniffer*, we make use of AutoGrow4, an open-source program that
 uses an evolutionary algorithm to generate novel leads from a set of chemically
 diverse molecular fragments. The de novo process makes use of in silico chemical
 reactions to generate new compounds, and the population of compounds is
-iteratively refined over a number of cycles. In order to remove compounds with
-undesirable physical and chemical properties, AutoGrow4 makes use of molecular
-filters such as PAINS and Lipinski rules. The molecules from the last three
-generations are set up as seeds to identify similar molecules in massive
-libraries.  
+iteratively refined over a number of cycles.
+
+In order to remove compounds with undesirable physical and chemical properties,
+AutoGrow4 makes use of molecular filters such as PAINS and Lipinski rules. The
+molecules from the last three generations are set up as seeds to identify
+similar molecules in massive libraries.  
 
 Required environment variables:
 
@@ -225,7 +243,9 @@ structures are to be prioritized. The ADMET filtering here is based on molecular
 fingerprint-based predictive models. While a majority of the models are binary
 classification models, for some endpoints such the metabolic intrinsic
 clearance, acute oral toxicity in rats, plasma protein binding and elimination
-half-life, multiclass models are proposed. For a complete list of the models
+half-life, multiclass models are proposed.
+
+For a complete list of the models
 employed see <https://doi.org/10.1186/s13321-021-00557-5>. For classification
 models, two additional values are reported: a confidence (how certain the model
 is that the prediction is a singleton) and a credibility. A confidence value of
@@ -249,3 +269,16 @@ Dependencies (included in Docker image):
 
   * Source: <https://gitlab.com/vishsoft/fpadmet>
   * Commit: d61d63e3d3c37e887a5d4b1959260d9f1b41f77a
+
+Stage 8 - Error Collation
+-------------------------
+
+Errors that occur in certain stages (those that tend to produce recoverable
+errors) are assembled into a single report and written to the path provided by
+the :ref:`output_dir <output_dir>` parameter.
+
+Stage 9 - Results Collation
+---------------------------
+
+Results are assembled into a single file and written to the path provided by the
+:ref:`output_dir <output_dir>` parameter.

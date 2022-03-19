@@ -9,6 +9,8 @@ change the behavior of various stages.
 Output
 ------
 
+.. _output_dir:
+
 output_dir
 ^^^^^^^^^^
 
