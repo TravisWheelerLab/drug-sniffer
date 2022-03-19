@@ -6,11 +6,35 @@
 Drug Sniffer
 ============
 
-Drug Sniffer is a drug discovery pipeline. More details to come!
+*Drug Sniffer* is a virtual screening (VS) pipeline capable of screening
+billions of molecules using only thousands of CPU hours, using a novel
+combination of ligand-based (LBVS) and structure-based (SBVS) methods.
+
+The pipeline requires the user to identify the structure and pocket of the
+target protein (stages 1 and 2). These stages are completed manually by the
+user.
+
+Then, the pipeline begins by designing multiple de novo ligands for the
+identified binding pockets (stage 3). Next, it uses these ligands as seeds to
+identify similar compounds from a small-molecule database (stage 4). The
+resulting neighbors are then subjected to rigid-body docking (stage 5) and
+re-ranked with a new scoring model (stage 6).
+
+Optionally, the pipeline also allows the user to run possible ligands through
+`FP-ADMET <https://gitlab.com/vishsoft/fpadmet>`_, an ADMET filter (stage 7).
+
+The *Drug Sniffer* pipeline has been implemented as a `Nextflow
+<http://nextflow.io>`_ workflow. Each stage has a corresponding script and
+Docker image that are used to execute the computations contained in the stage.
+
 Code can be found on
 `GitHub <https://github.com/TravisWheelerLab/drug-sniffer>`_.
 
-See the :ref:`Usage <usage>` guide for details on how to run it.
+See the :ref:`Usage <usage>` guide for details on how to run *Drug Sniffer*.
+
+.. image:: _static/pipeline.png
+  :width: 600
+  :alt: Drug Sniffer Pipeline
 
 Table of Contents
 =================
