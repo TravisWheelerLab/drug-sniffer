@@ -10,6 +10,8 @@ Drug Sniffer is a drug discovery pipeline. More details to come!
 Code can be found on
 `GitHub <https://github.com/TravisWheelerLab/drug-sniffer>`_.
 
+See the :ref:`Usage <usage>` guide for details on how to run it.
+
 Table of Contents
 =================
 
@@ -17,8 +19,8 @@ Table of Contents
 .. toctree::
    :maxdepth: 2
 
-   stages
    usage
+   stages
    parameters
 
 
