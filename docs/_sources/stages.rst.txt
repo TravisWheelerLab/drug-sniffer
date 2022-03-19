@@ -26,8 +26,8 @@ with each stage below.
 Stage 1 - Target Identification
 --------------------------------
 
-The user is presumed to have chosen a target protein. For example, the SARS
-CoV-2 spike protein.
+The user is presumed to have chosen a target protein. For example, the
+SARS-CoV-2 Nucleocapsid Protein.
 
 Stage 2 - Pocket Prediction
 ---------------------------
@@ -35,6 +35,10 @@ Stage 2 - Pocket Prediction
 Pocket prediction is a manual process. Once a pocket has been selected, it is
 provided to the *Drug Sniffer* pipeline as a PDB file along with information
 about the pocket geometry. See :ref:`Parameters <parameters>` for details.
+
+Some common pocket prediction tools include `ProBis <http://probis.cmm.ki.si>`_,
+`FTMAP <http://ftmap.bu.edu>`_, and
+`POCASA <https://g6altair.sci.hokudai.ac.jp/g6/service/pocasa/manual.html>`_.
 
 Stage 3 - Denovo Molecule Design
 --------------------------------

@@ -59,3 +59,6 @@ Acknowledgements
 
 This research was supported in part by NIH grant R01GM132600 and DOE grant
 DE-SC0021216.
+
+*Drug Sniffer* was developed by `Wheeler Lab <http://wheelerlab.org>`_ at
+the University of Montana, along with other collaborators.
