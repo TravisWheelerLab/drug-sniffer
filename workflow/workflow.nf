@@ -175,7 +175,6 @@ process activity_prediction {
 
     stub:
     """
-    echo "pose,chemical name,docked file,dock2bind score" >> ligand.score
     echo "name0,name1,name2,1.0" >> ligand.score
     touch errors_ap_${task.index}.log
     """
@@ -201,7 +200,6 @@ process admet_filtering {
 
     stub:
     """
-    echo "1_predicted,1_confidence,1_credibility,jlogp" >> output.txt
     echo "1.0,1.0,1.0,1.0" >> output.txt
     """
 }

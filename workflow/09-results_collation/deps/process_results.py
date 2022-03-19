@@ -27,6 +27,8 @@ def main(args):
         headers.append(f"credibility {check}")
     headers.append("jlogp")
 
+    print(",".join(headers))
+
     score_file = open(options.ligand_score, "r")
     admet_file = open(options.admet_output, "r")
 
