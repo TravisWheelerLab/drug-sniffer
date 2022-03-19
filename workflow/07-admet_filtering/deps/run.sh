@@ -14,30 +14,19 @@ set -e
 
 OUTPUT_FILE=${OUTPUT_FILE:-output.txt}
 
-rm -f headers.txt
-echo -n "smi," > headers.txt
-for check in $ADMET_CHECKS; do
-    echo -n "${check}_predicted,${check}_confidence,${check}_credibility," >> headers.txt
-done
-echo "jlogp" >> headers.txt
-
-rm -f data.txt
-touch data.txt
 cat "$LIGANDS_SMI" | while read smi
 do
     echo "$smi" > ligand.smi
-    echo -n "$smi," >> data.txt
+    echo -n "$smi," >> "$OUTPUT_FILE"
     for check in $ADMET_CHECKS; do
         runadmet.sh -f ligand.smi -p "$check" -a
-        awk 'NR!=1 {printf "%s,%s,%s,",2,3,4}' /opt/fpadmet/RESULTS/predicted.txt >> data.txt
+        awk 'NR!=1 {printf "%s,%s,%s,",2,3,4}' /opt/fpadmet/RESULTS/predicted.txt >> "$OUTPUT_FILE"
     done
 
     rm -f jlogp.txt
     java -jar /opt/JLogP/build/JLogP.jar ligand.smi jlogp.txt
-    awk '{print $2}' jlogp.txt >> data.txt
+    awk '{print $2}' jlogp.txt >> "$OUTPUT_FILE"
 done
 
-cat headers.txt data.txt > "$OUTPUT_FILE"
-
-rm -f data.txt headers.txt ligand.smi jlogp.txt
+rm -f ligand.smi jlogp.txt
 

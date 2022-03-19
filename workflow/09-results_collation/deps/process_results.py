@@ -11,8 +11,21 @@ def main(args):
 
     parser.add_argument("--ligand-score")
     parser.add_argument("--admet-output")
+    parser.add_argument("--admet-checks")
 
     options = parser.parse_args(args)
+
+    headers = [
+        "pose",
+        "chemical name",
+        "docked file",
+        "dock2bind score",
+    ]
+    for check in options.admet_checks.split():
+        headers.append(f"predicted {check}")
+        headers.append(f"confidence {check}")
+        headers.append(f"credibility {check}")
+    headers.append("jlogp")
 
     score_file = open(options.ligand_score, "r")
     admet_file = open(options.admet_output, "r")

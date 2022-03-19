@@ -168,8 +168,6 @@ def main(args):
         out += model(data).squeeze()
     data = out
 
-    print("pose,chemical name,docked file,dock2bind score")
-
     for i in range(len(data)):
         print(names[i][0], names[i][1], names[i][2], float(data[i]) / float(sample_num))
 

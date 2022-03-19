@@ -248,6 +248,7 @@ process results_collation {
     process_results.py \
         --ligand-score ${ligand_score} \
         --admet-output ${admet_output} \
+        --admet-checks ${params.admet_checks} \
         > all_results.txt
     """
 }
