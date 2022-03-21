@@ -57,8 +57,15 @@ Indices
 Acknowledgements
 ================
 
-This research was supported in part by NIH grant R01GM132600 and DOE grant
-DE-SC0021216.
+This research was supported in part by:
 
-*Drug Sniffer* was developed by `Wheeler Lab <http://wheelerlab.org>`_ at
-the University of Montana, along with other collaborators.
+* Research Council of Norway (Grant No. 262152)
+* National Institutes of Health (NIH), Department of Health and Human Services
+  under BCBB Support Services Contract HHSN316201300006W/HHSN27200002 to MSC,
+  Inc.
+* This research was supported in part by NIH grant R01GM132600 and DOE grant
+  DE-SC0021216.
+
+The *Drug Sniffer* software was developed by the `Wheeler Lab
+<http://wheelerlab.org>`_ at the University of Montana, along with other
+collaborators.
