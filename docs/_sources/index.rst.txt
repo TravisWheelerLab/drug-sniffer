@@ -30,7 +30,7 @@ Docker image that are used to execute the computations contained in the stage.
 Code can be found on
 `GitHub <https://github.com/TravisWheelerLab/drug-sniffer>`_.
 
-See the :ref:`Usage <usage>` guide for details on how to run *Drug Sniffer*.
+See the :ref:`usage` guide for details on how to run *Drug Sniffer*.
 
 .. image:: _static/pipeline.png
   :width: 600

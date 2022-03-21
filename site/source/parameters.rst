@@ -9,7 +9,7 @@ change the behavior of various stages.
 Output
 ------
 
-.. _output_dir:
+.. _output_dir-parameter:
 
 output_dir
 ^^^^^^^^^^
@@ -72,7 +72,7 @@ skipped entirely, the ligands specified will be fed directly into Stage 4.
 Similarity Search (Stage 4)
 ---------------------------
 
-.. _molecule-db-parameter:
+.. _molecule_db-parameter:
 
 molecule_db
 ^^^^^^^^^^^

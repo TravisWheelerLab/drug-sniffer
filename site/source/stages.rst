@@ -34,7 +34,7 @@ Stage 2 - Pocket Prediction
 
 Pocket prediction is a manual process. Once a pocket has been selected, it is
 provided to the *Drug Sniffer* pipeline as a PDB file along with information
-about the pocket geometry. See :ref:`Parameters <parameters>` for details.
+about the pocket geometry. See :ref:`parameters` for details.
 
 Some common pocket prediction tools include `ProBis <http://probis.cmm.ki.si>`_,
 `FTMAP <http://ftmap.bu.edu>`_, and
@@ -84,12 +84,12 @@ Dependencies (included in Docker image):
 
 * Autogrow4
 
-  * Website: <https://durrantlab.pitt.edu/autogrow4/>
+  * Website: `<https://durrantlab.pitt.edu/autogrow4/>`_
   * Version: 4.0.3
 
 * Autodock Vina
 
-  * Website: <https://vina.scripps.edu>
+  * Website: `<https://vina.scripps.edu>`_
   * Version: 1.1.2
 
 The Docker container for this stage also uses Miniconda 4.10.3 running Python
@@ -113,7 +113,7 @@ Required environment variables:
   stage 3
 * :code:`MOLECULE_DB` - the path to a molecule database to match denovo
   ligands against; the database format is described alongside the other
-  :ref:`parameters <molecule-db-parameter>`
+  :ref:`parameters <molecule_db-parameter>`
 
 Optional environment variables:
 
@@ -158,7 +158,7 @@ Dependencies (included in Docker image):
 
 * Autodock Vina
 
-  * Website: <https://vina.scripps.edu>
+  * Website: `<https://vina.scripps.edu>`_
   * Version: 1.1.2
 
 Stage 6 - Activity Prediction
@@ -226,16 +226,16 @@ Dependencies (included in Docker image):
 
 * DLIGAND2
 
-  * Source: <https://github.com/sysu-yanglab/DLIGAND2/>
+  * Source: `<https://github.com/sysu-yanglab/DLIGAND2/>`_
   * Commit: 03b0347d450b1a70f4728d1d170626100b585bb4
 
 * Smina
 
-  * Source: <https://github.com/mwojcikowski/smina>
+  * Source: `<https://github.com/mwojcikowski/smina>`_
 
 * Open Babel
 
-  * Website: <http://openbabel.org/wiki/Main_Page>
+  * Website: `<http://openbabel.org/wiki/Main_Page>`_
   * Installed from Debian repositories
 
 Stage 7 - ADMET Filtering (optional)
@@ -250,7 +250,7 @@ clearance, acute oral toxicity in rats, plasma protein binding and elimination
 half-life, multiclass models are proposed.
 
 For a complete list of the models
-employed see <https://doi.org/10.1186/s13321-021-00557-5>. For classification
+employed see `<https://doi.org/10.1186/s13321-021-00557-5>`_. For classification
 models, two additional values are reported: a confidence (how certain the model
 is that the prediction is a singleton) and a credibility. A confidence value of
 0.95 suggests that the classifier is quite certain that the prediction is likely
@@ -265,13 +265,13 @@ Required environment variables:
 Optional environment variables:
 
 * :code:`ADMET_CHECKS` - space-separated list of ADMET checks for FPADMET,
-  values in the range [1, 56] (default is empty)
+  values in the range ``[1, 56]`` (default is empty)
 
 Dependencies (included in Docker image):
 
 * FPADMET
 
-  * Source: <https://gitlab.com/vishsoft/fpadmet>
+  * Source: `<https://gitlab.com/vishsoft/fpadmet>`_
   * Commit: d61d63e3d3c37e887a5d4b1959260d9f1b41f77a
 
 Stage 8 - Error Collation
@@ -279,10 +279,10 @@ Stage 8 - Error Collation
 
 Errors that occur in certain stages (those that tend to produce recoverable
 errors) are assembled into a single report and written to the path provided by
-the :ref:`output_dir <output_dir>` parameter.
+the :ref:`output_dir-parameter` parameter.
 
 Stage 9 - Results Collation
 ---------------------------
 
 Results are assembled into a single file and written to the path provided by the
-:ref:`output_dir <output_dir>` parameter.
+:ref:`output_dir-parameter` parameter.

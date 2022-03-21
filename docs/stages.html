@@ -118,13 +118,13 @@ Autogrow4 (default is 10)</p></li>
 <ul class="simple">
 <li><p>Autogrow4</p>
 <ul>
-<li><p>Website: &lt;<a class="reference external" href="https://durrantlab.pitt.edu/autogrow4/">https://durrantlab.pitt.edu/autogrow4/</a>&gt;</p></li>
+<li><p>Website: <a class="reference external" href="https://durrantlab.pitt.edu/autogrow4/">https://durrantlab.pitt.edu/autogrow4/</a></p></li>
 <li><p>Version: 4.0.3</p></li>
 </ul>
 </li>
 <li><p>Autodock Vina</p>
 <ul>
-<li><p>Website: &lt;<a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a>&gt;</p></li>
+<li><p>Website: <a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a></p></li>
 <li><p>Version: 1.1.2</p></li>
 </ul>
 </li>
@@ -191,7 +191,7 @@ using Autodock Vina</p></li>
 <ul class="simple">
 <li><p>Autodock Vina</p>
 <ul>
-<li><p>Website: &lt;<a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a>&gt;</p></li>
+<li><p>Website: <a class="reference external" href="https://vina.scripps.edu">https://vina.scripps.edu</a></p></li>
 <li><p>Version: 1.1.2</p></li>
 </ul>
 </li>
@@ -261,18 +261,18 @@ poses computed by Autodock Vina in stage 5</p></li>
 </li>
 <li><p>DLIGAND2</p>
 <ul>
-<li><p>Source: &lt;<a class="reference external" href="https://github.com/sysu-yanglab/DLIGAND2/">https://github.com/sysu-yanglab/DLIGAND2/</a>&gt;</p></li>
+<li><p>Source: <a class="reference external" href="https://github.com/sysu-yanglab/DLIGAND2/">https://github.com/sysu-yanglab/DLIGAND2/</a></p></li>
 <li><p>Commit: 03b0347d450b1a70f4728d1d170626100b585bb4</p></li>
 </ul>
 </li>
 <li><p>Smina</p>
 <ul>
-<li><p>Source: &lt;<a class="reference external" href="https://github.com/mwojcikowski/smina">https://github.com/mwojcikowski/smina</a>&gt;</p></li>
+<li><p>Source: <a class="reference external" href="https://github.com/mwojcikowski/smina">https://github.com/mwojcikowski/smina</a></p></li>
 </ul>
 </li>
 <li><p>Open Babel</p>
 <ul>
-<li><p>Website: &lt;<a class="reference external" href="http://openbabel.org/wiki/Main_Page">http://openbabel.org/wiki/Main_Page</a>&gt;</p></li>
+<li><p>Website: <a class="reference external" href="http://openbabel.org/wiki/Main_Page">http://openbabel.org/wiki/Main_Page</a></p></li>
 <li><p>Installed from Debian repositories</p></li>
 </ul>
 </li>
@@ -288,7 +288,7 @@ classification models, for some endpoints such the metabolic intrinsic
 clearance, acute oral toxicity in rats, plasma protein binding and elimination
 half-life, multiclass models are proposed.</p>
 <p>For a complete list of the models
-employed see &lt;<a class="reference external" href="https://doi.org/10.1186/s13321-021-00557-5">https://doi.org/10.1186/s13321-021-00557-5</a>&gt;. For classification
+employed see <a class="reference external" href="https://doi.org/10.1186/s13321-021-00557-5">https://doi.org/10.1186/s13321-021-00557-5</a>. For classification
 models, two additional values are reported: a confidence (how certain the model
 is that the prediction is a singleton) and a credibility. A confidence value of
 0.95 suggests that the classifier is quite certain that the prediction is likely
@@ -302,13 +302,13 @@ needs to treat the prediction with caution.</p>
 <p>Optional environment variables:</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">ADMET_CHECKS</span></code> - space-separated list of ADMET checks for FPADMET,
-values in the range [1, 56] (default is empty)</p></li>
+values in the range <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">56]</span></code> (default is empty)</p></li>
 </ul>
 <p>Dependencies (included in Docker image):</p>
 <ul class="simple">
 <li><p>FPADMET</p>
 <ul>
-<li><p>Source: &lt;<a class="reference external" href="https://gitlab.com/vishsoft/fpadmet">https://gitlab.com/vishsoft/fpadmet</a>&gt;</p></li>
+<li><p>Source: <a class="reference external" href="https://gitlab.com/vishsoft/fpadmet">https://gitlab.com/vishsoft/fpadmet</a></p></li>
 <li><p>Commit: d61d63e3d3c37e887a5d4b1959260d9f1b41f77a</p></li>
 </ul>
 </li>
@@ -318,12 +318,12 @@ values in the range [1, 56] (default is empty)</p></li>
 <h2>Stage 8 - Error Collation<a class="headerlink" href="#stage-8-error-collation" title="Permalink to this headline">¶</a></h2>
 <p>Errors that occur in certain stages (those that tend to produce recoverable
 errors) are assembled into a single report and written to the path provided by
-the <a class="reference internal" href="parameters.html#output-dir"><span class="std std-ref">output_dir</span></a> parameter.</p>
+the <a class="reference internal" href="parameters.html#output-dir-parameter"><span class="std std-ref">output_dir</span></a> parameter.</p>
 </section>
 <section id="stage-9-results-collation">
 <h2>Stage 9 - Results Collation<a class="headerlink" href="#stage-9-results-collation" title="Permalink to this headline">¶</a></h2>
 <p>Results are assembled into a single file and written to the path provided by the
-<a class="reference internal" href="parameters.html#output-dir"><span class="std std-ref">output_dir</span></a> parameter.</p>
+<a class="reference internal" href="parameters.html#output-dir-parameter"><span class="std std-ref">output_dir</span></a> parameter.</p>
 </section>
 </section>
 

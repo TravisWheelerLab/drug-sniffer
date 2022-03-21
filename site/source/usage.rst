@@ -7,7 +7,7 @@ Nextflow Workflow
 -----------------
 
 Drug Sniffer is implemented as a `Nextflow <https://nextflow.io>`_ workflow. See
-:ref:`Parameters <parameters>` for details on the available workflow parameters.
+:ref:`parameters` for details on the available workflow parameters.
 
 The simplest way to learn how to use Drug Sniffer is to experiment with the
 examples (see below for more information). These may be found in the
@@ -76,8 +76,8 @@ parameters from the specified YAML file. An example file is shown below:
 
   admet_checks: '1 2 3'
 
-The parameters described in this file are explained on the :ref:`Parameters
-<parameters>` page. Of interest, however, if the ``${launchDir}`` variable,
+The parameters described in this file are explained on the :ref:`parameters`
+page. Of interest, however, if the ``${launchDir}`` variable,
 which is set to the directory from which the ``nextflow`` command is run
 (running a Nextflow workflow is often called "launching" it). There is also a
 variable called ``projectDir`` available which is set to the location of the
@@ -114,7 +114,7 @@ database accessible through NFS or some similar means to avoid downloading it on
 to each node.
 
 Once extracted, you can point Drug Sniffer at the location using the
-:ref:`molecule_db <molecule-db-parameter>` parameter.
+:ref:`molecule_db-parameter` parameter.
 
 The full database is available for download at
 `<https://data.drugsniffer.org/molecules.zip>`_.
