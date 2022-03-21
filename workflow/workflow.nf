@@ -139,6 +139,8 @@ process protein_ligand_docking {
     SIZE_Y="${size_y}" \
     SIZE_Z="${size_z}" \
     run.sh
+
+    mv errors.log errors_pld_${task.index}.log
     """
 
     stub:
@@ -168,6 +170,8 @@ process activity_prediction {
     RECEPTOR_PDB=${receptor_pdb} \
     DOCKED_PDBQT=${docked_pdbqt} \
     run.sh
+
+    mv errors.log errors_ap_${task.index}.log
     """
 
     stub:
