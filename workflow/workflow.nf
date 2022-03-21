@@ -159,7 +159,7 @@ process activity_prediction {
 
     input:
     path receptor_pdb from params.receptor_pdb
-    path docked_pdbqt from docked_pdbqt
+    path docked_pdbqt from docked_pdbqt.flatMap()
 
     output:
     path "ligand.score" into ligand_score
