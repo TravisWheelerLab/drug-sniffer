@@ -144,9 +144,6 @@ process protein_ligand_docking {
     stub:
     """
     touch docked_0.pdbqt
-    touch docked_1.pdbqt
-    touch docked_2.pdbqt
-    touch docked_3.pdbqt
     cp ${db_ligands_smi} admet.smi
     touch errors_pld_${task.index}.log
     """
@@ -159,7 +156,7 @@ process activity_prediction {
 
     input:
     path receptor_pdb from params.receptor_pdb
-    path docked_pdbqt from docked_pdbqt.flatMap()
+    path docked_pdbqt from docked_pdbqt
 
     output:
     path "ligand.score" into ligand_score
