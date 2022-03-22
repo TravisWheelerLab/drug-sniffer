@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-external_denovo = params.denovo_ligands != null
+external_denovo = params.hasProperty('denovo_ligands') && params.denovo_ligands != null
 
 if (external_denovo) {
     denovo_ligands = params.denovo_ligands
@@ -28,7 +28,7 @@ process internal_denovo {
     val size_z from params.receptor_size_z
 
     output:
-    path "denovo.smi" into denovo_ligands
+    path "denovo.smi" into denovo_ligands_smi
 
     cpus 4
 
