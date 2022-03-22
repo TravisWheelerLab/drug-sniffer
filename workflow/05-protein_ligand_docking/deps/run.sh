@@ -59,6 +59,8 @@ vina --receptor receptor.pdbqt \
 exit-error "$?" "vina receptor validation"
 rm -f docked_test.pdbqt
 
+touch admet.smi
+
 n=0
 cat "$LIGANDS_SMI" | while read smi
 do
