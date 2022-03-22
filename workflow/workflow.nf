@@ -1,70 +1,82 @@
 #!/usr/bin/env nextflow
 
+external_denovo = params.denovo_ligands != null
+
+if (external_denovo) {
+    denovo_ligands = params.denovo_ligands
+} else {
+    denovo_ligands = Channel.empty()
+}
+
 // Stages 1 and 2 require manual intervention and are therefore excluded from the
 // workflow definition.
 
 // Stage 3
 
-if (params.denovo_ligands == null) {
-    process denovo {
-        container 'traviswheelerlab/03-denovo:latest'
+process internal_denovo {
+    container 'traviswheelerlab/03-denovo:latest'
 
-        input:
-        path receptor_pdb from params.receptor_pdb
+    input:
+    path receptor_pdb from params.receptor_pdb
 
-        val center_x from params.receptor_center_x
-        val center_y from params.receptor_center_y
-        val center_z from params.receptor_center_z
+    val center_x from params.receptor_center_x
+    val center_y from params.receptor_center_y
+    val center_z from params.receptor_center_z
 
-        val size_x from params.receptor_size_x
-        val size_y from params.receptor_size_y
-        val size_z from params.receptor_size_z
+    val size_x from params.receptor_size_x
+    val size_y from params.receptor_size_y
+    val size_z from params.receptor_size_z
 
-        output:
-        path "denovo.smi" into denovo_ligands
+    output:
+    path "denovo.smi" into denovo_ligands
 
-        cpus 4
+    cpus 4
 
-        script:
-        """
-        NUMBER_OF_PROCESSORS=4 \
-        RECEPTOR_PATH="${receptor_pdb}" \
-        CENTER_X="${center_x}" \
-        CENTER_Y="${center_y}" \
-        CENTER_Z="${center_z}" \
-        SIZE_X="${size_x}" \
-        SIZE_Y="${size_y}" \
-        SIZE_Z="${size_z}" \
-        run.sh
-        """
+    when:
+    !external_denovo
 
-        stub:
-        """
-        touch denovo.smi
-        """
-    }
-} else {
-    process denovo {
-        container 'traviswheelerlab/03-denovo:latest'
+    script:
+    """
+    NUMBER_OF_PROCESSORS=4 \
+    RECEPTOR_PATH="${receptor_pdb}" \
+    CENTER_X="${center_x}" \
+    CENTER_Y="${center_y}" \
+    CENTER_Z="${center_z}" \
+    SIZE_X="${size_x}" \
+    SIZE_Y="${size_y}" \
+    SIZE_Z="${size_z}" \
+    run.sh
+    """
 
-        input:
-        path denovo_ligands from params.denovo_ligands
+    stub:
+    """
+    touch denovo.smi
+    """
+}
 
-        output:
-        path "denovo.smi" into denovo_ligands_smi
+process external_denovo {
+    container 'traviswheelerlab/03-denovo:latest'
 
-        cpus 4
+    input:
+    path denovo_ligands from denovo_ligands
 
-        script:
-        """
-        cp ${denovo_ligands} denovo.smi
-        """
+    output:
+    path "denovo.smi" into external_denovo_ligands_smi
 
-        stub:
-        """
-        touch denovo.smi
-        """
-    }
+    cpus 4
+
+    when:
+    external_denovo
+
+    script:
+    """
+    cp ${denovo_ligands} denovo.smi
+    """
+
+    stub:
+    """
+    touch denovo.smi
+    """
 }
 
 // Stage 4
@@ -73,7 +85,7 @@ process similarity_search {
     container 'traviswheelerlab/04-similarity_search:latest'
 
     input:
-    path denovo_ligands_smi from denovo_ligands_smi
+    path denovo_ligands_smi from denovo_ligands_smi.mix(external_denovo_ligands_smi)
     path molecule_db from params.molecule_db
 
     output:
