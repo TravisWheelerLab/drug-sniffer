@@ -121,7 +121,7 @@ class ScoreModel(nn.Module):
 
 def main(args):
     if len(args) != 2:
-        print("Expects 2 arguments. Usage: python3 rescore.py <model> <scores>")
+        print("Expects 2 arguments. Usage: python3 dock2bind.py <model> <scores>")
         exit(1)
 
     model_file = args[0]

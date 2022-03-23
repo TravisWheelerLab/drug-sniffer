@@ -83,8 +83,8 @@ for pose_pdbqt in pose_*.pdbqt; do
 done
 
 # Re-score with the ML model
-rescore.py /opt/activity_prediction/platstd.h5 "${OUTPUT_PATH}_" \
+dock2bind.py /opt/activity_prediction/platstd.h5 "${OUTPUT_PATH}_" \
     > "$OUTPUT_PATH"
-exit-error "$?" "run rescore model"
+exit-error "$?" "run dock2bind model"
 
 rm -f receptor.pdbqt

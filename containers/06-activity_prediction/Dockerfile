@@ -74,7 +74,7 @@ COPY deps/run.sh activity_prediction/
 
 WORKDIR /opt
 
-COPY deps/rescore.py activity_prediction/
+COPY deps/dock2bind.py activity_prediction/
 COPY deps/platstd.h5 activity_prediction/
 
 # ---------------------
