@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-external_denovo = params.hasProperty('denovo_ligands') && params.denovo_ligands != null
+external_denovo = params.denovo_ligands != null
 
 if (external_denovo) {
     denovo_ligands = params.denovo_ligands
