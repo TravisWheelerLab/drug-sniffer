@@ -26,7 +26,6 @@ FROM debian:bullseye-slim
 
 RUN apt-get update && apt-get -y install \
         openbabel \
-        openjdk-11-jre-headless \
         python3 \
         python3-numpy \
         python3-torch \
