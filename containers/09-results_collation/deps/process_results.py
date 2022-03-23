@@ -18,7 +18,6 @@ def main(args):
     headers = [
         "pose",
         "chemical name",
-        "docked file",
         "dock2bind score",
     ]
     for check in options.admet_checks.split():

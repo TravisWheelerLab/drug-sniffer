@@ -157,7 +157,6 @@ def main(args):
                     exit(2)
 
             name = cols[0:2]
-            name.append(dock_file)
 
             names.append(name)
             vals.append(v)
@@ -170,7 +169,7 @@ def main(args):
 
     for i in range(len(data)):
         score = float(data[i]) / float(sample_num)
-        print(f"{names[i][0]},{names[i][1]},{names[i][2]},{score:.4}")
+        print(f"{names[i][0]},{names[i][1]},{score:.4}")
 
 
 if __name__ == "__main__":
