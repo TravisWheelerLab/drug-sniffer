@@ -1,8 +1,14 @@
 Stages
 ======
 
-The `workflow/` directory contains everything necessary to run the Drug Sniffer
-pipeline conveniently on a variety of computing platforms. The individual
+The ``workflow/`` directory contains everything necessary to run the Drug Sniffer
+pipeline conveniently on a variety of computing platforms.
+
+Container configuration can be found in the ``containers/`` directory. However,
+*Drug Sniffer* users should not need to interact with the contents of this
+directory.
+
+The individual
 components of the pipeline (stages) are described below. Although it is possible
 to use the pipeline without understanding the individual stages, this information
 is provided here to aid users in troubleshooting, and for completeness.

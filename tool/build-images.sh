@@ -8,7 +8,7 @@ IMAGE_REGISTRY=${IMAGE_REGISTRY:-docker.io}
 IMAGE_NAMESPACE=${IMAGE_NAMESPACE:-traviswheelerlab}
 IMAGE_VERSION=${IMAGE_VERSION:-latest}
 
-pushd workflow
+pushd containers
 
 for stage in 0*; do
     tag="$IMAGE_REGISTRY/$IMAGE_NAMESPACE/$stage:$IMAGE_VERSION"
