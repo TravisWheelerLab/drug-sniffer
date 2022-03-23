@@ -25,7 +25,7 @@ def main(args):
         headers.append(f"predicted {check}")
         headers.append(f"confidence {check}")
         headers.append(f"credibility {check}")
-    headers.append("jlogp")
+    headers.append("logp")
 
     print(",".join(headers))
 
