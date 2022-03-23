@@ -169,7 +169,8 @@ def main(args):
     data = out
 
     for i in range(len(data)):
-        print(names[i][0], names[i][1], names[i][2], float(data[i]) / float(sample_num))
+        score = float(data[i]) / float(sample_num)
+        print(f"{names[i][0]},{names[i][1]},{names[i][2]},{score:.4}")
 
 
 if __name__ == "__main__":
