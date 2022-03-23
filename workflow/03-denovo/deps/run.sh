@@ -67,7 +67,7 @@ let "GEN1 = $NUMBER_OF_GENERATIONS - 1"
 let "GEN2 = $NUMBER_OF_GENERATIONS - 0"
 
 dedup.py \
-    -o "$ORIG_PWD/denovo.smi" \
+    -o "$ORIG_PWD/seeds.smi" \
     $ORIG_PWD/Run_0/generation_$GEN0/generation_$GEN0.smi \
     $ORIG_PWD/Run_0/generation_$GEN1/generation_$GEN1.smi \
     $ORIG_PWD/Run_0/generation_$GEN2/generation_$GEN2.smi

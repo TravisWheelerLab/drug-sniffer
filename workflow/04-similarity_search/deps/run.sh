@@ -4,7 +4,7 @@ set -e
 
 # Required parameters:
 #
-# DENOVO_LIGANDS_SMI
+# SEED_LIGANDS_SMI
 # MOLECULE_DB
 #
 # Optional parameters:
@@ -21,4 +21,4 @@ similarity.py \
     -t "$TANIMOTO_CUTOFF" \
     -d "$MOLECULE_DB" \
     -o "$OUTPUT_PATH/" \
-    "$DENOVO_LIGANDS_SMI"
+    "$SEED_LIGANDS_SMI"

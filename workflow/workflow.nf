@@ -1,11 +1,11 @@
 #!/usr/bin/env nextflow
 
-external_denovo = params.denovo_ligands != null
+external_seeds = params.seed_ligands != null
 
-if (external_denovo) {
-    denovo_ligands = params.denovo_ligands
+if (external_seeds) {
+    seed_ligands = params.seed_ligands
 } else {
-    denovo_ligands = Channel.empty()
+    seed_ligands = Channel.empty()
 }
 
 // Stages 1 and 2 require manual intervention and are therefore excluded from the
@@ -13,7 +13,7 @@ if (external_denovo) {
 
 // Stage 3
 
-process internal_denovo {
+process denovo_ligands {
     container 'traviswheelerlab/03-denovo:latest'
 
     input:
@@ -28,12 +28,12 @@ process internal_denovo {
     val size_z from params.receptor_size_z
 
     output:
-    path "denovo.smi" into denovo_ligands_smi
+    path "seeds.smi" into seed_ligands_smi
 
     cpus 4
 
     when:
-    !external_denovo
+    !external_seeds
 
     script:
     """
@@ -50,32 +50,30 @@ process internal_denovo {
 
     stub:
     """
-    touch denovo.smi
+    touch seeds.smi
     """
 }
 
-process external_denovo {
-    container 'traviswheelerlab/03-denovo:latest'
+process external_seeds {
+    container 'traviswheelerlab/03-seeds:latest'
 
     input:
-    path denovo_ligands from denovo_ligands
+    path seed_ligands from seed_ligands
 
     output:
-    path "denovo.smi" into external_denovo_ligands_smi
-
-    cpus 4
+    path "seeds.smi" into external_seed_ligands_smi
 
     when:
-    external_denovo
+    external_seeds
 
     script:
     """
-    cp ${denovo_ligands} denovo.smi
+    cp ${seed_ligands} seeds.smi
     """
 
     stub:
     """
-    touch denovo.smi
+    touch seeds.smi
     """
 }
 
@@ -85,17 +83,15 @@ process similarity_search {
     container 'traviswheelerlab/04-similarity_search:latest'
 
     input:
-    path denovo_ligands_smi from denovo_ligands_smi.mix(external_denovo_ligands_smi)
+    path seed_ligands_smi from seed_ligands_smi.mix(external_seed_ligands_smi)
     path molecule_db from params.molecule_db
 
     output:
     path "*.smi" into db_ligands_smi
 
-    cpus 1
-
     script:
     """
-    DENOVO_LIGANDS_SMI="${denovo_ligands_smi}" \
+    SEED_LIGANDS_SMI="${seed_ligands_smi}" \
     MOLECULE_DB="${molecule_db}" \
     TANIMOTO_CUTOFF="${params.tanimoto_cutoff}" \
     run.sh
@@ -127,8 +123,6 @@ process protein_ligand_docking {
     path "docked_*.pdbqt" optional true into docked_pdbqt
     path "admet.smi" optional true into admet_smi
     path "errors_pld_${task.index}.log" into pld_errors
-
-    cpus 1
 
     script:
     """

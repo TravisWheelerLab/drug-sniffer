@@ -109,7 +109,7 @@ and therefore (hopefully) likely to fit the receptor.
 
 Required environment variables:
 
-* :code:`DENOVO_LIGANDS_SMI` - a .smi file containing the ligands created in
+* :code:`SEED_LIGANDS_SMI` - a .smi file containing the ligands created in
   stage 3
 * :code:`MOLECULE_DB` - the path to a molecule database to match denovo
   ligands against; the database format is described alongside the other
