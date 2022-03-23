@@ -1,3 +1,4 @@
 work/
 .nextflow*
 drug-sniffer-output/
+*.pdbqt

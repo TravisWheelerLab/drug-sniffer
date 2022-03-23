@@ -4,7 +4,7 @@ set -e
 
 # Required parameters:
 #
-# LIGANDS_SMI
+# LIGAND_SMIS
 #
 # Optional parameters:
 #
@@ -14,7 +14,7 @@ set -e
 
 OUTPUT_FILE=${OUTPUT_FILE:-output.txt}
 
-cat "$LIGANDS_SMI" | while read smi
+cat "$LIGAND_SMIS" | while read smi
 do
     echo "$smi" > ligand.smi
     echo -n "$smi," >> "$OUTPUT_FILE"

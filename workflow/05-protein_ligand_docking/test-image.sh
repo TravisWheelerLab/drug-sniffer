@@ -2,7 +2,7 @@
 
 set -e
 
-rm -f test/docked_*.pdbqt test/ligand.* test/output.log
+rm -f test/docked_*.pdbqt test/ligand.* test/output.log test/admet.smi
 
 docker run -v "$PWD/test:/data" -u "$(id -u):$(id -g)" \
     -e RECEPTOR_PDB=3clpro_rec.pdb \

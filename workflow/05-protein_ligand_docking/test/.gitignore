@@ -1,3 +1,5 @@
 docked_*.pdbqt
 ligand.*
 output.log
+errors.log
+admet.smi
