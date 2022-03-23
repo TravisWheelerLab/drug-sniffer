@@ -30,7 +30,7 @@ process denovo_ligands {
     output:
     path "seeds.smi" into seed_ligands_smi
 
-    cpus 4
+    cpus 12
 
     when:
     !external_seeds
