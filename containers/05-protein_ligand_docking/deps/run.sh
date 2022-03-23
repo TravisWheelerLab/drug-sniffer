@@ -84,7 +84,8 @@ do
         --out docked_${n}.pdbqt \
         --num_modes "$NUMBER_OF_POSES" \
         --log output.log \
-        --exhaustiveness 4
+        --exhaustiveness 4 \
+        --seed 42
     if [ "$?" != "0" ]; then
         log-error "$?" "dock ligand $smi"
         let "n=n+1"
