@@ -142,6 +142,8 @@ docking poses produced and the exhaustiveness parameter for the search for each
 ligand are parameterized by the user; the default values are 9 and 4,
 respectively.
 
+The Autodock Vina seed value is set to 42 in order to facilitate reproduction.
+
 Required environment variables:
 
 * :code:`RECEPTOR_PDBQT` - path to the receptor (pocket) chosen by the user, in
