@@ -90,5 +90,6 @@ ADMET Filtering (Stage 7)
 admet_checks
 ^^^^^^^^^^^^
 
-A space-separated list of ADMET checks to perform, see the FPADMET documentation
+A space-separated list of ADMET checks to perform, see the
+`FPADMET <https://gitlab.com/vishsoft/fpadmet>`_ documentation
 for a list of available checks.
