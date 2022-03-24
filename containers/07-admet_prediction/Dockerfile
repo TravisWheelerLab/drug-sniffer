@@ -36,9 +36,9 @@ RUN ls && ls JLogP && cd JLogP/build \
 ENV PATH=${PATH}:/opt/JLogP/build
 
 WORKDIR /opt
-RUN mkdir admet_filtering
-COPY deps/run.sh admet_filtering/
-ENV PATH=${PATH}:/opt/admet_filtering
+RUN mkdir admet_prediction
+COPY deps/run.sh admet_prediction/
+ENV PATH=${PATH}:/opt/admet_prediction
 
 VOLUME /data
 WORKDIR /data

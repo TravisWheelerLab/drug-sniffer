@@ -84,8 +84,8 @@ tanimoto_cutoff
 
 The minimum Tanimoto coefficient to consider two molecules a match.
 
-ADMET Filtering (Stage 7)
--------------------------
+ADMET Prediction (Stage 7)
+--------------------------
 
 admet_checks
 ^^^^^^^^^^^^

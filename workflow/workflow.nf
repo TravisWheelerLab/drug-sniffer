@@ -179,8 +179,8 @@ process activity_prediction {
 
 // Stage 7
 
-process admet_filtering {
-    container 'traviswheelerlab/07-admet_filtering'
+process admet_prediction {
+    container 'traviswheelerlab/07-admet_prediction'
 
     input:
     path db_ligands_smi from admet_smi

@@ -245,12 +245,12 @@ Dependencies (included in Docker image):
   * Website: `<http://openbabel.org/wiki/Main_Page>`_
   * Installed from Debian repositories
 
-Stage 7 - ADMET Filtering (optional)
-------------------------------------
+Stage 7 - ADMET Prediction (optional)
+-------------------------------------
 
 The absorption, distribution, metabolism, excretion, and toxicity (ADMET) of
 drugs plays a key role in determining which among the potential candidate
-structures are to be prioritized. The ADMET filtering here is based on molecular
+structures are to be prioritized. The ADMET prediction here is based on molecular
 fingerprint-based predictive models. While a majority of the models are binary
 classification models, for some endpoints such the metabolic intrinsic
 clearance, acute oral toxicity in rats, plasma protein binding and elimination

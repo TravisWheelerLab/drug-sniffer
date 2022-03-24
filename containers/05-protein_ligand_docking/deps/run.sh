@@ -93,7 +93,7 @@ do
     fi
 
     # Successfully processed the ligand so add it to the list for ADMET
-    # filtering
+    # prediction
     echo "$smi" >> admet.smi
 
     let "n=n+1"
