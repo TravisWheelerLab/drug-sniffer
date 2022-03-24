@@ -210,8 +210,7 @@ columns listed below:
 
 1. Pose (identifier)
 2. Chemical name
-3. Docked file path
-4. Model output (from 0 to 1)
+3. Model output (from 0 to 1)
 
 Required environment variables:
 
