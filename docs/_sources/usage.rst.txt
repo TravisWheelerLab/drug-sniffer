@@ -77,7 +77,7 @@ parameters from the specified YAML file. An example file is shown below:
   admet_checks: '1 2 3'
 
 The parameters described in this file are explained on the :ref:`parameters`
-page. Of interest, however, if the ``${launchDir}`` variable,
+page. Of interest, however, is the ``${launchDir}`` variable,
 which is set to the directory from which the ``nextflow`` command is run
 (running a Nextflow workflow is often called "launching" it). There is also a
 variable called ``projectDir`` available which is set to the location of the
@@ -85,6 +85,22 @@ workflow itself (the ``.nf`` file).
 
 Finally, the Nextflow script is specified. The Drug Sniffer script is defined in
 ``workflow/workflow.nf``.
+
+Output
+------
+
+There are two output files. The first, ``all_errors.txt``, contains errors
+produced during the workflow run. The second, ``all_results.txt`` contains the
+actual output. The output file is comma-separated and includes the fields listed
+below:
+
+1. Pose - the ID of the Autodock Vina pose
+2. Chemical name - the name of the chemical from the molecule database
+3. dock2bind score - the score assigned by the dock2bind model
+4. Three columns per ADMET check - predicted, confidence, and credibility, see
+   the `FPADMET <https://gitlab.com/vishsoft/fpadmet>`_ documentation for more
+   details
+5. The calculated ``logp`` value
 
 Examples
 --------
