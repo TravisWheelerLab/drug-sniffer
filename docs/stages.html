@@ -57,6 +57,10 @@ directory corresponding to that stage. To run the container, for manual
 debugging, use <cite>run-image.sh</cite>. To run the automated smoke tests, use
 <cite>test-image.sh</cite>. The tests rely on data files stored in the <cite>test/</cite> directory
 and may write additional outputs to that same location when they run.</p>
+<a class="reference internal image-reference" href="_images/flow.png"><img alt="Drug Sniffer Data Flow" src="_images/flow.png" style="width: 600px;" /></a>
+<p>The diagram above illustrates how data flows through the <em>Drug Sniffer</em>
+pipeline. For the most part, users will not need to concern themselves with
+this.</p>
 <section id="running-a-stage">
 <h2>Running a Stage<a class="headerlink" href="#running-a-stage" title="Permalink to this headline">¶</a></h2>
 <p>Within each Docker image is a script, included in the <code class="code docutils literal notranslate"><span class="pre">PATH</span></code>, called

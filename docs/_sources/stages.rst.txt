@@ -20,6 +20,15 @@ debugging, use `run-image.sh`. To run the automated smoke tests, use
 `test-image.sh`. The tests rely on data files stored in the `test/` directory
 and may write additional outputs to that same location when they run.
 
+
+.. image:: _static/flow.png
+  :width: 600
+  :alt: Drug Sniffer Data Flow
+
+The diagram above illustrates how data flows through the *Drug Sniffer*
+pipeline. For the most part, users will not need to concern themselves with
+this.
+
 Running a Stage
 ---------------
 
