@@ -144,8 +144,8 @@ def main(args):
             line = line.strip()
             cols = re.split(r"[ \t,]+", line)
 
-            if len(cols) != 19:
-                continue
+            if len(cols) != 18:
+                raise Exception(f"wrong number of columns in input: '{cols}'")
 
             v = [0.0, 0.0, 0.0]
 
