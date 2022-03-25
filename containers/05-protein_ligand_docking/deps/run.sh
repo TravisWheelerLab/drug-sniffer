@@ -47,14 +47,14 @@ NUMBER_OF_POSES=${NUMBER_OF_POSES:-4}
 /opt/mgltools/bin/pythonsh \
     /opt/mgltools/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_receptor4.py \
     -r "$RECEPTOR_PDB" -o _receptor.pdbqt -A hydrogens
-exit-error "$?" "converting receptor to pdbqt failed"
+exit-error "$?" "failed converting receptor to pdbqt"
 
 smi=$(cat "$LIGAND_SMI")
 echo "docking $smi"
 echo "$smi" > _ligand.smi
 
 obabel -ismi _ligand.smi -opdbqt -O _ligand.pdbqt --gen3d --ff UFF
-exit-error "$?" "converting ligand to pdbqt failed: $smi"
+exit-error "$?" "failed converting ligand to pdbqt: $smi"
 
 vina --receptor _receptor.pdbqt \
     --ligand _ligand.pdbqt \
@@ -69,7 +69,7 @@ vina --receptor _receptor.pdbqt \
     --log output.log \
     --exhaustiveness 4 \
     --seed 42
-exit-error "$?" "docking ligand failed: $smi"
+exit-error "$?" "failed docking ligand: $smi"
 
 # Successfully processed the ligand so add it to the lists for
 # ADMET prediction and output

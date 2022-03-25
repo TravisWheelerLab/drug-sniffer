@@ -40,21 +40,21 @@ exit-error "$?" "failed converting receptor to pdbqt"
 
 # Split poses
 vina_split --input "$DOCKED_PDBQT" --ligand _pose_
-exit-error "$?" "run vina_split on $DOCKED_PDBQT"
+exit-error "$?" "failed running vina_split: $DOCKED_PDBQT"
 
 pose_id=0
 for pose_pdbqt in _pose_*.pdbqt; do
     # Create mol2 file
     obabel -ipdbqt "$pose_pdbqt" -omol2 -O "$pose_pdbqt.mol2"
     if [ "$?" != "0" ]; then
-        log-error "$?" "failed converting pose $pose_pdbqt to mol2"
+        log-error "$?" "failed converting pose to mol2: $pose_pdbqt"
         continue
     fi
 
     # Capture DFIRE value
     dfire=$(dligand2-15 -P "$RECEPTOR_PDB" -L "$pose_pdbqt.mol2" -etype 1)
     if [ "$?" != "0" ]; then
-        log-error "$?" "failed running dfire on $pose_pdbqt"
+        log-error "$?" "failed running dfire: $pose_pdbqt"
         continue
     fi
 
@@ -65,7 +65,7 @@ for pose_pdbqt in _pose_*.pdbqt; do
             | sed "s/##//" \
             | awk '{if(NR>1) print}')
     if [ "$?" != "0" ]; then
-        log-error "$?" "failed running smina on $pose_pdbqt"
+        log-error "$?" "failed running smina: $pose_pdbqt"
         continue
     fi
 
