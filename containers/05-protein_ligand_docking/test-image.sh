@@ -2,11 +2,17 @@
 
 set -e
 
-rm -f test/docked_*.pdbqt test/ligand.* test/output.log test/admet.smi
+rm -f \
+    test/docked_ligand.pdbqt \
+    test/_ligand.smi \
+    test/_ligand.pdbqt \
+    test/output.log \
+    test/ligand.smi.admet \
+    test/ligand.smi.output
 
 docker run -v "$PWD/test:/data" -u "$(id -u):$(id -g)" \
     -e RECEPTOR_PDB=3clpro_rec.pdb \
-    -e LIGANDS_SMI=ligands.smi \
+    -e LIGAND_SMI=ligand.smi \
     -e CENTER_X=-37.141998 \
     -e CENTER_Y=10.206000 \
     -e CENTER_Z=55.180000 \

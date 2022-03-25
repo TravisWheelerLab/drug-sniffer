@@ -1,5 +1,5 @@
-docked_*.pdbqt
-ligand.*
-output.log
+docked_ligand.pdbqt
 errors.log
-admet.smi
+ligand.smi.admet
+ligand.smi.output
+output.log

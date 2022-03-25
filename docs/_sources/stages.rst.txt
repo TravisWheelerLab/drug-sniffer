@@ -176,7 +176,9 @@ The docking score produced by AutoDock Vina is only a loose estimate of the
 actual binding affinity. DrugSniffer adds 3 post hoc re-scoring methods (1) the
 Autodock Vina score (2) the SMINA score (3) **dock2bind** (the default) which is
 a neural network re-scoring strategy. The model is trained on ligand-protein
-complexes taken from the LIT-PCBA and DUD-E. For each docked pose, 16 pose
+complexes taken from the LIT-PCBA and DUD-E.
+
+For each docked pose, 16 pose
 descriptors calculated by SMINA, along with the DFIRE estimate of protein–ligand
 potential are used as input to the model. **dock2bind** produces a value from
 0 to 1 and can be thought of as the model's confidence that the molecule binds
@@ -186,43 +188,36 @@ The model accepts the values below, in order, as a comma- or whitespace-delimite
 table:
 
 1. Pose (identifier)
-2. Chemical name
-3. gauss_1
-4. gauss_2
-5. repulsion
-6. hydrophobic
-7. non_hydrophobic
-8. vdw
-9. non_dir_hbond_lj
-10. non_dir_anti_h_bond_quadratic
-11. non_dir_h_bond
-12. acceptor_acceptor_quadratic
-13. donor_donor_quadratic
-14. electrostatic
-15. ad4_solvation
-16. ligand_length
-17. constant_term
-18. num_tors_div
-19. DFIRE
+2. gauss_1
+3. gauss_2
+4. repulsion
+5. hydrophobic
+6. non_hydrophobic
+7. vdw
+8. non_dir_hbond_lj
+9. non_dir_anti_h_bond_quadratic
+10. non_dir_h_bond
+11. acceptor_acceptor_quadratic
+12. donor_donor_quadratic
+13. electrostatic
+14. ad4_solvation
+15. ligand_length
+16. constant_term
+17. num_tors_div
+18. DFIRE
 
 The output of this stage is a comma-delimited table of values containing the
 columns listed below:
 
 1. Pose (identifier)
-2. Chemical name
-3. Model output (from 0 to 1)
+2. Model output (from 0 to 1)
 
 Required environment variables:
 
 * :code:`RECEPTOR_PATH` - path to the original PDB file containing the protein
   receptor (pocket) chosen manually by the user
-* :code:`LIGAND_NAME` - the name used to identify the ligand
 * :code:`DOCKED_PDBQT` - the docked ligand as a PDBQT file that contains all
   poses computed by Autodock Vina in stage 5
-
-Optional environment variables:
-
-* :code:`OUTPUT_PATH` - path to the output file (default is `ligand.score`)
 
 Dependencies (included in Docker image):
 

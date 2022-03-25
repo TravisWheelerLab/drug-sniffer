@@ -115,15 +115,21 @@ workflow itself (the <code class="docutils literal notranslate"><span class="pre
 <h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
 <p>There are two output files. The first, <code class="docutils literal notranslate"><span class="pre">all_errors.txt</span></code>, contains errors
 produced during the workflow run. The second, <code class="docutils literal notranslate"><span class="pre">all_results.txt</span></code> contains the
-actual output. The output file is comma-separated and includes the fields listed
+actual output. The output file is tab-separated and includes the fields listed
 below:</p>
 <ol class="arabic simple">
 <li><p>Pose - the ID of the Autodock Vina pose</p></li>
 <li><p>Chemical name - the name of the chemical from the molecule database</p></li>
-<li><p>dock2bind score - the score assigned by the dock2bind model</p></li>
-<li><p>Three columns per ADMET check - predicted, confidence, and credibility, see
-the <a class="reference external" href="https://gitlab.com/vishsoft/fpadmet">FPADMET</a> documentation for more
-details</p></li>
+<li><p>Chemical database - the name of the database the chemical can be found in</p></li>
+</ol>
+<p>4. Chemical SMILES string - the raw SMILES string
+3. dock2bind score - the score assigned by the dock2bind model
+4. Three columns per ADMET check - predicted, confidence, and credibility, see</p>
+<blockquote>
+<div><p>the <a class="reference external" href="https://gitlab.com/vishsoft/fpadmet">FPADMET</a> documentation for more
+details</p>
+</div></blockquote>
+<ol class="arabic simple" start="5">
 <li><p>The calculated <code class="docutils literal notranslate"><span class="pre">logp</span></code> value</p></li>
 </ol>
 </section>

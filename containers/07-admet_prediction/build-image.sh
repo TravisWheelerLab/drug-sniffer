@@ -3,4 +3,3 @@
 set -e
 
 docker build -t traviswheelerlab/07-admet_prediction:latest .
-

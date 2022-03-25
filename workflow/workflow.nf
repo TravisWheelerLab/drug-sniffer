@@ -28,7 +28,7 @@ process denovo_ligands {
     val size_z from params.receptor_size_z
 
     output:
-    path "seeds.smi" into seed_ligands_smi
+    path "seeds.smi" into denovo_seed_ligands_smi
 
     cpus 12
 
@@ -83,7 +83,7 @@ process similarity_search {
     container 'traviswheelerlab/04-similarity_search:latest'
 
     input:
-    path seed_ligands_smi from seed_ligands_smi.mix(external_seed_ligands_smi)
+    path seed_ligands_smi from denovo_seed_ligands_smi.mix(external_seed_ligands_smi)
     path molecule_db from params.molecule_db
 
     output:
@@ -111,7 +111,7 @@ process protein_ligand_docking {
 
     input:
     path receptor_pdb from params.receptor_pdb
-    path db_ligands_smi from db_ligands_smi.flatMap()
+    path ligand_smi from db_ligands_smi.flatMap()
     val center_x from params.receptor_center_x
     val center_y from params.receptor_center_y
     val center_z from params.receptor_center_z
@@ -120,14 +120,15 @@ process protein_ligand_docking {
     val size_z from params.receptor_size_z
 
     output:
-    path "docked_*.pdbqt" optional true into docked_pdbqt
-    path "admet.smi" optional true into admet_smi
+    path "docked_ligand.pdbqt" optional true into docked_ligand
+    path "ligand.smi.admet" optional true into ligand_smi_admet
+    path "ligand.smi.output" optional true into ligand_smi_output
     path "errors_pld_${task.index}.log" into pld_errors
 
     script:
     """
     RECEPTOR_PDB="${receptor_pdb}" \
-    LIGANDS_SMI="${db_ligands_smi}" \
+    LIGAND_SMI="${ligand_smi}" \
     CENTER_X="${center_x}" \
     CENTER_Y="${center_y}" \
     CENTER_Z="${center_z}" \
@@ -141,8 +142,9 @@ process protein_ligand_docking {
 
     stub:
     """
-    touch docked_0.pdbqt
-    cp ${db_ligands_smi} admet.smi
+    touch docked_ligand.pdbqt
+    cp ${ligand_smi} ligand.smi.admet
+    cp ${ligand_smi} ligand.smi.output
     touch errors_pld_${task.index}.log
     """
 }
@@ -154,7 +156,7 @@ process activity_prediction {
 
     input:
     path receptor_pdb from params.receptor_pdb
-    path docked_pdbqt from docked_pdbqt
+    path docked_ligand from docked_ligand
 
     output:
     path "ligand.score" into ligand_score
@@ -162,9 +164,8 @@ process activity_prediction {
 
     script:
     """
-    LIGAND_NAME=dummy \
     RECEPTOR_PDB=${receptor_pdb} \
-    DOCKED_PDBQT=${docked_pdbqt} \
+    DOCKED_PDBQT=${docked_ligand} \
     run.sh
 
     mv errors.log errors_ap_${task.index}.log
@@ -172,7 +173,7 @@ process activity_prediction {
 
     stub:
     """
-    echo "name0,name1,name2,1.0" >> ligand.score
+    echo "1,1.0" >> ligand.score
     touch errors_ap_${task.index}.log
     """
 }
@@ -183,21 +184,21 @@ process admet_prediction {
     container 'traviswheelerlab/07-admet_prediction'
 
     input:
-    path db_ligands_smi from admet_smi
+    path ligand_smi from ligand_smi_admet
 
     output:
-    path "output.txt" into admet_output
+    path "admet.txt" into admet_output
 
     script:
     """
-    LIGAND_SMIS="${db_ligands_smi}" \
+    LIGAND_SMI="${ligand_smi}" \
     ADMET_CHECKS="${params.admet_checks}" \
     run.sh
     """
 
     stub:
     """
-    echo "1.0,1.0,1.0,1.0" >> output.txt
+    echo "1.0,1.0,1.0,1.0" >> admet.txt
     """
 }
 
@@ -234,6 +235,7 @@ process results_collation {
     input:
     path ligand_score from ligand_score.collectFile()
     path admet_output from admet_output.collectFile()
+    path ligand_smi from ligand_smi_output.collectFile()
 
     output:
     path "all_results.txt" into all_results
@@ -241,6 +243,7 @@ process results_collation {
     script:
     """
     process_results.py \
+        --ligand-smi "${ligand_smi}" \
         --ligand-score "${ligand_score}" \
         --admet-output "${admet_output}" \
         --admet-checks "${params.admet_checks}" \

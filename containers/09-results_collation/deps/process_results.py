@@ -9,6 +9,7 @@ def main(args):
         description="A script to process Drug Sniffer results",
     )
 
+    parser.add_argument("--ligand-smi")
     parser.add_argument("--ligand-score")
     parser.add_argument("--admet-output")
     parser.add_argument("--admet-checks")
@@ -18,6 +19,8 @@ def main(args):
     headers = [
         "pose",
         "chemical name",
+        "chemical database",
+        "smiles",
         "dock2bind score",
     ]
     for check in options.admet_checks.split():
@@ -26,13 +29,24 @@ def main(args):
         headers.append(f"credibility {check}")
     headers.append("logp")
 
-    print(",".join(headers))
+    print("\t".join(headers))
 
+    ligand_file = open(options.ligand_smi, "r")
     score_file = open(options.ligand_score, "r")
     admet_file = open(options.admet_output, "r")
 
-    for score, admet in zip(score_file, admet_file):
-        print(f"{score.strip()},{admet.strip()}")
+    for ligand, score, admet in zip(ligand_file, score_file, admet_file):
+        smi, name, db, _ = ligand.split("\t")
+        pose, value = score.split("\t")
+
+        print("\t".join([
+            pose.strip(),
+            name.strip(),
+            db.strip(),
+            smi.strip(),
+            value.strip(),
+            admet.strip(),
+        ]))
 
     score_file.close()
     admet_file.close()

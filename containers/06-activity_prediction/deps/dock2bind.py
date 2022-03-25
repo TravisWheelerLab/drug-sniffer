@@ -149,16 +149,14 @@ def main(args):
 
             v = [0.0, 0.0, 0.0]
 
-            for j, value in enumerate(cols[2:]):
+            for j, value in enumerate(cols[1:]):
                 try:
                     v.append(float(value))
                 except:
                     print(f"value at index {j + 2} ({value}) must be a float")
                     exit(2)
 
-            name = cols[0:2]
-
-            names.append(name)
+            names.append(cols[:1])
             vals.append(v)
 
     data = torch.tensor(vals)
@@ -169,7 +167,7 @@ def main(args):
 
     for i in range(len(data)):
         score = float(data[i]) / float(sample_num)
-        print(f"{names[i][0]},{names[i][1]},{score:.4}")
+        print(f"{names[i][0]}\t{score:.4}")
 
 
 if __name__ == "__main__":

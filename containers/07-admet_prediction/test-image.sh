@@ -9,4 +9,3 @@ docker run -v $PWD/test:/data -u $(id -u):$(id -g) \
     -e ADMET_CHECKS="1 2 3" \
     traviswheelerlab/07-admet_prediction \
     run.sh
-

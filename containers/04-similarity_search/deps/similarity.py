@@ -15,7 +15,7 @@ from rdkit.Chem import AllChem  # type: ignore
 LIGAND_INDEX = 0
 
 
-class DenovoLigand:
+class SeedLigand:
     __slots__ = ["index", "smi_str", "fpt"]
 
     index: int
@@ -33,7 +33,7 @@ class DenovoLigand:
 
 
 class Neighbor(NamedTuple):
-    ligand: DenovoLigand
+    ligand: SeedLigand
     ligand_fpt_path: str
     ligand_index: int
     db_fpt_path: str
@@ -110,12 +110,12 @@ def main(args: List[str]):
     for db_ligand in db_ligands:
         with open(f"{options.out_dir}/{index}.smi", "w") as out_file:
             out_file.write(
-                f"{db_ligand.smi_str} {db_ligand.name} {db_ligand.db_src} {db_ligand.neighbor.db_index}\n"
+                f"{db_ligand.smi_str}\t{db_ligand.name}\t{db_ligand.db_src}\t{db_ligand.neighbor.db_index}\n"
             )
         index += 1
 
 
-def load_ligands(ligands_smi: str) -> List[DenovoLigand]:
+def load_ligands(ligands_smi: str) -> List[SeedLigand]:
     """
     Load denovo ligands from the given .smi file.
 
@@ -128,11 +128,11 @@ def load_ligands(ligands_smi: str) -> List[DenovoLigand]:
     ligands = []
     with open(ligands_smi, "r") as smi_file:
         for smi_str in smi_file:
-            ligands.append(DenovoLigand(smi_str.strip()))
+            ligands.append(SeedLigand(smi_str.strip()))
     return ligands
 
 
-def fingerprint_ligands(ligands: Iterable[DenovoLigand]) -> None:
+def fingerprint_ligands(ligands: Iterable[SeedLigand]) -> None:
     """
     Fingerprint the given ligands and return the path to a directory
     containing the resulting .fpt files. Also updates the DenovoLigand
@@ -161,7 +161,7 @@ def fingerprint_ligands(ligands: Iterable[DenovoLigand]) -> None:
 
 
 def find_ligand_neighbors(
-    ligands: List[DenovoLigand],
+    ligands: List[SeedLigand],
     db_dir: str,
     tanimoto: float,
 ) -> Iterable[Neighbor]:

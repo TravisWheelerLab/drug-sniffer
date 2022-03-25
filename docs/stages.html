@@ -208,7 +208,8 @@ using Autodock Vina</p></li>
 actual binding affinity. DrugSniffer adds 3 post hoc re-scoring methods (1) the
 Autodock Vina score (2) the SMINA score (3) <strong>dock2bind</strong> (the default) which is
 a neural network re-scoring strategy. The model is trained on ligand-protein
-complexes taken from the LIT-PCBA and DUD-E. For each docked pose, 16 pose
+complexes taken from the LIT-PCBA and DUD-E.</p>
+<p>For each docked pose, 16 pose
 descriptors calculated by SMINA, along with the DFIRE estimate of protein–ligand
 potential are used as input to the model. <strong>dock2bind</strong> produces a value from
 0 to 1 and can be thought of as the model’s confidence that the molecule binds
@@ -217,7 +218,6 @@ to the pocket, constrained by the specific pose.</p>
 table:</p>
 <ol class="arabic simple">
 <li><p>Pose (identifier)</p></li>
-<li><p>Chemical name</p></li>
 <li><p>gauss_1</p></li>
 <li><p>gauss_2</p></li>
 <li><p>repulsion</p></li>
@@ -240,20 +240,14 @@ table:</p>
 columns listed below:</p>
 <ol class="arabic simple">
 <li><p>Pose (identifier)</p></li>
-<li><p>Chemical name</p></li>
 <li><p>Model output (from 0 to 1)</p></li>
 </ol>
 <p>Required environment variables:</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">RECEPTOR_PATH</span></code> - path to the original PDB file containing the protein
 receptor (pocket) chosen manually by the user</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">LIGAND_NAME</span></code> - the name used to identify the ligand</p></li>
 <li><p><code class="code docutils literal notranslate"><span class="pre">DOCKED_PDBQT</span></code> - the docked ligand as a PDBQT file that contains all
 poses computed by Autodock Vina in stage 5</p></li>
-</ul>
-<p>Optional environment variables:</p>
-<ul class="simple">
-<li><p><code class="code docutils literal notranslate"><span class="pre">OUTPUT_PATH</span></code> - path to the output file (default is <cite>ligand.score</cite>)</p></li>
 </ul>
 <p>Dependencies (included in Docker image):</p>
 <ul class="simple">
