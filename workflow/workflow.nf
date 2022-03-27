@@ -55,7 +55,7 @@ process denovo_ligands {
 }
 
 process external_seeds {
-    container 'traviswheelerlab/03-seeds:latest'
+    container 'traviswheelerlab/03-denovo:latest'
 
     input:
     path seed_ligands from seed_ligands
