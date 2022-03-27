@@ -159,7 +159,7 @@ process activity_prediction {
     path docked_ligand from docked_ligand
 
     output:
-    path "ligand.score" into ligand_score
+    path "ligand.score" optional true into ligand_score
     path "errors_ap_${task.index}.log" into ap_errors
 
     script:

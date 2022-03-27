@@ -21,7 +21,7 @@ function exit-error {
     local msg="$2"
     if [ "$code" != "0" ]; then
         log-error "$code" "$msg"
-        exit "$code"
+        exit 0
     fi
 }
 
