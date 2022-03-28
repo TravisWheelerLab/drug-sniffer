@@ -123,7 +123,7 @@ process protein_ligand_docking {
     path "docked_ligand.pdbqt" optional true into docked_ligand
     path "ligand.smi.admet" optional true into ligand_smi_admet
     path "ligand.smi.output" optional true into ligand_smi_output
-    path "errors_pld_${task.index}.log" into pld_errors
+    path "errors_pld.log" into pld_errors
 
     script:
     """
@@ -137,7 +137,7 @@ process protein_ligand_docking {
     SIZE_Z="${size_z}" \
     run.sh
 
-    mv errors.log errors_pld_${task.index}.log
+    mv errors.log errors_pld.log
     """
 
     stub:
@@ -145,7 +145,7 @@ process protein_ligand_docking {
     touch docked_ligand.pdbqt
     cp ${ligand_smi} ligand.smi.admet
     cp ${ligand_smi} ligand.smi.output
-    touch errors_pld_${task.index}.log
+    touch errors_pld.log
     """
 }
 
@@ -160,7 +160,7 @@ process activity_prediction {
 
     output:
     path "ligand.score" optional true into ligand_score
-    path "errors_ap_${task.index}.log" into ap_errors
+    path "errors_ap.log" into ap_errors
 
     script:
     """
@@ -168,13 +168,13 @@ process activity_prediction {
     DOCKED_PDBQT=${docked_ligand} \
     run.sh
 
-    mv errors.log errors_ap_${task.index}.log
+    mv errors.log errors_ap.log
     """
 
     stub:
     """
     echo "1,1.0" >> ligand.score
-    touch errors_ap_${task.index}.log
+    touch errors_ap.log
     """
 }
 
