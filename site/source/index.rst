@@ -46,6 +46,7 @@ Table of Contents
    usage
    stages
    parameters
+   errors
 
 
 Indices

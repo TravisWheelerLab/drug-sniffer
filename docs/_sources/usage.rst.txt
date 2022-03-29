@@ -102,13 +102,13 @@ below:
 
 1. Pose - the ID of the Autodock Vina pose
 2. Chemical name - the name of the chemical from the molecule database
-3. Chemical database - the name of the database the chemical can be found in
+3. Chemical database - the name of the database that contains the chemical
 4. Chemical SMILES string - the raw SMILES string
-3. dock2bind score - the score assigned by the dock2bind model
-4. Three columns per ADMET check - predicted, confidence, and credibility, see
+5. dock2bind score - the score assigned by the dock2bind model
+6. Three columns per ADMET check - predicted, confidence, and credibility, see
    the `FPADMET <https://gitlab.com/vishsoft/fpadmet>`_ documentation for more
    details
-5. The calculated ``logp`` value
+7. The calculated ``logp`` value
 
 Examples
 --------
