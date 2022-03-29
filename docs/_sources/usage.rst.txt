@@ -11,15 +11,13 @@ Drug Sniffer is implemented as a `Nextflow <https://nextflow.io>`_ workflow. See
 
 The simplest way to learn how to use Drug Sniffer is to experiment with the
 examples (see below for more information). These may be found in the
-``examples/`` directory within the project repository. From this directory, you
-can run one of the examples with the command below.
+``examples/`` directory within the project repository. From the project root
+directory, you can run one of the examples with the command below.
 
 ::
 
   nextflow run \
-    -profile local \
-    -params-file 3vri_params.yaml \
-    ../workflow/workflow.nf
+    -params-file examples/3vri_params.yaml
 
 There are three things going on here. First, we select the environment the
 workflow will run in with ``-profile local``. The available environments are

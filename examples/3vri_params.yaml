@@ -1,7 +1,7 @@
-molecule_db: '${launchDir}/small-db'
+molecule_db: '${projectDir}/../examples/small-db'
 tanimoto_cutoff: 0.5
 
-receptor_pdb: '${launchDir}/3vri_rec.pdb'
+receptor_pdb: '${projectDir}/../examples/3vri_rec.pdb'
 
 receptor_center_x: 14.641000
 receptor_center_y: -11.026000
@@ -13,6 +13,6 @@ receptor_size_z: 10.0
 
 admet_checks: '1 2 3'
 
-seed_ligands: '${launchDir}/3vri_seeds.smi'
+seed_ligands: '${projectDir}/../examples/3vri_seeds.smi'
 
 output_dir: '${launchDir}/drug-sniffer-output'
