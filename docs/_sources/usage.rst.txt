@@ -16,8 +16,7 @@ directory, you can run one of the examples with the command below.
 
 ::
 
-  nextflow run \
-    -params-file examples/3vri_params.yaml
+  nextflow run -profile local -params-file examples/3vri_params.yaml .
 
 There are three things going on here. First, we select the environment the
 workflow will run in with ``-profile local``. The available environments are
@@ -54,8 +53,9 @@ file format is also `described
 <https://www.nextflow.io/docs/latest/config.html>`_.
 
 Next, we specify a set of parameters for the workflow run with
-``-params-file 3vri_params.yaml``. This tells Nextflow to load workflow
-parameters from the specified YAML file. An example file is shown below:
+``-params-file examples/3vri_params.yaml``. This tells Nextflow to load
+workflow parameters from the specified YAML file. An example file is shown
+below:
 
 ::
 
@@ -74,6 +74,8 @@ parameters from the specified YAML file. An example file is shown below:
 
   admet_checks: '1 2 3'
 
+  output_dir: '${launchDir}/drug-sniffer-output'
+
 The parameters described in this file are explained on the :ref:`parameters`
 page. Of interest, however, is the ``${launchDir}`` variable,
 which is set to the directory from which the ``nextflow`` command is run
@@ -81,8 +83,14 @@ which is set to the directory from which the ``nextflow`` command is run
 variable called ``projectDir`` available which is set to the location of the
 workflow itself (the ``.nf`` file).
 
-Finally, the Nextflow script is specified. The Drug Sniffer script is defined in
-``workflow/workflow.nf``.
+Finally, we tell Nextflow to run the workflow configured for the current
+directory (using ``.``). It is also possible to run the workflow without
+cloning the Git repository by referencing the repo on the command line:
+
+::
+
+  nextflow -profile local -params-file my-params.yaml \
+    https://github.com/TravisWheelerLab/drug-sniffer.git
 
 Output
 ------
