@@ -206,8 +206,8 @@ process error_collation {
     publishDir "${params.output_dir}", mode: 'symlink'
 
     input:
-    path pld_log from pld_errors.collectFile()
-    path ap_log from ap_errors.collectFile()
+    path pld_log from pld_errors.collectFile(name: "pld_errors.log")
+    path ap_log from ap_errors.collectFile(name: "ap_errors.log")
 
     output:
     path "all_errors.txt" into all_errors
