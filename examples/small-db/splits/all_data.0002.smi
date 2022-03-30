@@ -2452,7 +2452,6 @@ CC[C@@H]([C@@H](C(=O)NS(=O)(=O)NC[C@H]1O[C@H]([C@@H]([C@@H]1O)O)n1cnc2c1ncnc2N)N
 CC[C@@H]([C@H](C(=O)O)CNS(=O)(=O)c1ccc(cc1)C)C=O drugbank drugbank_6914 6914
 CC[C@@H]([C@H](C(=O)O)CNS(=O)(=O)c1ccc(cc1)[N+](=O)[O-])C=O drugbank drugbank_6915 6915
 CC[C@@H]([C@H](C(=O)O)NCc1c(cnc(c1O)C)COP(=O)(O)O)C drugbank drugbank_2357 2357
-CC[C@H]([C@@H](C(=O)O)N)C drugbank drugbank_1525 1525
 CC[C@@H]([C@@H](C(=O)O)N)C drugbank drugbank_64 64
 CC([C@@H]([C@@H](C(=O)O)N)O)C drugbank drugbank_2675 2675
 CC[C@H]([C@@H](C(=O)O)NS(=O)(=O)c1ccc(cc1)C)C(=O)O drugbank drugbank_5288 5288
@@ -7998,3 +7997,4 @@ CCN(CC)C(=S)NC(=O)\C=C\C1=CC=CS1 molport MolPort-018-828-892 5565
 CC[N+](CCCS(=O)(=O)[O-])(C)C drugbank drugbank_2342 2342
 CCN(CC)C(=S)SCC1CCN(C)C1 molport MolPort-045-981-207 39955
 CCN(CC)C(=S)SC(C)C(=O)NC1=CC=C(C=C1)S(=O)(=O)NC1=NC=CC=N1 molport MolPort-009-243-590 27125
+CCN(CC)C(=S)SCC(=O)N1CCN(CC1)S(=O)(=O)C1=CC=C(C)C=C1C molport MolPort-004-499-205 13685
