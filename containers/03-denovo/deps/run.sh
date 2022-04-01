@@ -62,9 +62,9 @@ cd /opt/autogrow4 && python RunAutogrow.py \
     --gypsum_timeout_limit 1 \
     --rxn_library "all_rxns"
 
-let "GEN0 = $NUMBER_OF_GENERATIONS - 2"
-let "GEN1 = $NUMBER_OF_GENERATIONS - 1"
-let "GEN2 = $NUMBER_OF_GENERATIONS - 0"
+let "GEN0 = $NUMBER_OF_GENERATIONS - 3"
+let "GEN1 = $NUMBER_OF_GENERATIONS - 2"
+let "GEN2 = $NUMBER_OF_GENERATIONS - 1"
 
 dedup.py \
     -o "$ORIG_PWD/seeds.smi" \

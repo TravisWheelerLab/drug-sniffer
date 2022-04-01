@@ -2,6 +2,8 @@
 
 set -e
 
+rm -rf test/Run_*
+
 docker run -u $(id -u):$(id -g) -v $PWD/test:/data \
     -e NUMBER_OF_PROCESSORS=4 \
     -e RECEPTOR_PATH=3clpro_itasser_h.pdb \
