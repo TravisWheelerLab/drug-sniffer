@@ -1,6 +1,7 @@
 work/
 .nextflow.log.*
 .nextflow/
+drug-sniffer-output/
 
 # ----
 # Perl
