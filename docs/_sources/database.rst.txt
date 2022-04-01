@@ -16,8 +16,10 @@ Database versions, hashes, and download links can be found below.
    :header-rows: 1
 
    * - Version
+     - Size (compressed)
      - Checksum (MD5)
      - Link
    * - 0
+     - 165GB
      - 89bebd1196d5adfd524680d406f1abde
      - `Download <https://data.drugsniffer.org/molecules-v0.zip>`_
