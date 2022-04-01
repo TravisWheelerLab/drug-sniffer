@@ -8,7 +8,7 @@ However, we provide two databases for users who do not wish to bring their own.
 The first, an extremely small database, just a few dozen molecules, exists for
 testing purposes. It can be found at ``examples/small-db``. The second is much,
 much larger (about 450GB decompressed). This database is available for download
-as a ZIP file from `https://data.drugsniffer.org/`_.
+as a ZIP file from `<https://data.drugsniffer.org>`_.
 
 Database versions, hashes, and download links can be found below.
 
