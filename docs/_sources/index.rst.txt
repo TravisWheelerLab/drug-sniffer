@@ -44,6 +44,7 @@ Table of Contents
    :maxdepth: 2
 
    usage
+   database
    stages
    parameters
    errors
