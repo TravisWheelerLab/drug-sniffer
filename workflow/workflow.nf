@@ -109,6 +109,8 @@ process similarity_search {
 process protein_ligand_docking {
     container 'traviswheelerlab/05-protein_ligand_docking:latest'
 
+    time '15min'
+
     input:
     path receptor_pdb from params.receptor_pdb
     path ligand_smi from db_ligands_smi.flatMap()
