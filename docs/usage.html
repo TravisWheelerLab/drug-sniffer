@@ -48,8 +48,10 @@
 <a class="reference internal" href="parameters.html#parameters"><span class="std std-ref">Parameters</span></a> for details on the available workflow parameters.</p>
 <p>The simplest way to learn how to use Drug Sniffer is to experiment with the
 examples (see below for more information). These may be found in the
-<code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory within the project repository. From the project root
-directory, you can run one of the examples with the command below.</p>
+<code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory within the project repository. First, clone the
+repository (<a class="reference external" href="https://github.com/TravisWheelerLab/drug-sniffer">https://github.com/TravisWheelerLab/drug-sniffer</a>). Then,
+from the project root directory, you can run one of the examples with the
+command below.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="o">-</span><span class="n">profile</span> <span class="n">local</span> <span class="o">-</span><span class="n">params</span><span class="o">-</span><span class="n">file</span> <span class="n">examples</span><span class="o">/</span><span class="mi">3</span><span class="n">vri_params</span><span class="o">.</span><span class="n">yaml</span> <span class="o">.</span>
 </pre></div>
 </div>
@@ -111,10 +113,12 @@ workflow itself (the <code class="docutils literal notranslate"><span class="pre
 <p>Finally, we tell Nextflow to run the workflow configured for the current
 directory (using <code class="docutils literal notranslate"><span class="pre">.</span></code>). It is also possible to run the workflow without
 cloning the Git repository by referencing the repo on the command line:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="o">-</span><span class="n">profile</span> <span class="n">local</span> <span class="o">-</span><span class="n">params</span><span class="o">-</span><span class="n">file</span> <span class="n">my</span><span class="o">-</span><span class="n">params</span><span class="o">.</span><span class="n">yaml</span> \
-  <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">TravisWheelerLab</span><span class="o">/</span><span class="n">drug</span><span class="o">-</span><span class="n">sniffer</span><span class="o">.</span><span class="n">git</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="o">-</span><span class="n">profile</span> <span class="n">local</span> <span class="o">-</span><span class="n">params</span><span class="o">-</span><span class="n">file</span> <span class="n">my</span><span class="o">-</span><span class="n">params</span><span class="o">.</span><span class="n">yaml</span> \
+  <span class="o">-</span><span class="n">r</span> <span class="n">main</span> <span class="n">TravisWheelerLab</span><span class="o">/</span><span class="n">drug</span><span class="o">-</span><span class="n">sniffer</span>
 </pre></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">-r</span></code> option tells Nextflow which branch to use. In this case, our primary
+branch is called “main”, so that’s usually the one you want to execute.</p>
 </section>
 <section id="output">
 <h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>

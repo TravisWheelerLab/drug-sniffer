@@ -11,8 +11,10 @@ Drug Sniffer is implemented as a `Nextflow <https://nextflow.io>`_ workflow. See
 
 The simplest way to learn how to use Drug Sniffer is to experiment with the
 examples (see below for more information). These may be found in the
-``examples/`` directory within the project repository. From the project root
-directory, you can run one of the examples with the command below.
+``examples/`` directory within the project repository. First, clone the
+repository (`<https://github.com/TravisWheelerLab/drug-sniffer>`_). Then,
+from the project root directory, you can run one of the examples with the
+command below.
 
 ::
 
@@ -89,8 +91,11 @@ cloning the Git repository by referencing the repo on the command line:
 
 ::
 
-  nextflow -profile local -params-file my-params.yaml \
-    https://github.com/TravisWheelerLab/drug-sniffer.git
+  nextflow run -profile local -params-file my-params.yaml \
+    -r main TravisWheelerLab/drug-sniffer
+
+The ``-r`` option tells Nextflow which branch to use. In this case, our primary
+branch is called "main", so that's usually the one you want to execute.
 
 Output
 ------
