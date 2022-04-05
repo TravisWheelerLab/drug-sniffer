@@ -6,7 +6,7 @@ rm -rf test/Run_*
 
 docker run -u $(id -u):$(id -g) -v $PWD/test:/data \
     -e NUMBER_OF_PROCESSORS=4 \
-    -e RECEPTOR_PATH=3clpro_itasser_h.pdb \
+    -e RECEPTOR_PATH=/opt/autogrow4/tutorial/PARP/4r6eA_PARP1_prepared.pdb \
     -e CENTER_X=-37.141998 \
     -e CENTER_Y=10.206000 \
     -e CENTER_Z=55.180000 \
