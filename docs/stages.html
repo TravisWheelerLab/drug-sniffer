@@ -51,16 +51,33 @@ directory.</p>
 components of the pipeline (stages) are described below. Although it is possible
 to use the pipeline without understanding the individual stages, this information
 is provided here to aid users in troubleshooting, and for completeness.</p>
-<p>Each stage includes a Docker image (<cite>Dockerfile</cite>) along with dependencies and
-scripts. To build the image for a given stage, run <cite>build-image.sh</cite> in the
-directory corresponding to that stage. To run the container, for manual
-debugging, use <cite>run-image.sh</cite>. To run the automated smoke tests, use
-<cite>test-image.sh</cite>. The tests rely on data files stored in the <cite>test/</cite> directory
-and may write additional outputs to that same location when they run.</p>
+<section id="docker-images">
+<h2>Docker Images<a class="headerlink" href="#docker-images" title="Permalink to this headline">¶</a></h2>
+<p>Each stage in the Drug Sniffer pipeline has its own Docker image. The images can
+be built all at once with the <code class="docutils literal notranslate"><span class="pre">build-images.sh</span></code> script found in the <code class="docutils literal notranslate"><span class="pre">tool/</span></code>
+directory, which can be run from the repository root. This script accepts three
+parameters as environment variables, listed below. These allow the images to be
+built and pushed to registries other than the default locations.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">IMAGE_REGISTRY</span></code> - the registry that will host the image, this doesn’t
+matter if the image will only be used locally</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IMAGE_NAMESPACE</span></code> - the owner of the image, this is usually a project or
+organization name and, again, doesn’t matter for images that will never be
+pushed to a registry</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IMAGE_VERSION</span></code> - the version identifier to be applied to the image</p></li>
+</ul>
+<p>All of the variables above have usable defaults.</p>
+<p>To build the image for a particular stage for testing purposes, run
+<code class="docutils literal notranslate"><span class="pre">build-image.sh</span></code> in the directory corresponding to that stage. To run the
+container, for manual debugging, use <code class="docutils literal notranslate"><span class="pre">run-image.sh</span></code>. To run the automated
+smoke tests, use <code class="docutils literal notranslate"><span class="pre">test-image.sh</span></code>. The tests rely on data files stored in the
+<code class="docutils literal notranslate"><span class="pre">test/</span></code> directory and may write additional outputs to that same location
+when they run.</p>
 <a class="reference internal image-reference" href="_images/flow.png"><img alt="Drug Sniffer Data Flow" src="_images/flow.png" style="width: 600px;" /></a>
 <p>The diagram above illustrates how data flows through the <em>Drug Sniffer</em>
 pipeline. For the most part, users will not need to concern themselves with
 this.</p>
+</section>
 <section id="running-a-stage">
 <h2>Running a Stage<a class="headerlink" href="#running-a-stage" title="Permalink to this headline">¶</a></h2>
 <p>Within each Docker image is a script, included in the <code class="code docutils literal notranslate"><span class="pre">PATH</span></code>, called
@@ -178,6 +195,9 @@ docking poses produced and the exhaustiveness parameter for the search for each
 ligand are parameterized by the user; the default values are 9 and 4,
 respectively.</p>
 <p>The Autodock Vina seed value is set to 42 in order to facilitate reproduction.</p>
+<p>This stage is allowed to fail since OpenBabel sometimes fails to produce a 3D
+structure. These failures are ignored because there is no reasonable way to
+recover and the consequences are generally insignificant.</p>
 <p>Required environment variables:</p>
 <ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">RECEPTOR_PDBQT</span></code> - path to the receptor (pocket) chosen by the user, in
@@ -345,6 +365,7 @@ the <a class="reference internal" href="parameters.html#output-dir-parameter"><s
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Stages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#docker-images">Docker Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-a-stage">Running a Stage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-1-target-identification">Stage 1 - Target Identification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stage-2-pocket-prediction">Stage 2 - Pocket Prediction</a></li>

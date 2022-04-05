@@ -48,6 +48,7 @@ Table of Contents
    stages
    parameters
    errors
+   troubleshooting
 
 
 Indices

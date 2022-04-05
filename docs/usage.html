@@ -42,10 +42,22 @@
             
   <section id="usage">
 <span id="id1"></span><h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
-<section id="nextflow-workflow">
-<h2>Nextflow Workflow<a class="headerlink" href="#nextflow-workflow" title="Permalink to this headline">¶</a></h2>
-<p>Drug Sniffer is implemented as a <a class="reference external" href="https://nextflow.io">Nextflow</a> workflow. See
-<a class="reference internal" href="parameters.html#parameters"><span class="std std-ref">Parameters</span></a> for details on the available workflow parameters.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p><em>Drug Sniffer</em> is implemented as a <a class="reference external" href="https://nextflow.io">Nextflow</a> workflow.
+Users will need to install Nextflow before they can use <em>Drug Sniffer</em>, it is
+generally quite easy to install, see the website for details.</p>
+<p>Note that when Nextflow is installed using the default method, a file called
+<code class="docutils literal notranslate"><span class="pre">nextflow</span></code> is created. This can be moved to a location on the user’s <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
+or it can be invoked like <code class="docutils literal notranslate"><span class="pre">./nextflow</span></code>, per standard Unix practices.</p>
+<p><a class="reference external" href="https://www.docker.com">Docker</a> also must be installed in the execution
+environment and configured so that the user launching the Nextflow workflow has
+permission to run Docker containers. In the future, we intend to support
+<a class="reference external" href="https://sylabs.io/singularity">Singularity</a> containers as well since this
+container runtime is more commonly available in HPC environments.</p>
+</section>
+<section id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
 <p>The simplest way to learn how to use Drug Sniffer is to experiment with the
 examples (see below for more information). These may be found in the
 <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory within the project repository. First, clone the
@@ -86,6 +98,7 @@ file format is also <a class="reference external" href="https://www.nextflow.io/
 <code class="docutils literal notranslate"><span class="pre">-params-file</span> <span class="pre">examples/3vri_params.yaml</span></code>. This tells Nextflow to load
 workflow parameters from the specified YAML file. An example file is shown
 below:</p>
+<p>See <a class="reference internal" href="parameters.html#parameters"><span class="std std-ref">Parameters</span></a> for details on the available workflow parameters.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">molecule_db</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{projectDir}</span><span class="s1">/../examples/small-db&#39;</span>
 <span class="n">tanimoto_cutoff</span><span class="p">:</span> <span class="mf">0.5</span>
 
@@ -164,23 +177,6 @@ to each node.</p>
 <p>The full database is available for download at
 <a class="reference external" href="https://data.drugsniffer.org/molecules.zip">https://data.drugsniffer.org/molecules.zip</a>.</p>
 </section>
-<section id="docker-images">
-<h2>Docker Images<a class="headerlink" href="#docker-images" title="Permalink to this headline">¶</a></h2>
-<p>Each stage in the Drug Sniffer pipeline has its own Docker image. The images can
-be built all at once with the <cite>build-images.sh</cite> script found in the <cite>tool/</cite>
-directory, which can be run from the repository root. This script accepts three
-parameters as environment variables, listed below. These allow the images to be
-built and pushed to registries other than the default locations.</p>
-<ul class="simple">
-<li><p><code class="code docutils literal notranslate"><span class="pre">IMAGE_REGISTRY</span></code> - the registry that will host the image, this doesn’t
-matter if the image will only be used locally</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">IMAGE_NAMESPACE</span></code> - the owner of the image, this is usually a project or
-organization name and, again, doesn’t matter for images that will never be
-pushed to a registry</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">IMAGE_VERSION</span></code> - the version identifier to be applied to the image</p></li>
-</ul>
-<p>All of the variables above have usable defaults.</p>
-</section>
 </section>
 
 
@@ -197,11 +193,11 @@ pushed to a registry</p></li>
 <h3><a href="index.html">Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#nextflow-workflow">Nextflow Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running">Running</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#molecule-database">Molecule Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#docker-images">Docker Images</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>

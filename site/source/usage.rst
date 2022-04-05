@@ -3,11 +3,25 @@
 Usage
 =====
 
-Nextflow Workflow
------------------
+Prerequisites
+-------------
 
-Drug Sniffer is implemented as a `Nextflow <https://nextflow.io>`_ workflow. See
-:ref:`parameters` for details on the available workflow parameters.
+*Drug Sniffer* is implemented as a `Nextflow <https://nextflow.io>`_ workflow.
+Users will need to install Nextflow before they can use *Drug Sniffer*, it is
+generally quite easy to install, see the website for details.
+
+Note that when Nextflow is installed using the default method, a file called
+``nextflow`` is created. This can be moved to a location on the user's ``PATH``
+or it can be invoked like ``./nextflow``, per standard Unix practices.
+
+`Docker <https://www.docker.com>`_ also must be installed in the execution
+environment and configured so that the user launching the Nextflow workflow has
+permission to run Docker containers. In the future, we intend to support
+`Singularity <https://sylabs.io/singularity>`_ containers as well since this
+container runtime is more commonly available in HPC environments.
+
+Running
+-------
 
 The simplest way to learn how to use Drug Sniffer is to experiment with the
 examples (see below for more information). These may be found in the
@@ -58,6 +72,8 @@ Next, we specify a set of parameters for the workflow run with
 ``-params-file examples/3vri_params.yaml``. This tells Nextflow to load
 workflow parameters from the specified YAML file. An example file is shown
 below:
+
+See :ref:`parameters` for details on the available workflow parameters.
 
 ::
 
@@ -147,21 +163,3 @@ Once extracted, you can point Drug Sniffer at the location using the
 
 The full database is available for download at
 `<https://data.drugsniffer.org/molecules.zip>`_.
-
-Docker Images
--------------
-
-Each stage in the Drug Sniffer pipeline has its own Docker image. The images can
-be built all at once with the `build-images.sh` script found in the `tool/`
-directory, which can be run from the repository root. This script accepts three
-parameters as environment variables, listed below. These allow the images to be
-built and pushed to registries other than the default locations.
-
-* :code:`IMAGE_REGISTRY` - the registry that will host the image, this doesn't
-  matter if the image will only be used locally
-* :code:`IMAGE_NAMESPACE` - the owner of the image, this is usually a project or
-  organization name and, again, doesn't matter for images that will never be
-  pushed to a registry
-* :code:`IMAGE_VERSION` - the version identifier to be applied to the image
-
-All of the variables above have usable defaults.

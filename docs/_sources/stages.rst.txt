@@ -13,12 +13,30 @@ components of the pipeline (stages) are described below. Although it is possible
 to use the pipeline without understanding the individual stages, this information
 is provided here to aid users in troubleshooting, and for completeness.
 
-Each stage includes a Docker image (`Dockerfile`) along with dependencies and
-scripts. To build the image for a given stage, run `build-image.sh` in the
-directory corresponding to that stage. To run the container, for manual
-debugging, use `run-image.sh`. To run the automated smoke tests, use
-`test-image.sh`. The tests rely on data files stored in the `test/` directory
-and may write additional outputs to that same location when they run.
+Docker Images
+-------------
+
+Each stage in the Drug Sniffer pipeline has its own Docker image. The images can
+be built all at once with the ``build-images.sh`` script found in the ``tool/``
+directory, which can be run from the repository root. This script accepts three
+parameters as environment variables, listed below. These allow the images to be
+built and pushed to registries other than the default locations.
+
+* ``IMAGE_REGISTRY`` - the registry that will host the image, this doesn't
+  matter if the image will only be used locally
+* ``IMAGE_NAMESPACE`` - the owner of the image, this is usually a project or
+  organization name and, again, doesn't matter for images that will never be
+  pushed to a registry
+* ``IMAGE_VERSION`` - the version identifier to be applied to the image
+
+All of the variables above have usable defaults.
+
+To build the image for a particular stage for testing purposes, run
+``build-image.sh`` in the directory corresponding to that stage. To run the
+container, for manual debugging, use ``run-image.sh``. To run the automated
+smoke tests, use ``test-image.sh``. The tests rely on data files stored in the
+``test/`` directory and may write additional outputs to that same location
+when they run.
 
 
 .. image:: _static/flow.png
@@ -152,6 +170,10 @@ ligand are parameterized by the user; the default values are 9 and 4,
 respectively.
 
 The Autodock Vina seed value is set to 42 in order to facilitate reproduction.
+
+This stage is allowed to fail since OpenBabel sometimes fails to produce a 3D
+structure. These failures are ignored because there is no reasonable way to
+recover and the consequences are generally insignificant.
 
 Required environment variables:
 
