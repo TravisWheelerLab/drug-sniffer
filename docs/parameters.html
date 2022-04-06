@@ -86,13 +86,23 @@ the denovo step.</p>
 <p>size in the Z dimension (Angstroms)</p>
 </section>
 </section>
-<section id="denovo-ligands-stage-3">
-<h2>Denovo Ligands (Stage 3)<a class="headerlink" href="#denovo-ligands-stage-3" title="Permalink to this headline">¶</a></h2>
+<section id="denovo-stage-3">
+<h2>Denovo (Stage 3)<a class="headerlink" href="#denovo-stage-3" title="Permalink to this headline">¶</a></h2>
 <section id="seed-ligands-optional">
 <h3>seed_ligands (optional)<a class="headerlink" href="#seed-ligands-optional" title="Permalink to this headline">¶</a></h3>
 <p>A SMILES file (.smi) containing one or more SMILES strings for molecules to use
 in place of building denovo ligands with Autogrow4. This causes Stage 3 to be
 skipped, the ligands specified will be fed directly into Stage 4.</p>
+</section>
+<section id="autogrow-exhaustiveness">
+<h3>autogrow_exhaustiveness<a class="headerlink" href="#autogrow-exhaustiveness" title="Permalink to this headline">¶</a></h3>
+<p>The value to use for the <code class="docutils literal notranslate"><span class="pre">docking_exhaustiveness</span></code> parameter to Autogrow4. The
+default is 1.</p>
+</section>
+<section id="autogrow-generations">
+<h3>autogrow_generations<a class="headerlink" href="#autogrow-generations" title="Permalink to this headline">¶</a></h3>
+<p>The number of generations to produce with Autogrow4. <em>Drug Sniffer</em> uses the
+last three generations, so this value must be at least 3. The default is 20.</p>
 </section>
 </section>
 <section id="similarity-search-stage-4">
@@ -136,12 +146,13 @@ for a list of available checks.</p>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Parameters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#protein-receptor-pocket">Protein Receptor (Pocket)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#denovo-ligands-stage-3">Denovo Ligands (Stage 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#denovo-stage-3">Denovo (Stage 3)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#similarity-search-stage-4">Similarity Search (Stage 4)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#admet-prediction-stage-7">ADMET Prediction (Stage 7)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">

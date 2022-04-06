@@ -8,6 +8,18 @@ if (external_seeds) {
     seed_ligands = Channel.empty()
 }
 
+if (params.autogrow_exhaustiveness == null) {
+    autogrow_exhaustiveness = 1
+} else {
+    autogrow_exhaustiveness = params.autogrow_exhaustiveness
+}
+
+if (params.autogrow_generations == null) {
+    autogrow_generations = 20
+} else {
+    autogrow_generations = params.autogrow_generations
+}
+
 // Stages 1 and 2 require manual intervention and are therefore excluded from the
 // workflow definition.
 
@@ -15,6 +27,8 @@ if (external_seeds) {
 
 process denovo_ligands {
     container 'traviswheelerlab/03-denovo:latest'
+
+    publishDir "${params.output_dir}", mode: 'symlink'
 
     input:
     path receptor_pdb from params.receptor_pdb
@@ -37,7 +51,9 @@ process denovo_ligands {
 
     script:
     """
-    NUMBER_OF_PROCESSORS=4 \
+    DOCKING_EXHAUSTIVENESS=${autogrow_exhaustiveness} \
+    NUMBER_OF_GENERATIONS=${autogrow_generations} \
+    NUMBER_OF_PROCESSORS=12 \
     RECEPTOR_PATH="${receptor_pdb}" \
     CENTER_X="${center_x}" \
     CENTER_Y="${center_y}" \

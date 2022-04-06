@@ -64,9 +64,7 @@ ENV PATH=${PATH}:/opt/autogrow4
 
 COPY deps/Fragment_MW_up_to_250.smi /opt/autogrow4/
 ENV SOURCE_COMPOUND_FILE="/opt/autogrow4/Fragment_MW_up_to_250.smi"
-ENV DOCKING_EXHAUSTIVENESS=1
 ENV NUMBER_OF_PROCESSORS=12
-ENV NUMBER_OF_GENERATIONS=20
 
 # ---------------------
 # Runtime configuration

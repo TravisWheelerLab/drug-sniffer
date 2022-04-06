@@ -59,8 +59,8 @@ receptor_size_z
 
 size in the Z dimension (Angstroms)
 
-Denovo Ligands (Stage 3)
-------------------------
+Denovo (Stage 3)
+----------------
 
 seed_ligands (optional)
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -68,6 +68,18 @@ seed_ligands (optional)
 A SMILES file (.smi) containing one or more SMILES strings for molecules to use
 in place of building denovo ligands with Autogrow4. This causes Stage 3 to be
 skipped, the ligands specified will be fed directly into Stage 4.
+
+autogrow_exhaustiveness
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The value to use for the ``docking_exhaustiveness`` parameter to Autogrow4. The
+default is 1.
+
+autogrow_generations
+^^^^^^^^^^^^^^^^^^^^
+
+The number of generations to produce with Autogrow4. *Drug Sniffer* uses the
+last three generations, so this value must be at least 3. The default is 20.
 
 Similarity Search (Stage 4)
 ---------------------------
