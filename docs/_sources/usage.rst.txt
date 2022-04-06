@@ -113,6 +113,10 @@ cloning the Git repository by referencing the repo on the command line:
 The ``-r`` option tells Nextflow which branch to use. In this case, our primary
 branch is called "main", so that's usually the one you want to execute.
 
+We also suggest using the ``-with-report`` option to the Nextflow "run" command
+as it produces a useful report after the workflow has finished. See the `example
+<_static/report.html>`_ report for details.
+
 Output
 ------
 
