@@ -2,6 +2,7 @@ FROM debian:bullseye-slim as build
 
 RUN apt-get update && apt-get -y install \
         gcc \
+        procps \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
@@ -15,6 +16,7 @@ FROM debian:bullseye-slim
 # -------------------
 
 RUN apt-get update && apt-get -y install \
+        procps \
         python3 \
         python3-pip \
         python3-rdkit \

@@ -26,6 +26,7 @@ FROM debian:bullseye-slim
 
 RUN apt-get update && apt-get -y install \
         openbabel \
+        procps \
         python3 \
         python3-numpy \
         python3-torch \

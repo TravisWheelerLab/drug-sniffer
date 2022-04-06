@@ -5,6 +5,7 @@ RUN apt-get update && apt-get -y install \
         gnupg \
         openjdk-11-jdk-headless \
         openjdk-11-jre-headless \
+        procps \
     && rm -rf /var/lib/apt/lists/*
 
 ARG R_REPO="deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/"

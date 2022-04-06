@@ -1,6 +1,7 @@
 FROM debian:bullseye-slim
 
 RUN apt-get update && apt-get -y install \
+        procps \
         python3 \
         python-is-python3 \
     && rm -rf /var/lib/apt/lists/*

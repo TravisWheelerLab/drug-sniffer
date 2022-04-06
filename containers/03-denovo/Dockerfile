@@ -7,6 +7,7 @@ FROM debian:bullseye-slim
 RUN apt-get update && apt-get -y install \
         coreutils \
         openbabel \
+        procps \
         unzip \
     && rm -rf /var/lib/apt/lists/*
 

@@ -6,6 +6,7 @@ FROM debian:bullseye-slim
 
 RUN apt-get update && apt-get -y install \
         openbabel \
+        procps \
         python \
     && rm -rf /var/lib/apt/lists/*
 
