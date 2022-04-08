@@ -126,6 +126,7 @@ process protein_ligand_docking {
     container 'traviswheelerlab/05-protein_ligand_docking:latest'
 
     time '60min'
+    errorStrategy 'ignore'
 
     input:
     path receptor_pdb from params.receptor_pdb
