@@ -165,9 +165,15 @@ def main(args):
         out += model(data).squeeze()
     data = out
 
+    max_score = -1
+    max_i = -1
     for i in range(len(data)):
         score = float(data[i]) / float(sample_num)
-        print(f"{names[i][0]}\t{score:.4}")
+        if score > max_score:
+            max_score = score
+            max_i = i
+
+    print(f"{names[max_i][0]}\t{max_score:.4}")
 
 
 if __name__ == "__main__":

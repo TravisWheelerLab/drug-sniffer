@@ -17,7 +17,7 @@ set -e
 
 smi=$(cat "$LIGAND_SMI")
 echo "$smi" > ligand.smi
-echo -n "$smi," >> admet.txt
+echo -n "$smi\t" >> admet.txt
 
 for check in $ADMET_CHECKS; do
     runadmet.sh -f ligand.smi -p "$check" -a

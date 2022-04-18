@@ -188,7 +188,7 @@ process activity_prediction {
 
     stub:
     """
-    echo "1,1.0" >> ligand.score
+    echo "1\t1.0" >> ligand.score
     touch errors.log
     """
 }
