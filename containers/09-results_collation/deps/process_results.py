@@ -36,7 +36,7 @@ def main(args):
     admet_file = open(options.admet_output, "r")
 
     for ligand, score, admet in zip(ligand_file, score_file, admet_file):
-        smi, db, name, _ = ligand.split("\t")
+        smi, name, db, _ = ligand.split("\t")
         pose, value = score.split("\t")
 
         print("\t".join([
