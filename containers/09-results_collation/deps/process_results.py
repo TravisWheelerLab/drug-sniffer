@@ -35,7 +35,14 @@ def main(args):
     score_file = open(options.ligand_score, "r")
     admet_file = open(options.admet_output, "r")
 
-    for ligand, score, admet in zip(ligand_file, score_file, admet_file):
+    ligand_lines = list(ligand_file)
+    score_lines = list(score_file)
+    admet_lines = list(admet_file)
+
+    assert len(ligand_lines) == len(score_lines)
+    assert len(ligand_lines) == len(admet_lines)
+
+    for ligand, score, admet in zip(ligand_lines, score_lines, admet_lines):
         smi, name, db, _ = ligand.split("\t")
         pose, value = score.split("\t")
 
