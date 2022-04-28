@@ -2,6 +2,7 @@
 
 # Required parameters:
 #
+# LIGAND_SMI
 # RECEPTOR_PDB
 # DOCKED_PDBQT
 #
@@ -32,7 +33,7 @@ hydrophobic non_hydrophobic vdw non_dir_hbond_lj \
 non_dir_anti_h_bond_quadratic non_dir_h_bond \
 acceptor_acceptor_quadratic donor_donor_quadratic \
 electrostatic ad4_solvation ligand_length \
-constant_term num_tors_div DFIRE" > _ligand.score
+constant_term num_tors_div DFIRE" > _ligand.in.score
 
 # Convert the protein to pdbqt
 obabel -ipdb "$RECEPTOR_PDB" -opdbqt -O _receptor.pdbqt
@@ -70,7 +71,7 @@ for pose_pdbqt in _pose_*.pdbqt; do
     fi
 
     let "pose_id=pose_id+1"
-    echo "$pose_id $smina $dfire" >> _ligand.score
+    echo "$pose_id $smina $dfire" >> _ligand.in.score
 done
 
 # If we never incremented the pose ID, then we know that none of the poses
@@ -80,8 +81,13 @@ if [ "$pose_id" == "0" ]; then
 fi
 
 # Re-score with the ML model
-dock2bind.py /opt/activity_prediction/platstd.h5 _ligand.score \
-    > ligand.score
+dock2bind.py /opt/activity_prediction/platstd.h5 _ligand.in.score \
+    > _ligand.score
 exit-error "$?" "failed running dock2bind model"
 
+# Build the output, prepending the SMI content
+combine.py "$LIGAND_SMI" _ligand.score
+    > ligand.score
+
 rm -f _receptor.pdbqt _pose_*.pdbqt
+rm -f _ligand.in.score _ligand.score

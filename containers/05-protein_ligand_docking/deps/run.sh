@@ -75,6 +75,7 @@ exit-error "$?" "failed docking ligand: $smi"
 # ADMET prediction and output
 echo "$smi" > ligand.smi.admet
 echo "$smi" > ligand.smi.output
+echo "$smi" > ligand.smi.activity
 
 rm -f _ligand.smi _ligand.pdbqt
 rm -f _receptor.pdbqt
