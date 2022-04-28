@@ -42,6 +42,14 @@ def main(args):
     assert len(ligand_lines) == len(score_lines)
     assert len(ligand_lines) == len(admet_lines)
 
+    # All results have their corresponding SMI line at the beginning of
+    # each record, and all SMI lines are unique (so there are no ties),
+    # so we can put the results for each stage in a consistent order by
+    # sorting them all.
+    ligand_lines.sort()
+    score_lines.sort()
+    admet_lines.sort()
+
     for ligand, score, admet in zip(ligand_lines, score_lines, admet_lines):
         smi, name, db, _ = ligand.split("\t")
         pose, value = score.split("\t")

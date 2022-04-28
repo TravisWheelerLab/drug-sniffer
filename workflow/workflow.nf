@@ -142,6 +142,7 @@ process protein_ligand_docking {
     path "docked_ligand.pdbqt" optional true into docked_ligand
     path "ligand.smi.admet" optional true into ligand_smi_admet
     path "ligand.smi.output" optional true into ligand_smi_output
+    path "ligand.smi.activity" optional true into ligand_smi_activity
     path "errors.log" into pld_errors
 
     script:
@@ -172,6 +173,7 @@ process activity_prediction {
     container 'traviswheelerlab/06-activity_prediction'
 
     input:
+    path ligand_smi from ligand_smi_activity
     path receptor_pdb from params.receptor_pdb
     path docked_ligand from docked_ligand
 
@@ -181,6 +183,7 @@ process activity_prediction {
 
     script:
     """
+    LIGAND_SMI=${ligand_smi} \
     RECEPTOR_PDB=${receptor_pdb} \
     DOCKED_PDBQT=${docked_ligand} \
     run.sh
