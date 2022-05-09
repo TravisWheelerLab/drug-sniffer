@@ -185,6 +185,12 @@ written (default is <cite>./output</cite>)</p></li>
 </ul>
 <p>This stage consists entirely of custom code but relies on RDKit (specifically
 the Python bindings), version 2021.9.4.</p>
+<p>The output is one or more <code class="docutils literal notranslate"><span class="pre">.smi</span></code> files that contain the SMILES strings,
+taken from the molecule database, thought to match the binding pocket.
+Each line contains one SMILES string, then the database it came from, the
+name of the molecule within that database, and the offset it was stored at
+in the database (which is only for debugging purposes). The fields for each
+molecule are separated by tab characters.</p>
 </section>
 <section id="stage-5-protein-ligand-docking">
 <h2>Stage 5 - Protein Ligand Docking<a class="headerlink" href="#stage-5-protein-ligand-docking" title="Permalink to this headline">¶</a></h2>
@@ -380,6 +386,7 @@ the <a class="reference internal" href="parameters.html#output-dir-parameter"><s
 </li>
 <li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">

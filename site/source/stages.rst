@@ -159,6 +159,13 @@ Optional environment variables:
 This stage consists entirely of custom code but relies on RDKit (specifically
 the Python bindings), version 2021.9.4.
 
+The output is one or more ``.smi`` files that contain the SMILES strings,
+taken from the molecule database, thought to match the binding pocket.
+Each line contains one SMILES string, then the database it came from, the
+name of the molecule within that database, and the offset it was stored at
+in the database (which is only for debugging purposes). The fields for each
+molecule are separated by tab characters.
+
 Stage 5 - Protein Ligand Docking
 --------------------------------
 
