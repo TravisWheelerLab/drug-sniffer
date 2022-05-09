@@ -77,7 +77,7 @@ WORKDIR /opt
 
 COPY deps/dock2bind.py activity_prediction/
 COPY deps/platstd.h5 activity_prediction/
-COPY deps/combine.py activity_prediction/
+COPY deps/combine_dock2bind.py activity_prediction/
 
 # ---------------------
 # Runtime configuration

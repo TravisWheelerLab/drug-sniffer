@@ -27,7 +27,7 @@ rm -f jlogp.txt
 java -jar /opt/JLogP/build/JLogP.jar "$LIGAND_SMI" jlogp.txt
 awk '{print $2}' jlogp.txt >> _admet.txt
 
-combine.py "$LIGAND_SMI" _admet.txt > admet.txt
+combine_admet.py "$LIGAND_SMI" _admet.txt > admet.txt
 
 rm -f jlogp.txt predicted.txt _admet.txt
 

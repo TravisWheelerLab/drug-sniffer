@@ -40,7 +40,7 @@ ENV PATH=${PATH}:/opt/JLogP/build
 WORKDIR /opt
 RUN mkdir admet_prediction
 COPY deps/run.sh admet_prediction/
-COPY deps/combine.py admet_prediction/
+COPY deps/combine_admet.py admet_prediction/
 ENV PATH=${PATH}:/opt/admet_prediction
 
 VOLUME /data

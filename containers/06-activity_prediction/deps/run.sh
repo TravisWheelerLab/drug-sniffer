@@ -86,7 +86,7 @@ dock2bind.py /opt/activity_prediction/platstd.h5 _ligand.in.score \
 exit-error "$?" "failed running dock2bind model"
 
 # Build the output, prepending the SMI content
-combine.py "$LIGAND_SMI" _ligand.score \
+combine_dock2bind.py "$LIGAND_SMI" _ligand.score \
     > ligand.score
 
 rm -f _receptor.pdbqt _pose_*.pdbqt
