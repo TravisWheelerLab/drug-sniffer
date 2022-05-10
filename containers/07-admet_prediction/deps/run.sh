@@ -18,7 +18,7 @@ set -e
 for check in $ADMET_CHECKS; do
     runadmet.sh -f "$LIGAND_SMI" -p "$check" -a
     cp /opt/fpadmet/RESULTS/predicted.txt predicted.txt
-    awk 'NR!=1 {printf "%s\t%s\t%s\t",$2,$3,$4}' predicted.txt > _admet.txt
+    awk 'NR!=1 {printf "%s\t%s\t%s\t",$2,$3,$4}' predicted.txt >> _admet.txt
 done
 
 # JLogP - remove the output file in case we're running a test and the last run
@@ -28,6 +28,3 @@ java -jar /opt/JLogP/build/JLogP.jar "$LIGAND_SMI" jlogp.txt
 awk '{print $2}' jlogp.txt >> _admet.txt
 
 combine_admet.py "$LIGAND_SMI" _admet.txt > admet.txt
-
-rm -f jlogp.txt predicted.txt _admet.txt
-
