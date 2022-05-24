@@ -15,20 +15,13 @@ set -e
 # admet.txt
 #
 
-echo "SMI data:"
-cat "$LIGAND_SMI"
-
 for check in $ADMET_CHECKS; do
     runadmet.sh -f "$LIGAND_SMI" -p "$check" -a
 
     # For debugging
     cp /opt/fpadmet/RESULTS/fps.txt fps.txt
-    echo "fps.txt:"
-    cat fps.txt
 
     cp /opt/fpadmet/RESULTS/predicted.txt predicted.txt
-    echo "predicted.txt:"
-    cat predicted.txt
 
     awk 'NR!=1 {printf "%s\t%s\t%s\t",$2,$3,$4}' predicted.txt >> _admet.txt
     echo "$check\t" >> _admet.txt
