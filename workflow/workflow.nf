@@ -163,6 +163,7 @@ process protein_ligand_docking {
     touch docked_ligand.pdbqt
     cp ${ligand_smi} ligand.smi.admet
     cp ${ligand_smi} ligand.smi.output
+    cp ${ligand_smi} ligand.smi.activity
     touch errors.log
     """
 }
