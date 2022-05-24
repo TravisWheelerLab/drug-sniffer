@@ -52,16 +52,33 @@ def main(args):
 
     for ligand, score, admet in zip(ligand_lines, score_lines, admet_lines):
         smi, name, db, _ = ligand.split("\t")
-        pose, value = score.split("\t")
+        smi_score, name_score, db_score, _, pose, value = score.split("\t")
+        smi_admet, name_admet, db_admet, _, a, b, c, j = admet.split("\t")
 
-        print("\t".join([
-            pose.strip(),
-            name.strip(),
-            db.strip(),
-            smi.strip(),
-            value.strip(),
-            admet.strip(),
-        ]))
+        assert smi == smi_score
+        assert name == name_score
+        assert db == db_score
+
+        assert smi == smi_admet
+        assert name == name_admet
+        assert db == db_admet
+
+        print(
+            "\t".join(
+                [
+                    pose.strip(),
+                    name.strip(),
+                    db.strip(),
+                    smi.strip(),
+                    value.strip(),
+                    admet.strip(),
+                    a,
+                    b,
+                    c,
+                    j,
+                ]
+            )
+        )
 
     score_file.close()
     admet_file.close()
