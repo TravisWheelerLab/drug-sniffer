@@ -210,7 +210,8 @@ process admet_prediction {
 
     script:
     """
-    LIGAND_SMI="${ligand_smi}" \
+    cp ${ligand_smi} ligand.smi
+    LIGAND_SMI="ligand.smi" \
     ADMET_CHECKS="${params.admet_checks}" \
     run.sh
     """
