@@ -24,7 +24,6 @@ for check in $ADMET_CHECKS; do
     cp /opt/fpadmet/RESULTS/predicted.txt predicted.txt
 
     awk 'NR!=1 {printf "%s\t%s\t%s\t",$2,$3,$4}' predicted.txt >> _admet.txt
-    echo "$check\t" >> _admet.txt
 done
 
 # JLogP - remove the output file in case we're running a test and the last run
