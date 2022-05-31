@@ -16,6 +16,8 @@ def main(args):
 
     options = parser.parse_args(args)
 
+    admet_checks = options.admet_checks.split()
+
     headers = [
         "pose",
         "chemical name",
@@ -23,7 +25,7 @@ def main(args):
         "smiles",
         "dock2bind score",
     ]
-    for check in options.admet_checks.split():
+    for check in admet_checks:
         headers.append(f"predicted {check}")
         headers.append(f"confidence {check}")
         headers.append(f"credibility {check}")
@@ -53,7 +55,10 @@ def main(args):
     for ligand, score, admet in zip(ligand_lines, score_lines, admet_lines):
         smi, name, db, _ = ligand.split("\t")
         smi_score, name_score, db_score, _, pose, value = score.split("\t")
-        smi_admet, name_admet, db_admet, _, a, b, c, j = admet.split("\t")
+
+        admet_parts = admet.split("\t")
+        assert len(admet_parts) == 5 + 3 * len(admet_checks)
+        smi_admet, name_admet, db_admet, _ = admet[:4]
 
         assert smi == smi_score
         assert name == name_score
@@ -71,12 +76,7 @@ def main(args):
                     db.strip(),
                     smi.strip(),
                     value.strip(),
-                    admet.strip(),
-                    a,
-                    b,
-                    c,
-                    j,
-                ]
+                ] + admet_parts[4:],
             )
         )
 
