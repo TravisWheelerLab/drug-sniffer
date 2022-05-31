@@ -58,7 +58,7 @@ def main(args):
 
         admet_parts = admet.split("\t")
         assert len(admet_parts) == 5 + 3 * len(admet_checks)
-        smi_admet, name_admet, db_admet, _ = admet[:4]
+        smi_admet, name_admet, db_admet, _ = admet_parts[:4]
 
         try:
             assert smi.strip() == smi_score.strip()
