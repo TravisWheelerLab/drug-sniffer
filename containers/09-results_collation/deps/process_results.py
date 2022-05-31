@@ -60,13 +60,19 @@ def main(args):
         assert len(admet_parts) == 5 + 3 * len(admet_checks)
         smi_admet, name_admet, db_admet, _ = admet[:4]
 
-        assert smi == smi_score
-        assert name == name_score
-        assert db == db_score
+        try:
+            assert smi.strip() == smi_score.strip()
+            assert name.strip() == name_score.strip()
+            assert db.strip() == db_score.strip()
 
-        assert smi == smi_admet
-        assert name == name_admet
-        assert db == db_admet
+            assert smi.strip() == smi_admet.strip()
+            assert name.strip() == name_admet.strip()
+            assert db.strip() == db_admet.strip()
+        except:
+            print(f"ligand: {ligand}")
+            print(f"score: {score}")
+            print(f"admet: {admet}")
+            raise
 
         print(
             "\t".join(
