@@ -29,6 +29,7 @@ Docker image that are used to execute the computations contained in the stage.
 
 Code can be found on
 `GitHub <https://github.com/TravisWheelerLab/drug-sniffer>`_.
+Feel free to create an "issue" on GitHub if you find a bug or need support.
 
 See the :ref:`usage` guide for details on how to run *Drug Sniffer*.
 
