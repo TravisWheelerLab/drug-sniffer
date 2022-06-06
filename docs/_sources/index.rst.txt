@@ -27,14 +27,18 @@ The *Drug Sniffer* pipeline has been implemented as a `Nextflow
 <http://nextflow.io>`_ workflow. Each stage has a corresponding script and
 Docker image that are used to execute the computations contained in the stage.
 
-Code can be found on
-`GitHub <https://github.com/TravisWheelerLab/drug-sniffer>`_.
-
 See the :ref:`usage` guide for details on how to run *Drug Sniffer*.
 
 .. image:: _static/pipeline.png
   :width: 600
   :alt: Drug Sniffer Pipeline
+
+Code
+----
+
+Code can be found on
+`GitHub <https://github.com/TravisWheelerLab/drug-sniffer>`_.
+Feel free to create an "issue" on GitHub if you find a bug or need support.
 
 Table of Contents
 =================

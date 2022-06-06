@@ -2,6 +2,9 @@ Troubleshooting
 ===============
 
 Some common issues are listed below, along with likely solutions or next steps.
+If your issue isn't in the list below, or if you require additional assistance,
+create an "issue" on the
+`GitHub page <https://github.com/TravisWheelerLab/drug-sniffer>`_.
 
 **The pipeline stops running after the protein-ligand docking (PLD) stage**
 
@@ -13,3 +16,4 @@ output.
 
 The most common remedy is to ensure that the protein receptor file is properly
 formatted.
+
