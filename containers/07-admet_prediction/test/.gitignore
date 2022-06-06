@@ -4,3 +4,6 @@ jlogp.txt
 ligand.smi
 output.txt
 admet.txt
+_admet.txt
+predicted.txt
+fps.txt
