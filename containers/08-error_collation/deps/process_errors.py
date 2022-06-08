@@ -18,10 +18,10 @@ def main(args):
     print("")
 
     with open(options.protein_ligand_docking) as file:
-        print_group("Stage 6 - protein-ligand docking", file)
+        print_group("Stage 5 - protein-ligand docking", file)
     
     with open(options.activity_prediction) as file:
-        print_group("Stage 7 - activity prediction", file)
+        print_group("Stage 6 - activity prediction", file)
 
 
 def print_group(name, file):
