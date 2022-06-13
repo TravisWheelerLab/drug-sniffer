@@ -20,6 +20,33 @@ permission to run Docker containers. In the future, we intend to support
 `Singularity <https://sylabs.io/singularity>`_ containers as well since this
 container runtime is more commonly available in HPC environments.
 
+Containers
+----------
+
+The first step is to build the Docker images. This can be done by running
+the ``build-images.sh`` script in the ``tool/`` directory.
+
+::
+
+  ./tool/build-images.sh
+
+This will build the necessary Docker images. If the workflow is to be run on a
+cluster or cloud environment then it may be necessary to push the images to a
+registry. In this case, set the ``IMAGE_NAMESPACE`` environment variable to
+a valid registry and namespace when running the script above.
+
+::
+
+  IMAGE_NAMESPACE=fancyregistry.io/mylab ./tool/build-images.sh
+
+If the ``IMAGE_PUSH`` environment variable is set to anything other than ``0``
+(the default), the images will also be pushed to the specified registry,
+which defaults to ``docker.io`` is otherwise unspecified.
+
+::
+
+  IMAGE_NAMESPACE=mylab IMAGE_PUSH=1 ./tool/build-images.sh
+
 Running
 -------
 

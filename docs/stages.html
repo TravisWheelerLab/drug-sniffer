@@ -64,18 +64,15 @@ is provided here to aid users in troubleshooting, and for completeness.</p>
 <h2>Docker Images<a class="headerlink" href="#docker-images" title="Permalink to this headline">¶</a></h2>
 <p>Each stage in the Drug Sniffer pipeline has its own Docker image. The images can
 be built all at once with the <code class="docutils literal notranslate"><span class="pre">build-images.sh</span></code> script found in the <code class="docutils literal notranslate"><span class="pre">tool/</span></code>
-directory, which can be run from the repository root. This script accepts three
-parameters as environment variables, listed below. These allow the images to be
-built and pushed to registries other than the default locations.</p>
+directory, which can be run from the repository root. This script accepts two
+parameters as environment variables, listed below. The default values should be
+acceptable for most users.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">IMAGE_REGISTRY</span></code> - the registry that will host the image, this doesn’t
-matter if the image will only be used locally</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">IMAGE_NAMESPACE</span></code> - the owner of the image, this is usually a project or
 organization name and, again, doesn’t matter for images that will never be
 pushed to a registry</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">IMAGE_VERSION</span></code> - the version identifier to be applied to the image</p></li>
 </ul>
-<p>All of the variables above have usable defaults.</p>
 <p>To build the image for a particular stage for testing purposes, run
 <code class="docutils literal notranslate"><span class="pre">build-image.sh</span></code> in the directory corresponding to that stage. To run the
 container, for manual debugging, use <code class="docutils literal notranslate"><span class="pre">run-image.sh</span></code>. To run the automated

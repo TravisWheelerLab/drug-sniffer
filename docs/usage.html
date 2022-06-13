@@ -65,6 +65,27 @@ permission to run Docker containers. In the future, we intend to support
 <a class="reference external" href="https://sylabs.io/singularity">Singularity</a> containers as well since this
 container runtime is more commonly available in HPC environments.</p>
 </section>
+<section id="containers">
+<h2>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h2>
+<p>The first step is to build the Docker images. This can be done by running
+the <code class="docutils literal notranslate"><span class="pre">build-images.sh</span></code> script in the <code class="docutils literal notranslate"><span class="pre">tool/</span></code> directory.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">tool</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">images</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>This will build the necessary Docker images. If the workflow is to be run on a
+cluster or cloud environment then it may be necessary to push the images to a
+registry. In this case, set the <code class="docutils literal notranslate"><span class="pre">IMAGE_NAMESPACE</span></code> environment variable to
+a valid registry and namespace when running the script above.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IMAGE_NAMESPACE</span><span class="o">=</span><span class="n">fancyregistry</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">mylab</span> <span class="o">./</span><span class="n">tool</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">images</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">IMAGE_PUSH</span></code> environment variable is set to anything other than <code class="docutils literal notranslate"><span class="pre">0</span></code>
+(the default), the images will also be pushed to the specified registry,
+which defaults to <code class="docutils literal notranslate"><span class="pre">docker.io</span></code> is otherwise unspecified.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IMAGE_NAMESPACE</span><span class="o">=</span><span class="n">mylab</span> <span class="n">IMAGE_PUSH</span><span class="o">=</span><span class="mi">1</span> <span class="o">./</span><span class="n">tool</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">images</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</section>
 <section id="running">
 <h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
 <p>The simplest way to learn how to use Drug Sniffer is to experiment with the
@@ -205,6 +226,7 @@ to each node.</p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#containers">Containers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running">Running</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
