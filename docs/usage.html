@@ -200,14 +200,28 @@ how to do this. The <code class="docutils literal notranslate"><span class="pre"
 provide a large, curated database for use by the public. The database is an
 aggregation of a number of existing databases intended for drug research, and
 each molecule includes a reference back to its original source for convenience.</p>
-<p>The database is about 141GB compressed, so it requires a large filesystem.
+<p>The database is about 165GB compressed, so it requires a large filesystem.
 Further, when running Drug Sniffer on a cluster, we recommend that you make the
 database accessible through NFS or some similar means to avoid downloading it on
 to each node.</p>
+<p>The full database is available for download with the following steps in a shell environment :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># download a collection of 166 files representing the complete database. This will create
+# a new directory in your current working directory called molecule-files/
+$ mkdir molecule_db
+$ cd molecule_db
+$ wget --accept-regex &quot;ds_&quot; -nH -np -r https://data.drugsniffer.org/molecule-files/
+
+# merge all those files into a single zip file, then unzip it
+$ zip -F molecule-files/ds_molecules.zip --out molecules.zip
+$ unzip molecules.zip
+
+# clean up
+$ rm -rf molecules.zip molecule-files/
+</pre></div>
+</div>
 <p>Once extracted, you can point Drug Sniffer at the location using the
-<a class="reference internal" href="parameters.html#molecule-db-parameter"><span class="std std-ref">molecule_db</span></a> parameter.</p>
-<p>The full database is available for download at
-<a class="reference external" href="https://data.drugsniffer.org/molecules.zip">https://data.drugsniffer.org/molecules.zip</a>.</p>
+<a class="reference internal" href="parameters.html#molecule-db-parameter"><span class="std std-ref">molecule_db</span></a> parameter.
+That will be the path to (and including) the molecule_db directory described above.</p>
 </section>
 </section>
 
