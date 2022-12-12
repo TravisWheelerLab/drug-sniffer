@@ -14,7 +14,7 @@ Specifically, the full database is available for download with the following ste
 
 ::
 
-  # download a collection of 166 files representing the complete database. This will create
+  # download a collection of files representing the complete database. This will create
   # a new directory in your current working directory called molecule-files/
   $ mkdir molecule_db
   $ cd molecule_db
