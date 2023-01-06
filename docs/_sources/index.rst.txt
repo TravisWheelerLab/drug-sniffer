@@ -40,6 +40,18 @@ Code can be found on
 `GitHub <https://github.com/TravisWheelerLab/drug-sniffer>`_.
 Feel free to create an "issue" on GitHub if you find a bug or need support.
 
+Cite
+----
+
+If you use drugsniffer, please cite the `paper <https://pubmed.ncbi.nlm.nih.gov/35559261/>`_.
+
+V. Venkatraman, T. H. Colligan, G. T. Lesica, D. R. Olson, J. Gaiser, C. J. Copeland, T. J. Wheeler, and A. Roy, “Drugsniffer: An open source workflow for virtually screening billions of molecules for binding affinity to protein targets,” Front. Pharmacol., vol. 13, Apr. 2022.
+
+
+
+
+
+
 Table of Contents
 =================
 
@@ -73,6 +85,5 @@ This research was supported in part by:
 * NIH grant R01GM132600
 * DOE grant DE-SC0021216.
 
-The *Drug Sniffer* software was developed by the `Wheeler Lab
-<http://wheelerlab.org>`_ at the University of Montana, along with other
-collaborators.
+The *Drug Sniffer* software was developed under a collaboration between Amit Roy, Vishwesh Venkatraman, and members of the `Wheeler Lab
+<http://wheelerlab.org>`_ , 
