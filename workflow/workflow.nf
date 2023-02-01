@@ -26,7 +26,7 @@ if (params.autogrow_generations == null) {
 // Stage 3
 
 process denovo_ligands {
-    container 'traviswheelerlab/03-denovo:latest'
+    container "$params.image_namespace/03-denovo:latest"
 
     publishDir "${params.output_dir}", mode: 'symlink'
 
@@ -71,7 +71,7 @@ process denovo_ligands {
 }
 
 process external_seeds {
-    container 'traviswheelerlab/03-denovo:latest'
+    container "$params.image_namespace/03-denovo:latest"
 
     input:
     path seed_ligands from seed_ligands
@@ -96,7 +96,7 @@ process external_seeds {
 // Stage 4
 
 process similarity_search {
-    container 'traviswheelerlab/04-similarity_search:latest'
+    container "$params.image_namespace/04-similarity_search:latest"
 
     input:
     path seed_ligands_smi from denovo_seed_ligands_smi.mix(external_seed_ligands_smi)
@@ -123,7 +123,7 @@ process similarity_search {
 // Stage 5
 
 process protein_ligand_docking {
-    container 'traviswheelerlab/05-protein_ligand_docking:latest'
+    container "$params.image_namespace/05-protein_ligand_docking:latest"
 
     time '60min'
     errorStrategy 'ignore'
@@ -171,7 +171,7 @@ process protein_ligand_docking {
 // Stage 6
 
 process activity_prediction {
-    container 'traviswheelerlab/06-activity_prediction'
+    container "$params.image_namespace/06-activity_prediction"
 
     input:
     path ligand_smi from ligand_smi_activity
@@ -200,7 +200,7 @@ process activity_prediction {
 // Stage 7
 
 process admet_prediction {
-    container 'traviswheelerlab/07-admet_prediction'
+    container "$params.image_namespace/07-admet_prediction"
 
     input:
     path ligand_smi from ligand_smi_admet
@@ -225,7 +225,7 @@ process admet_prediction {
 // Stage 8
 
 process error_collation {
-    container 'traviswheelerlab/08-error_collation'
+    container "$params.image_namespace/08-error_collation"
 
     publishDir "${params.output_dir}", mode: 'symlink'
 
@@ -248,7 +248,7 @@ process error_collation {
 // Stage 9
 
 process results_collation {
-    container 'traviswheelerlab/09-results_collation'
+    container "$params.image_namespace/09-results_collation"
 
     publishDir "${params.output_dir}", mode: 'symlink'
 

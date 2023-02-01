@@ -1,0 +1,18 @@
+molecule_db: 's3://arkeabio-nextflow-drugsniffer/input_files/examples/small-db'
+tanimoto_cutoff: 0.5
+
+receptor_pdb: 's3://arkeabio-nextflow-drugsniffer/input_files/examples/3vri_rec.pdb'
+
+receptor_center_x: 14.641000
+receptor_center_y: -11.026000
+receptor_center_z: 43.231998
+
+receptor_size_x: 10.0
+receptor_size_y: 10.0
+receptor_size_z: 10.0
+
+admet_checks: '1 2 3'
+
+seed_ligands: 's3://arkeabio-nextflow-drugsniffer/input_files/examples/3vri_seeds.smi'
+
+output_dir: 's3://arkeabio-nextflow-drugsniffer/output_files/'
